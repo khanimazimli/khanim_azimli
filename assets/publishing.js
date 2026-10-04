@@ -62,7 +62,8 @@
   const fo = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) {
       fN.textContent = e.target.dataset.folio;
-      fol.classList.toggle('dark', e.target.classList.contains('loc'));
+      fol.classList.toggle('dark', e.target.classList.contains('loc') || e.target.hasAttribute('data-dark'));
+      fol.classList.toggle('pink', e.target.classList.contains('gr'));
     }
   }), { rootMargin: '-50% 0px -50% 0px' });
   secs.forEach(s => fo.observe(s));

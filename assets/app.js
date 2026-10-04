@@ -26,9 +26,17 @@
     ['redesign', 'Report redesigns'],
     ['exec', 'Executive & pitch decks'],
     ['data', 'Data storytelling'],
-    ['interactive', 'Interactive & motion']
+    ['interactive', 'Interactive & motion'],
+    ['editorial', 'Editorial & print']
   ];
   const P = [
+    {
+      // featured interactive atlas: home block, case page and transformation study live in case-got.js / case-got.css (the atlas's own ink / cobalt / cyan system)
+      id: 'got', custom: 'got', title: 'The World Is Still Trading', cat: 'Interactive Editorial Atlas · Data Storytelling', year: '2026', groups: ['redesign', 'data', 'interactive'],
+      card: 'got/s01',
+      desc: 'A 10-plate interactive editorial atlas about how global trade routes are being reshaped by geopolitics, AI demand and new manufacturing hubs.',
+      live: 'geometry-of-trade-2026-atlas'
+    },
     {
       // featured interactive case: home block, case page and transformation study live in case-tmf.js / case-tmf.css (project's own carbon/yellow system)
       id: 'tmf', custom: 'tmf', title: 'Tech Moves Fast', cat: 'Interactive Presentation · Data Storytelling', year: '2026', groups: ['redesign', 'data', 'interactive'],
@@ -130,6 +138,53 @@
     }
   ];
   const PI = Object.fromEntries(P.map((p, i) => [p.id, i]));
+
+  /* Selected Work: curated home order. Cases not listed here (gai, mel, indo, pas) stay reachable
+     through Before / After and case navigation. XP = home cards that link to their own pages. */
+  const HOME = ['nrf', 'got', 'sys', 'edu', 'ppt', 'tmf']; // got replaced the 'trade' link card (XP.trade kept, unused)
+  const XP = {
+    trade: {
+      id: 'trade', title: 'The World Is Still Trading. Just Differently.', cat: 'Interactive Data Atlas · Data Storytelling', year: '2026', groups: ['redesign', 'data', 'interactive'],
+      href: 'assets/live/geometry-of-trade-2026-atlas.html', ext: true, go: 'Open live experience', goI: '↗',
+      img: 'assets/img/trade/s01', thumbs: ['assets/img/trade/s02', 'assets/img/trade/s07'],
+      desc: 'McKinsey Global Institute’s 2026 trade research reinterpreted as a 10-plate interactive atlas, built around a globe that turns as the story moves.',
+      kpi: '10', kpiCap: 'plates · one globe · one trade story'
+    },
+    edu: {
+      id: 'edu', title: 'Game Changer / Editorial Publishing', cat: 'Editorial & Educational Publishing', year: '2022–2025', groups: ['editorial'],
+      href: 'publishing.html#game-changer', go: 'View publishing case', goI: '→',
+      img: 'assets/img/edu/home-shelf',
+      desc: 'Cambridge’s Game Changer adapted into a national edition for Azerbaijani classrooms, part of a wider print practice: textbooks, yearbooks and theatre.',
+      kpi: '469,810', kpiCap: 'textbook copies printed across four editions'
+    },
+    ppt: {
+      id: 'ppt', title: 'PowerPoint, Rebuilt.', cat: 'Presentation Redesign · Native PowerPoint', year: '2026', groups: ['redesign', 'exec'],
+      href: 'powerpoint-rebuilt.html', go: 'View the transformations', goI: '→',
+      img: 'assets/img/ppt/after-05', full: true, thumbs: ['assets/img/ppt/before-13', 'powerpoint-rebuilt/ai-prioritized/img/slide-02'],
+      desc: 'Three ordinary corporate decks rebuilt through hierarchy, storytelling and fully editable PowerPoint design.',
+      kpi: `158${TO}30`, kpiCap: 'source slides to redesigned slides, across 3 studies'
+    }
+  };
+  const homeList = () => HOME.map(id => XP[id] || P[PI[id]]).filter(Boolean);
+  const xImg = (x, sizes) => x.full
+    ? `<img src="${x.img}.webp" alt="" loading="lazy" decoding="async">`
+    : `<img src="${x.img}-t.webp" srcset="${x.img}-t.webp 960w, ${x.img}.webp 2000w" sizes="${sizes}" alt="" loading="lazy" decoding="async">`;
+  const linkCard = (x, n, flip) => {
+    const tgt = x.ext ? ' target="_blank" rel="noopener"' : '';
+    return `
+    <article class="pc pc-feat pc-link${flip ? ' flip' : ''}">
+      <a class="media" href="${x.href}"${tgt} aria-label="${x.title}, ${x.go.toLowerCase()}">${xImg(x, '(max-width:1024px) 92vw, 760px')}</a>
+      <div class="txt">
+        ${x.thumbs ? `<div class="thumbs">${x.thumbs.map(t => `<div class="frame"><img src="${t}${/\/img\/(trade)\//.test(t) ? '-t' : ''}.webp" alt="" loading="lazy" decoding="async"></div>`).join('')}</div>` : ''}
+        <h3>${x.title}</h3>
+        <p class="desc">${x.desc}</p>
+        <div class="bottom">
+          <div class="bar"><p class="meta"><span class="tag">${x.cat}</span><span>${n} · ${x.year}</span></p><span class="fill"></span><a class="go" href="${x.href}"${tgt}>${x.go} <i>${x.goI}</i></a></div>
+          <p class="kpi"><b>${x.kpi}</b><small>${x.kpiCap}</small></p>
+        </div>
+      </div>
+    </article>`;
+  };
 
   /* ================================================================
      HOME
@@ -239,8 +294,8 @@
   // The New Rules of Fashion: a special issue that interrupts the sequence.
   // Navy whitespace, a red thread, then an ivory spread opening from its spine.
   const NI = (p, w) => `assets/img/${p}${w === 't' ? '-t' : ''}.webp`;
-  const nxCard = () => {
-    const n = pad(PI.nrf + 1);
+  const nxCard = nn => {
+    const n = nn || pad(PI.nrf + 1);
     const fig = (cls, src, srcT, alt, idx, cap, sizes) => `
           <figure class="nx-f ${cls}"><span class="nx-fr"><img src="${srcT}" srcset="${srcT} 960w, ${src} 1920w" sizes="${sizes}" alt="${alt}" loading="lazy" decoding="async"></span><figcaption><i>${idx}</i>${cap}</figcaption></figure>`;
     return `
@@ -350,7 +405,7 @@
 
   const tfStudy = () => `
     <article class="tfs" aria-label="Transformation study: The System Is Waking Up">
-      <div class="tfs-bar"><span class="tfs-kind">Report → Interactive experience</span><span>Technology Trends Outlook 2025 · 108-page report → 10-slide interactive HTML</span><span class="tfs-no">Research → Interactive story</span></div>
+      <div class="tfs-bar"><span class="tfs-kind">01 · Report → Interactive system</span><span>Technology Trends Outlook 2025 · 108-page report → 10-slide interactive HTML</span><span class="tfs-no">Research → Interactive story</span></div>
       <h3 class="tfs-line" aria-label="13 separate trends, to one connected system"><span class="a">13 separate trends</span><i class="tfs-arr" aria-hidden="true"></i><span class="b">One connected <em>system</em></span></h3>
       <div class="tfs-ba">
         <figure class="tfs-before">
@@ -377,9 +432,10 @@
       </div>
     </article>
     ${window.TMF ? TMF.tfStudy() : ''}
+    ${window.GOT ? GOT.tfStudy() : ''}
     <div class="tfo">
       <p class="tfo-h"><span>More before → after studies</span><span>Different starting points, different outputs</span></p>
-      <a class="tfo-row" href="powerpoint-rebuilt.html"><span class="tfo-kind">PowerPoint → PowerPoint</span><b>From Complexity to Control</b><span class="tfo-n">49 slides → 10</span><span class="tfo-th"><span><img src="assets/img/ppt/before-13.webp" alt="Original source slide" loading="lazy" decoding="async"></span><span><img src="assets/img/ppt/after-05.webp" alt="Redesigned slide" loading="lazy" decoding="async"></span></span><i>→</i></a>
+      <a class="tfo-row" href="powerpoint-rebuilt.html"><span class="tfo-kind">PowerPoint → Decision story</span><b>From Complexity to Control</b><span class="tfo-n">49 slides → 10</span><span class="tfo-th"><span><img src="assets/img/ppt/before-13.webp" alt="Original source slide" loading="lazy" decoding="async"></span><span><img src="assets/img/ppt/after-05.webp" alt="Redesigned slide" loading="lazy" decoding="async"></span></span><i>→</i></a>
       <a class="tfo-row" href="#/work/mel" data-open="mel"><span class="tfo-kind">Report → Executive presentation</span><b>Melbourne</b><span class="tfo-n">56 pages → 12 slides</span><span class="tfo-th"><span><img src="${T('mel/b06')}" alt="Original report page" loading="lazy" decoding="async"></span><span><img src="${T('mel/s06')}" alt="Redesigned slide" loading="lazy" decoding="async"></span></span><i>→</i></a>
       <a class="tfo-row" href="#/work/indo" data-open="indo"><span class="tfo-kind">Report → Data story</span><b>Indonesia</b><span class="tfo-n">69 pages → 11 slides</span><span class="tfo-th"><span><img src="${T('indo/b03')}" alt="Original report page" loading="lazy" decoding="async"></span><span><img src="${T('indo/s03')}" alt="Redesigned slide" loading="lazy" decoding="async"></span></span><i>→</i></a>
     </div>`;
@@ -416,18 +472,19 @@
   };
   const initTf = () => {
     const m = $('#tfMount'); if (!m) return;
-    m.innerHTML = (window.TMF ? TMF.tfSeries() : '') + tfStudy();
+    m.innerHTML = (window.GOT ? GOT.tfSeries() : window.TMF ? TMF.tfSeries() : '') + tfStudy();
     const st = $('.tfs', m);
     const o = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { st.classList.add('in'); o.disconnect(); } }, { rootMargin: '0px 0px -25% 0px' });
     RM ? st.classList.add('in') : o.observe(st);
     initTabs(m);
     window.TMF && TMF.initTf(m);
+    window.GOT && GOT.initTf(m);
     syPlay($$('video', m));
   };
 
   // Selected work block
-  const syCard = () => {
-    const n = pad(PI.sys + 1);
+  const syCard = nn => {
+    const n = nn || pad(PI.sys + 1);
     const fr = (cls, inner, idx, cap) => `<figure class="sy-f ${cls}"><span class="sy-fr">${inner}</span><figcaption><i>${idx}</i>${cap}</figcaption></figure>`;
     return `
     <section class="sy" aria-label="Featured project: The System Is Waking Up">
@@ -509,13 +566,18 @@
   addEventListener('scroll', () => { if (syUpd && !syTick) { syTick = true; requestAnimationFrame(() => { syTick = false; syUpd && syUpd(); }); } }, { passive: true });
   addEventListener('resize', () => syUpd && syUpd());
 
+  // Selected Work: one block per project, in the curated HOME order (numbers follow that order)
   const layout = list => {
-    const g = list.find(p => p.custom === 'gai'), f = list.find(p => p.custom === 'nrf'), y = list.find(p => p.custom === 'sys');
-    const blocks = layoutStd(list.filter(p => !p.custom));
-    if (f) blocks.splice(Math.min(1, blocks.length), 0, nxCard());
-    if (y) blocks.splice(Math.min(f ? 2 : 1, blocks.length), 0, syCard());
-    const t = list.find(p => p.custom === 'tmf');
-    return (t && window.TMF ? TMF.card(pad(PI.tmf + 1), P.length) : '') + (g ? gaiCard() : '') + blocks.join('');
+    let flip = false;
+    return list.map(p => {
+      const n = pad(HOME.indexOf(p.id) + 1);
+      if (p.id === 'nrf') return nxCard(n);
+      if (p.id === 'sys') return syCard(n);
+      if (p.id === 'tmf') return window.TMF ? TMF.card(n, HOME.length) : '';
+      if (p.id === 'got') return window.GOT ? GOT.card(n, HOME.length) : '';
+      if (XP[p.id]) { const c = linkCard(p, n, flip); flip = !flip; return c; }
+      return '';
+    }).join('');
   };
   const layoutStd = list => {
     const n = list.length, nf = n <= 2 ? n : (n % 2 ? 1 : 2);
@@ -527,16 +589,17 @@
   const projects = $('#projects'), filters = $('#filters');
   let group = 'all';
   const renderList = () => {
-    const list = P.filter(p => group === 'all' || p.groups.includes(group));
+    const list = homeList().filter(p => group === 'all' || p.groups.includes(group));
     projects.innerHTML = layout(list);
     observe($$('.pc, .gx', projects));
     initGaiCard(projects);
     initNx(projects);
     initSy(projects);
     window.TMF && TMF.initCard(projects);
+    window.GOT && GOT.initCard(projects);
   };
   filters.innerHTML = GROUPS.map(([k, label]) => {
-    const c = k === 'all' ? P.length : P.filter(p => p.groups.includes(k)).length;
+    const H = homeList(), c = k === 'all' ? H.length : H.filter(p => p.groups.includes(k)).length;
     return `<button role="tab" data-g="${k}" aria-selected="${k === group}" class="${k === group ? 'on' : ''}">${label}<sup>${pad(c)}</sup></button>`;
   }).join('');
   $$('button', filters).forEach(b => b.addEventListener('click', () => {
@@ -568,7 +631,9 @@
       const red = !isOpen() && !!(t && t.closest('.nx-sheet')) && !t.closest('.nx-live');
       const grn = !isOpen() && !!(t && t.closest('.sy-stage, .tfs-after .tfs-fr'));
       const on = red || grn || (!isOpen() && !!(t && t.closest('.pc .media, .gx-stage')));
-      if (red !== cursor.classList.contains('red')) { cursor.classList.toggle('red', red); cursorLab.textContent = red ? 'Open issue' : 'View case'; }
+      const lk = !red && t && t.closest('.pc-link');
+      const lab = red ? 'Open issue' : lk ? (lk.querySelector('.media[target]') ? 'Open live' : 'Open') : 'View case';
+      cursor.classList.toggle('red', red); if (cursorLab.textContent !== lab) cursorLab.textContent = lab;
       cursor.classList.toggle('sy', grn);
       want = on ? 1 : 0; cursor.classList.toggle('on', on || s > .02);
       if (!raf) raf = requestAnimationFrame(loop);
@@ -1672,7 +1737,19 @@
     cs.classList.toggle('nrf', p.custom === 'nrf');
     cs.classList.toggle('sys', p.custom === 'sys');
     cs.classList.toggle('tmf', p.custom === 'tmf');
+    cs.classList.toggle('got', p.custom === 'got');
     cs.classList.remove('f-dark');
+    if (p.custom === 'got' && window.GOT) {
+      const ni = (i + 1) % P.length;
+      cb.innerHTML = GOT.page(i, P.length, ni, P[ni]);
+      $('#cTtl').textContent = 'The World Is Still Trading · Interactive atlas';
+      viewers.length = 0;
+      const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { root: cs, rootMargin: '0px 0px -8% 0px' });
+      if (RM) $$('.rv', cb).forEach(el => el.classList.add('in')); else $$('.rv', cb).forEach(el => o.observe(el));
+      cs.scrollTop = 0;
+      GOT.init(cb, cs);
+      return;
+    }
     if (p.custom === 'tmf' && window.TMF) {
       const ni = (i + 1) % P.length;
       cb.innerHTML = TMF.page(i, P.length, ni, P[ni]);
@@ -1766,7 +1843,7 @@
     $$('video', cb).forEach(v => v.pause());
     if (push) history.pushState({}, '', location.pathname + location.search + '#work');
     lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true });
-    setTimeout(() => { if (!isOpen()) { cb.innerHTML = ''; cs.classList.remove('nrf', 'f-dark', 'sys', 'tmf'); } }, 450);
+    setTimeout(() => { if (!isOpen()) { cb.innerHTML = ''; cs.classList.remove('nrf', 'f-dark', 'sys', 'tmf', 'got'); } }, 450);
     document.body.classList.remove('nx-hot'); $$('.nx.hot').forEach(n => n.classList.remove('hot'));
     nxUpd && nxUpd();
     syUpd && syUpd();

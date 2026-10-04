@@ -308,8 +308,8 @@
       <li class="t"><a href="#/work/tmf" data-open="tmf" data-tmf-jump><span class="n">03 · Report <i>→</i> human-centered interactive</span><b>Many technologies <i>→</i> one human question</b><span class="x">Tech Moves Fast</span></a></li>
     </ol>`;
   const tfStudy = () => `
-    <article class="tsx" aria-label="Transformation study 03: Tech Moves Fast">
-      <div class="tsx-bar"><span class="k">03 · Report → human-centered interactive story</span><span>EY Emerging Tech at Work 2023 · research report → 10-slide interactive HTML</span></div>
+    <article class="tsx" aria-label="Transformation study 02: Tech Moves Fast">
+      <div class="tsx-bar"><span class="k">02 · Report → human-centered story</span><span>EY Emerging Tech at Work 2023 · research report → 10-slide interactive HTML</span></div>
       <h3 class="tsx-line"><span>Many technologies</span><i aria-hidden="true">→</i><span class="y">One human question</span></h3>
       <div class="tsx-grid">
         <div class="tsx-before">
