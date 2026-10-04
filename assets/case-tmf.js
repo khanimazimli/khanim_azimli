@@ -5,7 +5,10 @@
 (() => {
   const LIVE = 'assets/live/Tech-Moves-Fast_EY-Emerging-Tech-Reinterpretation.html';
   const I = (n, t) => `assets/img/tmf/${n}${t ? '-t' : ''}.webp`;
-  const pic = (n, alt, sizes, eager) => `<img src="${I(n, 1)}" srcset="${I(n, 1)} 960w, ${I(n)} 1920w" sizes="${sizes}" alt="${alt}"${eager ? '' : ' loading="lazy"'} decoding="async">`;
+  // intrinsic ratios (thumb files): reserve each lazy image's height before it loads, so in-page links land on target
+  const IR = { 'b01':'960/540', 'b04':'960/540', 'b05':'960/540', 'b05-bot':'960/540', 'b05-top':'960/540', 'b06':'960/540', 'b07':'960/540', 'b08':'960/540', 'c-89':'960/519', 'c-barrier':'960/840', 'c-buy':'960/464', 'c-ctrl':'960/192', 'c-fall':'960/891', 'c-field':'960/411', 'c-found':'960/891', 'c-gap':'960/858', 'c-net':'960/1074', 'c-split':'960/380', 'c-stack':'960/487', 's01':'960/540', 's02':'960/540', 's03':'960/540', 's04':'960/540', 's05':'960/540', 's05-gap':'960/540', 's06':'960/540', 's07':'960/540', 's08':'960/540', 's08-tilt':'960/540', 's09':'960/540', 's09-fall':'960/540', 's10':'960/540', 's10-buy':'960/540', 'sw-after':'960/540', 'sw-before':'960/540' };
+  const ir = n => IR[n] ? ` style="aspect-ratio:auto ${IR[n]}"` : '';
+  const pic = (n, alt, sizes, eager) => `<img src="${I(n, 1)}" srcset="${I(n, 1)} 960w, ${I(n)} 1920w" sizes="${sizes}" alt="${alt}"${ir(n)}${eager ? '' : ' loading="lazy"'} decoding="async">`;
   const pad = n => String(n).padStart(2, '0');
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const liveBtn = (cls = '') => `<a class="tm-live ${cls}" href="${LIVE}" target="_blank" rel="noopener"><span>Open live experience</span><i aria-hidden="true">↗</i></a>`;
@@ -308,8 +311,8 @@
       <li class="t"><a href="#/work/tmf" data-open="tmf" data-tmf-jump><span class="n">03 · Report <i>→</i> human-centered interactive</span><b>Many technologies <i>→</i> one human question</b><span class="x">Tech Moves Fast</span></a></li>
     </ol>`;
   const tfStudy = () => `
-    <article class="tsx" aria-label="Transformation study 03: Tech Moves Fast">
-      <div class="tsx-bar"><span class="k">03 · Report → human-centered interactive story</span><span>EY Emerging Tech at Work 2023 · research report → 10-slide interactive HTML</span></div>
+    <article class="tsx" aria-label="Transformation study 02: Tech Moves Fast">
+      <div class="tsx-bar"><span class="k">02 · Report → human-centered story</span><span>EY Emerging Tech at Work 2023 · research report → 10-slide interactive HTML</span></div>
       <h3 class="tsx-line"><span>Many technologies</span><i aria-hidden="true">→</i><span class="y">One human question</span></h3>
       <div class="tsx-grid">
         <div class="tsx-before">

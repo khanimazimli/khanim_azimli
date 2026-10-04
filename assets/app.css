@@ -538,3 +538,6 @@ body.lock{overflow:hidden}
   .hero-title .pos b{font-size:24px}
   .about-facts div{grid-template-columns:96px 1fr}
 }
+
+/* v10: link cards in Selected Work keep the headline side of the frame in view */
+.pc-link .media img{object-position:0% 50%}

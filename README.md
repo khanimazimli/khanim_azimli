@@ -17,7 +17,7 @@ JavaScript, images, video and self-hosted web fonts.
 ## Structure
 
 ```
-index.html                     Homepage (Selected work, Before/After, PowerPoint, Publishing, About, Tools, Contact)
+index.html                     Homepage (Selected work incl. Geometry of Trade, Before/After, PowerPoint, Publishing, About, Tools, Contact)
 publishing.html                Editorial & educational publishing case
 powerpoint-rebuilt.html        PowerPoint, Rebuilt · 01 From Complexity to Control
 powerpoint-rebuilt/            02 AI, Prioritized · 03 The Pipeline Is Growing (pages, images, downloads)
@@ -40,3 +40,6 @@ assets/og/                     Open Graph preview images (1200×630)
   permits use and embedding on websites.
 - Consulting redesigns are independent exercises on public reports and are
   not affiliated with the original publishers.
+- Media is optimised for a small package: images are WebP capped at 1600 px
+  wide, videos re-encoded, and images embedded in the live HTML projects
+  converted to WebP.
