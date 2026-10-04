@@ -1,16 +1,15 @@
 # Khanim Azimli Portfolio
 
-**Project:** Khanim Azimli Portfolio
+**Repository:** `khanimazimli/khanim_azimli`
+**Live site:** https://khanimazimli.github.io/khanim_azimli/
 **Entry point:** `index.html`
 **Deployment:** GitHub Pages (static, no build step)
 
 ## Deploy
 
-1. Upload the contents of this folder to the root of a GitHub repository
-   (for a user site, name the repository `khanimazimli.github.io`).
-2. Settings → Pages → Source: *Deploy from a branch* → `main` / `(root)`.
-3. The site is served from `index.html`. `.nojekyll` makes GitHub Pages serve
-   all files as-is.
+GitHub Pages is configured under Settings → Pages → Source: *Deploy from a
+branch* → `main` / `(root)`. Changes merged into `main` are published to the
+live site automatically. `.nojekyll` makes GitHub Pages serve all files as-is.
 
 No npm, Node or build tools are needed. Everything is plain HTML, CSS,
 JavaScript, images, video and self-hosted web fonts.
@@ -30,9 +29,11 @@ assets/og/                     Open Graph preview images (1200×630)
 
 ## Notes
 
-- Open Graph tags use absolute URLs on `https://khanimazimli.github.io/`.
-  If the site is published under a different address (e.g. a project
-  repository or custom domain), update the `og:image` / `og:url` values.
+- The site is served from the `/khanim_azimli/` subpath. Internal links and
+  asset paths are relative, so they work there without changes. The only
+  absolute URLs are the Open Graph `og:url` / `og:image` tags and the
+  404 page's "Back to the portfolio" link, which all use
+  `https://khanimazimli.github.io/khanim_azimli/` (or `/khanim_azimli/`).
 - Fonts are self-hosted WOFF2 files. Archivo, Bodoni Moda, IBM Plex Mono,
   Inter Tight and Source Serif 4 are licensed under the SIL Open Font License.
   Satoshi is from Fontshare (Indian Type Foundry Free Font License), which
