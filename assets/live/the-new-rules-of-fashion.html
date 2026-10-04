@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The New Rules of Fashion · Khanim Azimli</title>
+<link rel="preload" href="../fonts/bodoni-moda-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Bodoni Moda";src:url(../fonts/bodoni-moda-var.woff2) format("woff2-variations"),url(../fonts/bodoni-moda-var.woff2) format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Archivo";src:url(../fonts/archivo-var.woff2) format("woff2-variations"),url(../fonts/archivo-var.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap}
+@font-face{font-family:"Archivo";src:url(../fonts/archivo-ext-var.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap;unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+20A0-20C0,U+2C60-2C7F,U+A720-A7FF}
+</style>
+<style>
+/* Layout: one 1920x1080 magazine "spread" per slide, scaled to fit; every spread breaks the grid differently, chrome (running head, arc, folio, source) stays fixed like a publication. */
+:root{
+  --ivory:#F2EFE8;      /* paper */
+  --paper:#E8E3D9;      /* deeper paper, lens tint, tape */
+  --ink:#101010;        /* type */
+  --ink-2:#55524C;      /* secondary text, warm grey */
+  --red:#D52B1E;        /* fashion red, one accent */
+  --steel:#B9B8B4;      /* rules, ghost lines */
+  --blush:#E3CFC2;      /* washed skin tone, garment fill */
+  --display:"Bodoni Moda","Didot","Bodoni 72","Bodoni MT","Times New Roman",serif;
+  --sans:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --ease:cubic-bezier(.22,.7,.12,1);
+  --slow:cubic-bezier(.45,0,.15,1);
+  color-scheme:light;
+}
+html,body{height:100%}
+body{margin:0;background:var(--ivory);color:var(--ink);font-family:var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased;transition:background-color .6s}
+body.dark{background:var(--ink)}
+*{box-sizing:border-box;font-style:normal}
+#viewport{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0;background:var(--ivory);overflow:hidden}
+#stage::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:50;opacity:.07;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>")}
+
+/* ---------- slides ---------- */
+.slide{position:absolute;inset:0;background:var(--ivory);visibility:hidden;z-index:1}
+.slide.active{visibility:visible;z-index:3}
+.slide.leaving{visibility:visible;z-index:2}
+.slide.active.turn{animation:pageturn 1.05s var(--slow) both}
+@keyframes pageturn{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0)}}
+.slide.dark{background:var(--ink);color:var(--ivory)}
+.abs{position:absolute;margin:0}
+.serif{font-family:var(--display);font-optical-sizing:auto}
+.red{color:var(--red)}
+.grey{color:var(--ink-2)}
+
+/* chrome */
+.head{position:absolute;left:100px;right:100px;top:44px;display:flex;justify-content:space-between;align-items:baseline;font:600 14px/1 var(--sans);font-stretch:85%;letter-spacing:.22em;text-transform:uppercase}
+.head .arc{display:flex;gap:30px;color:var(--steel)}
+.head .arc span.on{color:var(--red)}
+.head .arc span.on::before{content:"";display:inline-block;width:7px;height:7px;background:var(--red);margin-right:10px;transform:translateY(-1px)}
+.folio{position:absolute;right:100px;bottom:40px;font:500 15px/1 var(--sans);letter-spacing:.18em;font-variant-numeric:tabular-nums}
+.folio b{font-weight:700}
+.src{position:absolute;left:100px;bottom:40px;max-width:1380px;font:400 16px/1.35 var(--sans);color:var(--ink-2);letter-spacing:.01em}
+.src b{font-weight:600;color:var(--ink);letter-spacing:.14em;text-transform:uppercase;font-size:13px;margin-right:10px}
+.dark .src,.dark .folio{color:var(--steel)}
+.dark .src b{color:var(--ivory)}
+.rule-tag{display:flex;align-items:center;gap:16px;font:700 15px/1 var(--sans);font-stretch:80%;letter-spacing:.26em;text-transform:uppercase}
+.rule-tag i{display:inline-block;width:56px;height:1px;background:var(--ink)}
+.rule-tag em{color:var(--red);font-weight:700}
+.label{font:600 14px/1.2 var(--sans);font-stretch:85%;letter-spacing:.2em;text-transform:uppercase}
+.cap{font:400 21px/1.38 var(--sans);color:var(--ink)}
+.cap.sm{font-size:18px}
+.h-xl{font-family:var(--display);font-weight:500;letter-spacing:-.02em;line-height:.92;text-wrap:balance}
+.note{font:500 13px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+
+/* motion utilities: base state = final state, animation only plays when .on */
+.slide.on .m-up{animation:mUp 1s var(--ease) var(--d,0s) both}
+.slide.on .m-fade{animation:mFade 1.1s ease var(--d,0s) both}
+.slide.on .m-wipe{animation:mWipe 1.2s var(--slow) var(--d,0s) both}
+.slide.on .m-left{animation:mLeft 1.1s var(--ease) var(--d,0s) both}
+.slide.on .m-right{animation:mRight 1.1s var(--ease) var(--d,0s) both}
+.mask{display:block;overflow:hidden;padding-bottom:.04em}
+.mask>span{display:block}
+.slide.on .mask>span{animation:mRise 1.05s var(--ease) var(--d,0s) both}
+@keyframes mUp{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+@keyframes mFade{from{opacity:0}to{opacity:1}}
+@keyframes mWipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes mLeft{from{opacity:0;transform:translateX(-140px)}to{opacity:1;transform:none}}
+@keyframes mRight{from{opacity:0;transform:translateX(140px)}to{opacity:1;transform:none}}
+@keyframes mRise{from{transform:translateY(105%)}to{transform:none}}
+
+/* ---------- 01 cover ---------- */
+.s1 .w{position:absolute;margin:0;font-family:var(--display);line-height:.8;white-space:nowrap}
+.s1 .the{left:-46px;top:96px;font-size:250px;font-weight:500;letter-spacing:-.025em;--x:-260px;--y:0}
+.s1 .rules{left:34px;top:330px;font-size:590px;font-weight:600;letter-spacing:-.045em;--x:0;--y:180px}
+.s1 .of{right:58px;top:370px;font:600 30px/1 var(--sans);font-stretch:78%;letter-spacing:.5em;writing-mode:vertical-rl;--x:0;--y:-160px}
+.s1 .year{right:96px;top:108px;font-size:150px;font-weight:500;color:var(--red);letter-spacing:-.02em;--x:200px;--y:0}
+.slide.on .s1-compose{animation:compose 1.25s var(--ease) var(--d,0s) both}
+@keyframes compose{from{opacity:0;transform:translate(var(--x),var(--y))}45%{opacity:1}to{opacity:1;transform:none}}
+.s1 .pattern{left:1060px;top:74px;width:420px;height:230px}
+.s1 .care{left:100px;top:862px;width:430px;padding:20px 26px;outline:1.5px dashed var(--ink);outline-offset:-9px;border:1px solid var(--ink);font:600 14px/1.55 var(--sans);font-stretch:85%;letter-spacing:.18em;text-transform:uppercase}
+.s1 .care span{display:block;font-weight:400;letter-spacing:.06em;text-transform:none;font-size:17px;font-stretch:100%;margin-top:6px;color:var(--ink-2)}
+.s1 .lede{left:640px;top:858px;width:640px;font:400 36px/1.22 var(--display);font-optical-sizing:auto;text-wrap:balance}
+.s1 .kick{left:1390px;top:868px;width:420px}
+.s1 .marks{left:0;top:0;width:1920px;height:1080px;pointer-events:none}
+
+/* ---------- 02 pressure ---------- */
+.s2 h2{left:100px;top:150px;font-size:86px}
+.s2 .swap{left:100px;top:420px;width:760px}
+.s2 .slot{position:relative;height:118px;overflow:hidden;margin-top:18px}
+.s2 .word{position:absolute;left:0;top:0;font:700 118px/1 var(--sans);font-stretch:62%;letter-spacing:.01em;text-transform:uppercase;white-space:nowrap}
+.s2 .old{opacity:0;color:var(--ink-2)}
+.s2 .old i{position:absolute;left:-6px;right:-6px;top:52%;height:7px;background:var(--red);transform:scaleX(0);transform-origin:left}
+.slide.on.s2 .old{animation:oldWord 2.5s var(--ease) .3s both}
+.slide.on.s2 .old i{animation:strike .5s var(--ease) 1.2s both}
+.slide.on.s2 .new{animation:newWord .9s var(--ease) 2.25s both}
+@keyframes oldWord{0%{opacity:0;transform:translateY(100%)}20%{opacity:1;transform:none}78%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-100%)}}
+@keyframes strike{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes newWord{from{transform:translateY(100%)}to{transform:none}}
+.s2 .hist{margin-top:16px}
+.s2 .para{left:100px;top:672px;width:640px;font:400 34px/1.25 var(--display);font-optical-sizing:auto;text-wrap:balance}
+.s2 .big{right:-28px;top:200px;font-family:var(--display);font-weight:600;font-size:590px;line-height:1;letter-spacing:-.05em;color:var(--red);white-space:nowrap}
+.s2 .big sup{font-size:.36em;vertical-align:0;position:relative;top:-1.15em;margin-left:.04em;letter-spacing:0}
+.s2 .c46{left:1010px;top:806px;width:440px}
+.s2 .n25{left:1530px;top:790px;font:500 80px/1 var(--display);letter-spacing:-.03em}
+.s2 .c25{left:1530px;top:866px;width:300px}
+.s2 .tape{left:100px;top:930px;width:1720px;height:70px}
+
+/* ---------- 03 trade ---------- */
+.s3 .rt{left:100px;top:132px}
+.s3 h2{left:100px;top:186px;font-size:80px}
+.s3 .n76{left:92px;top:452px;font:600 330px/1 var(--display);letter-spacing:-.05em;color:var(--red)}
+.s3 .n76 sup{font-size:.4em;vertical-align:0;position:relative;top:-1.05em}
+.s3 .c76{left:100px;top:806px;width:560px}
+.s3 .sheet{left:770px;top:118px;width:1050px;height:560px}
+.s3 .sheet-cap{left:770px;top:676px;width:1050px;display:flex;justify-content:space-between}
+.s3 .tags{left:770px;top:722px;width:1050px;height:290px}
+.s3 .tagcap{left:1300px;top:740px;width:520px}
+
+/* ---------- 04 AI ---------- */
+.s4 .rt{left:100px;top:132px}
+.s4 h2{left:100px;top:186px;font-size:86px}
+.s4 .no1{left:1180px;top:120px;font:500 230px/1 var(--display);letter-spacing:-.04em;white-space:nowrap}
+.s4 .no1 small{font-size:.32em;letter-spacing:0;margin-right:.08em;vertical-align:.95em}
+.s4 .cno1{left:1190px;top:345px;width:630px}
+.s4 .band{left:100px;top:500px;width:1720px;height:290px}
+.s4 .stages{left:100px;top:474px;width:1720px;display:flex;justify-content:space-between}
+.s4 .col{top:818px;width:420px}
+.s4 .col h3{margin:0 0 12px;font:700 15px/1 var(--sans);letter-spacing:.3em}
+.s4 .col ul{list-style:none;margin:0;padding:0;font:400 30px/1.25 var(--display);font-optical-sizing:auto}
+.s4 .third{left:740px;top:806px;width:560px}
+.s4 .third .n{font:500 104px/1 var(--display);letter-spacing:-.03em}
+
+/* ---------- 05 AI shopper ---------- */
+.s5 .rt{left:100px;top:132px}
+.s5 h2{left:100px;top:180px;font-size:76px}
+.s5 .notent{left:100px;top:418px;font:500 52px/1 var(--display);color:var(--red)}
+.s5 .stats{left:100px;top:520px;width:610px;display:grid;gap:18px}
+.s5 .stat{display:grid;grid-template-columns:180px 1fr;align-items:start;gap:16px;border-top:1px solid var(--ink);padding-top:14px}
+.s5 .stat .n{font:500 78px/.9 var(--display);letter-spacing:-.03em}
+.s5 .panel{left:760px;top:120px;width:1060px;height:580px;border:1px solid var(--ink);background:var(--ivory)}
+.s5 .bar{position:absolute;left:24px;right:24px;top:20px;height:56px;border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between}
+.s5 .q{font:400 30px/1 var(--display);font-optical-sizing:auto;white-space:nowrap}
+.s5 .q .caret{display:inline-block;width:2px;height:30px;background:var(--red);vertical-align:-4px;margin-left:4px}
+.slide.on.s5 .typed{display:inline-block;animation:typing 1.5s steps(30) 1s both}
+.slide.on.s5 .caret{animation:blink .8s steps(1) 0s 5}
+@keyframes typing{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes blink{50%{opacity:0}}
+.s5 .attr{position:absolute;width:310px}
+.s5 .attr .label{color:var(--red);font-size:13px}
+.s5 .attr div{font:500 22px/1.25 var(--sans);margin-top:6px}
+.s5 .attr.r{text-align:left}
+.s5 .reco{position:absolute;left:24px;right:24px;top:486px;height:72px;border-top:1px solid var(--steel);display:flex;align-items:center;gap:26px;padding-top:12px}
+.s5 .reco .looks{display:flex;gap:10px}
+.s5 .reco .looks svg{width:40px;height:56px}
+.s5 .n4700{left:760px;top:722px;font:600 240px/1 var(--display);letter-spacing:-.045em;color:var(--red);white-space:nowrap;transform-origin:center;z-index:6}
+.slide.on.s5 .n4700{animation:shock 3s var(--slow) 5.4s both}
+@keyframes shock{0%{transform:translate(-160px,-680px) scale(.06);opacity:0}8%{opacity:1}42%{transform:translate(-214px,-300px) scale(1.95)}68%{transform:translate(-214px,-300px) scale(1.95)}100%{transform:none;opacity:1}}
+.s5 .flood{left:0;top:0;width:1920px;height:1080px;background:var(--ivory);opacity:0;z-index:5;pointer-events:none}
+.slide.on.s5 .flood{animation:flood 3s ease 5.4s both}
+@keyframes flood{0%{opacity:0}30%{opacity:1}68%{opacity:1}100%{opacity:0}}
+.s5 .c4700{left:1610px;top:800px;width:210px;z-index:6}
+
+/* ---------- 06 smart frames ---------- */
+.s6 .frames{left:0;top:0;width:1920px;height:1080px}
+.s6 .rt{left:1150px;top:250px}
+.s6 h2{left:1146px;top:298px;font-size:90px}
+.s6 .hud{left:1150px;top:596px;width:680px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px}
+.s6 .hud .n{font:500 74px/1 var(--display);letter-spacing:-.03em;margin:8px 0 10px}
+.s6 .ov{position:absolute;font:600 14px/1.35 var(--sans);font-stretch:85%;letter-spacing:.18em;text-transform:uppercase}
+.s6 .ov span{display:block;font:400 19px/1.3 var(--sans);letter-spacing:.01em;text-transform:none;font-stretch:100%;color:var(--ink)}
+.s6 .ov.r{color:var(--red)}
+
+/* ---------- 07 value ---------- */
+.s7 .rt{left:100px;top:132px}
+.s7 h2{left:100px;top:186px;font-size:84px}
+.s7 .reading{left:1250px;top:190px;width:570px;border-left:1px solid var(--ink);padding-left:28px}
+.s7 .reading p{margin:12px 0 0;font:400 30px/1.25 var(--display);font-optical-sizing:auto;text-wrap:balance}
+.s7 .obj{position:absolute;width:520px}
+.s7 .obj svg{display:block;height:250px;width:520px}
+.s7 .obj .word{font:500 118px/.9 var(--display);letter-spacing:-.03em;margin-top:6px}
+.s7 .obj .row{display:grid;grid-template-columns:150px 1fr;gap:20px;margin-top:18px;align-items:start;border-top:1px solid var(--ink);padding-top:14px}
+.s7 .obj .row .n{font:500 50px/1 var(--display);letter-spacing:-.02em;color:var(--red)}
+
+/* ---------- 08 resale ---------- */
+.s8 .rt{left:100px;top:132px}
+.s8 h2{left:100px;top:180px;font-size:74px}
+.s8 .n60{left:1060px;top:118px;font:600 200px/1 var(--display);letter-spacing:-.045em;color:var(--red);white-space:nowrap}
+.s8 .n60 small{font-size:.42em;letter-spacing:0;color:var(--ink);margin-right:.1em;vertical-align:1.15em;font-weight:500}
+.s8 .c60{left:1560px;top:170px;width:260px}
+.s8 .minis{left:1070px;top:360px;width:750px;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.s8 .minis .n{font:500 52px/1 var(--display);letter-spacing:-.02em;margin-bottom:8px}
+.s8 .strip{left:100px;top:522px;width:1720px;height:460px}
+.s8 .frame{position:absolute;top:0;width:540px;height:440px;border-top:1px solid var(--ink)}
+.s8 .frame .fl{position:absolute;left:0;top:14px;display:flex;gap:14px;align-items:baseline}
+.s8 .frame .fl b{font:500 40px/1 var(--display)}
+.s8 .frame svg.env{position:absolute;left:0;top:0;width:540px;height:440px}
+.s8 .coat{position:absolute;top:96px;width:190px;height:292px}
+.s8 .ghost{opacity:1}
+.slide.on.s8 .ghost.g1{animation:mFade .8s ease 1.6s both}
+.slide.on.s8 .ghost.g2{animation:mFade .8s ease 3.0s both}
+.slide.on.s8 .traveller{animation:travel 3.6s var(--slow) .5s both}
+@keyframes travel{0%{transform:translateX(-1180px);opacity:0}12%{transform:translateX(-1180px);opacity:1}28%{transform:translateX(-1180px)}48%{transform:translateX(-590px)}62%{transform:translateX(-590px)}84%{transform:none}100%{transform:none;opacity:1}}
+.s8 .story{left:1150px;top:996px;display:none}
+
+/* ---------- 09 luxury ---------- */
+.s9 .rt{left:100px;top:132px}
+.s9 h2{left:100px;top:196px;font-size:118px}
+.s9 .craft{left:960px;top:318px;font:600 172px/.9 var(--display);letter-spacing:-.045em;color:var(--red);white-space:nowrap}
+.slide.on.s9 .craft{animation:mUp 1.6s var(--ease) 2.4s both}
+.s9 .attr{left:100px;top:500px;width:560px}
+.s9 .attr q{display:block;font:500 46px/1.05 var(--display);margin:10px 0 10px;quotes:"\201C" "\201D"}
+.s9 .leather{left:0;top:660px;width:1920px;height:230px}
+.slide.on.s9 .leather{animation:macro 3.4s var(--slow) .4s both}
+@keyframes macro{from{clip-path:inset(0 100% 0 0);transform:scale(1.18)}to{clip-path:inset(0 0 0 0);transform:none}}
+.s9 .legend{left:100px;top:912px;width:1300px;display:flex;gap:40px;align-items:baseline}
+.s9 .legend .n{font:500 54px/1 var(--display);color:var(--red);letter-spacing:-.02em}
+
+/* ---------- 10 finale ---------- */
+.s10 .l1{left:100px;top:130px;font:500 60px/1 var(--display);letter-spacing:-.01em;color:var(--steel)}
+.s10 .l2{left:100px;top:368px;font:500 158px/.9 var(--display);letter-spacing:-.035em;color:var(--ivory)}
+.s10 .l2 .red{color:var(--red)}
+.s10 .sm{left:1330px;top:400px;width:490px;font:400 26px/1.35 var(--sans);color:var(--ivory)}
+.s10 .verbs{left:100px;top:742px;width:1720px;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid #3a3936}
+.s10 .verb{padding-top:22px}
+.s10 .verb b{display:block;font:700 66px/1 var(--sans);font-stretch:66%;letter-spacing:.02em;color:var(--ivory)}
+.s10 .verb span{display:block;margin-top:12px;font:500 13px/1.3 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--steel)}
+.s10 .sign{left:100px;top:946px;font:700 16px/1 var(--sans);letter-spacing:.32em;color:var(--ivory)}
+.s10 .disc{left:860px;top:938px;width:960px;font:400 15px/1.45 var(--sans);color:var(--steel);text-align:right}
+
+/* ---------- controls ---------- */
+#controls{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:100;display:flex;align-items:center;gap:2px;font:600 13px/1 var(--sans);letter-spacing:.14em;color:var(--ink);background:var(--ivory);border:1px solid var(--ink);padding:3px}
+body.dark #controls{background:var(--ink);color:var(--ivory);border-color:#55524C}
+#controls button{all:unset;cursor:pointer;width:38px;height:34px;display:grid;place-items:center}
+#controls button:hover{background:var(--paper)}
+body.dark #controls button:hover{background:#2a2927}
+#controls button:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
+#controls svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6}
+#counter{min-width:76px;text-align:center;font-variant-numeric:tabular-nums;padding:0 6px}
+#progress{position:fixed;left:0;bottom:0;height:3px;background:var(--red);z-index:99;transition:width .8s var(--ease)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- shared drawings -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="coat" viewBox="0 0 300 460">
+      <path d="M120 30 L95 40 L55 58 Q40 64 36 80 L18 300 L52 306 L70 150 L72 440 L228 440 L230 150 L248 306 L282 300 L264 80 Q260 64 245 58 L205 40 L180 30 Z" fill="var(--coat-fill,#E3CFC2)" stroke="var(--coat-line,#101010)" stroke-width="2" stroke-dasharray="var(--coat-dash,none)" stroke-linejoin="round"/>
+      <path d="M120 30 L106 72 L128 82 L150 196 M180 30 L194 72 L172 82 L150 196 M150 196 L150 440 M70 150 Q74 96 95 40 M230 150 Q226 96 205 40 M84 300 L128 300 L128 314 L84 314 Z M172 300 L216 300 L216 314 L172 314 Z M24 270 L56 274 M276 270 L244 274" fill="none" stroke="var(--coat-line,#101010)" stroke-width="1.6" stroke-dasharray="var(--coat-dash,none)"/>
+      <circle cx="162" cy="224" r="4" fill="none" stroke="var(--coat-line,#101010)" stroke-width="1.6"/>
+      <circle cx="162" cy="276" r="4" fill="none" stroke="var(--coat-line,#101010)" stroke-width="1.6"/>
+      <circle cx="162" cy="328" r="4" fill="none" stroke="var(--coat-line,#101010)" stroke-width="1.6"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="viewport" aria-live="polite">
+<div id="stage" role="region" aria-roledescription="presentation" aria-label="The New Rules of Fashion">
+
+<!-- ================= 01 COVER ================= -->
+<section class="slide s1" data-arc="0" aria-label="Slide 1, cover">
+  <svg class="abs marks" viewBox="0 0 1920 1080" aria-hidden="true">
+    <g stroke="#101010" stroke-width="1" class="m-fade" style="--d:1.6s">
+      <path d="M60 820 h24 M72 808 v24 M1836 820 h24 M1848 808 v24"/>
+    </g>
+    <line x1="100" y1="820" x2="1820" y2="820" stroke="#101010" stroke-width="1" class="m-wipe" style="--d:1.2s"/>
+  </svg>
+  <h1 class="sr">The New Rules of Fashion 2026</h1>
+  <p class="w the s1-compose" style="--d:.15s" aria-hidden="true">THE NEW</p>
+  <p class="w rules s1-compose" style="--d:.45s" aria-hidden="true">RULES</p>
+  <p class="w of s1-compose" style="--d:.85s" aria-hidden="true">OF FASHION</p>
+  <p class="w year s1-compose" style="--d:1.05s" aria-hidden="true">2026</p>
+  <!-- bodice pattern piece -->
+  <svg class="abs pattern m-fade" style="--d:1.3s" viewBox="0 0 420 230" aria-hidden="true">
+    <path d="M18 40 L120 18 Q150 52 196 50 L208 20 L360 34 Q372 90 398 120 L402 212 L24 212 Q30 120 18 40 Z" fill="none" stroke="#101010" stroke-width="1.4"/>
+    <path d="M30 50 L120 31 Q150 64 197 62 L210 33 L349 46 Q361 98 386 126 L389 200 L36 200 Q41 120 30 50 Z" fill="none" stroke="#101010" stroke-width=".9" stroke-dasharray="5 5"/>
+    <path d="M90 110 L330 110 M90 110 l12 -6 M90 110 l12 6 M330 110 l-12 -6 M330 110 l-12 6" fill="none" stroke="#D52B1E" stroke-width="1.2"/>
+    <path d="M24 130 l-10 0 M400 160 l10 0 M120 18 l-2 -10" stroke="#101010" stroke-width="1.4"/>
+    <text x="210" y="150" text-anchor="middle" font-family="Archivo,Helvetica,Arial,sans-serif" font-size="11" font-weight="600" letter-spacing="3" fill="#101010">FRONT BODICE · CUT 1 · SELF</text>
+    <text x="210" y="168" text-anchor="middle" font-family="Archivo,Helvetica,Arial,sans-serif" font-size="10" letter-spacing="2" fill="#55524C">GRAIN LINE ↔ · SS 2026</text>
+  </svg>
+  <div class="abs care m-up" style="--d:1.5s">Based on The State of Fashion 2026<span>BoF × McKinsey &amp; Company</span></div>
+  <p class="abs lede m-up" style="--d:1.65s">The industry isn't waiting for stability anymore. Fashion is learning to operate inside permanent change.</p>
+  <p class="abs kick cap sm m-up" style="--d:1.8s"><span class="label red" style="display:block;margin-bottom:10px">The premise</span>Fashion 2026 is not about the next trend. It is about learning to operate under new rules.</p>
+  <div class="folio"><b>01</b> / 10</div>
+</section>
+
+<!-- ================= 02 PRESSURE ================= -->
+<section class="slide s2" data-arc="1" aria-label="Slide 2, the old playbook no longer works">
+  <h2 class="abs h-xl"><span class="mask"><span style="--d:.1s">THE OLD PLAYBOOK</span></span><span class="mask"><span style="--d:.25s">NO LONGER WORKS.</span></span></h2>
+  <div class="abs swap">
+    <div class="label grey m-fade" style="--d:.3s">The word executives use most to describe the year ahead</div>
+    <div class="slot">
+      <span class="word old" aria-hidden="true">Uncertainty<i></i></span>
+      <span class="word new">Challenging</span>
+    </div>
+    <div class="note hist m-fade" style="--d:2.8s">2024 and 2025: “uncertainty” &nbsp;·&nbsp; 2026: <span class="red">“challenging”</span></div>
+  </div>
+  <p class="abs para m-up" style="--d:3s">Fashion leaders no longer expect volatility to disappear. They are learning to operate inside it.</p>
+  <div class="abs big m-right" style="--d:.5s"><span data-count="46">46</span><sup>%</sup></div>
+  <p class="abs c46 cap m-up" style="--d:1.4s">of fashion executives expect industry conditions to <b>worsen</b> in 2026. A year earlier: 39%.</p>
+  <div class="abs n25 m-up" style="--d:1.7s">25%</div>
+  <p class="abs c25 cap sm m-up" style="--d:1.8s">expect conditions to improve. A year earlier: 20%.</p>
+  <svg class="abs tape" viewBox="0 0 1720 70" aria-label="Tailor's tape from 0 to 100: 46 expect worse, 25 expect better">
+    <rect x="0" y="22" width="1720" height="40" fill="#E8E3D9"/>
+    <rect x="0" y="22" width="791.2" height="40" fill="#D52B1E" class="m-wipe" style="--d:1s"/>
+    <rect x="1290" y="22" width="430" height="40" fill="#B9B8B4" class="m-fade" style="--d:1.7s"/>
+    <g id="ticks" stroke="#101010" stroke-width="1"></g>
+    <text x="0" y="14" font-family="Archivo,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2.5" fill="#D52B1E">46 · EXPECT WORSE</text>
+    <text x="1720" y="14" text-anchor="end" font-family="Archivo,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2.5" fill="#55524C">EXPECT BETTER · 25</text>
+  </svg>
+  <p class="src"><b>Source</b>BoF–McKinsey State of Fashion Executive Survey, in The State of Fashion 2026 (Executive Summary; Global Economy). Tape scale 0–100% of executives polled.</p>
+</section>
+
+<!-- ================= 03 TRADE ================= -->
+<section class="slide s3" data-arc="1" aria-label="Slide 3, rule 01, trade has redrawn the map">
+  <div class="abs rt rule-tag m-fade"><span>Rule <em>01</em></span><i></i><span>Adapt faster</span></div>
+  <h2 class="abs h-xl"><span class="mask"><span style="--d:.1s">TRADE HAS</span></span><span class="mask"><span style="--d:.2s">REDRAWN</span></span><span class="mask"><span style="--d:.3s">THE MAP.</span></span></h2>
+  <div class="abs n76 m-up" style="--d:.5s"><span data-count="76" data-delay="500">76</span><sup>%</sup></div>
+  <p class="abs c76 cap m-up" style="--d:.8s">of fashion executives say trade disruptions and rising duties will shape the industry in 2026.</p>
+  <svg class="abs sheet" viewBox="0 0 1050 560" aria-label="Pattern pieces sized by value of 2024 apparel and footwear exports to the US"></svg>
+  <div class="abs sheet-cap note m-fade" style="--d:1.6s"><span>Cutting sheet · piece area = 2024 apparel &amp; footwear exports to the US, USD</span><span>US imports 2019–2024</span></div>
+  <svg class="abs tags" viewBox="0 0 1050 290" aria-label="Weighted average US tariff on apparel and footwear: 13% on 1 January 2025, 54% on 2 April 2025, 36% on 27 August 2025"></svg>
+  <p class="src"><b>Source</b>The State of Fashion 2026, ch. 01 Tariff Turbulence; tariff rates are weighted averages across the top 10 source markets (MGI Global Trade Dispute Database, World Bank).</p>
+</section>
+
+<!-- ================= 04 AI ================= -->
+<section class="slide s4" data-arc="2" aria-label="Slide 4, rule 02, AI is no longer a side project">
+  <div class="abs rt rule-tag m-fade"><span>Rule <em>02</em></span><i></i><span>Rewire the business</span></div>
+  <h2 class="abs h-xl"><span class="mask"><span style="--d:.1s">AI IS NO LONGER</span></span><span class="mask"><span style="--d:.22s">A SIDE PROJECT.</span></span></h2>
+  <div class="abs no1 m-up" style="--d:.5s"><small>No.</small>1</div>
+  <p class="abs cno1 cap m-up" style="--d:.7s"><b>AI, digital and technology capability development and integration into operations</b> is the single biggest opportunity executives name for 2026 (top answer, 13% of respondents).</p>
+  <div class="abs stages label m-fade" style="--d:.9s"><span>Craft</span><span class="red">System</span><span>Hybrid</span></div>
+  <svg class="abs band m-wipe" style="--d:1s;animation-duration:2.8s" viewBox="0 0 1720 300" aria-hidden="true">
+    <defs>
+      <linearGradient id="gSmooth" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".5" stop-color="#000"/><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#fff"/></linearGradient>
+      <linearGradient id="gStep" x1="0" x2="1"><stop offset="0" stop-color="#000"/><stop offset=".25" stop-color="#000"/><stop offset=".5" stop-color="#fff"/><stop offset=".78" stop-color="#000"/><stop offset="1" stop-color="#000"/></linearGradient>
+      <linearGradient id="gGrid" x1="0" x2="1"><stop offset="0" stop-color="#000"/><stop offset=".25" stop-color="#000"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#fff"/></linearGradient>
+      <mask id="mSmooth"><rect width="1720" height="300" fill="url(#gSmooth)"/></mask>
+      <mask id="mStep"><rect width="1720" height="300" fill="url(#gStep)"/></mask>
+      <mask id="mGrid"><rect width="1720" height="300" fill="url(#gGrid)"/></mask>
+    </defs>
+    <g id="grid4" mask="url(#mGrid)" stroke="#B9B8B4" stroke-width="1"></g>
+    <g id="smooth4" mask="url(#mSmooth)" fill="none" stroke="#101010" stroke-width="1.6"></g>
+    <g id="step4" mask="url(#mStep)" fill="none" stroke="#D52B1E" stroke-width="1.6"></g>
+  </svg>
+  <div class="abs col m-up" style="left:100px;--d:2.4s"><h3>HUMAN</h3><ul><li>Creative direction</li><li>Taste</li><li>Judgment</li><li>Storytelling</li></ul></div>
+  <div class="abs third m-up" style="--d:2.7s"><div class="n">~⅓</div><p class="cap sm" style="margin:6px 0 0">of employee time across industries could be automated by generative AI and other technologies by 2030, in Europe and the US.</p></div>
+  <div class="abs col m-up" style="left:1400px;--d:2.4s"><h3 class="red">SYSTEM</h3><ul><li>Analysis</li><li>Optimisation</li><li>Generation</li><li>Automation</li></ul></div>
+  <p class="src"><b>Source</b>The State of Fashion 2026, Global Economy (Executive Survey) and ch. 02 Workforce Rewired. Human / System lists are conceptual labels, not report data.</p>
+</section>
+
+<!-- ================= 05 AI SHOPPER ================= -->
+<section class="slide s5" data-arc="3" aria-label="Slide 5, rule 03, the next shopper may not be human">
+  <div class="abs rt rule-tag m-fade"><span>Rule <em>03</em></span><i></i><span>Design for the AI shopper</span></div>
+  <h2 class="abs h-xl"><span class="mask"><span style="--d:.1s">THE NEXT</span></span><span class="mask"><span style="--d:.2s">SHOPPER MAY</span></span><span class="mask"><span style="--d:.3s">NOT BE HUMAN.</span></span></h2>
+  <p class="abs notent m-left" style="--d:1.6s">Not entirely.</p>
+  <div class="abs stats">
+    <div class="stat m-up" style="--d:.6s"><div class="n"><span data-count="53" data-delay="600">53</span>%</div><p class="cap sm" style="margin:0">of US consumers who used generative AI for search in Q2 2025 also used it to help them shop.</p></div>
+    <div class="stat m-up" style="--d:.75s"><div class="n"><span data-count="41" data-delay="750">41</span>%</div><p class="cap sm" style="margin:0">of consumers say they trust generative AI search results more than paid search ads.</p></div>
+    <div class="stat m-up" style="--d:.9s"><div class="n"><span data-count="85" data-delay="900">85</span>%</div><p class="cap sm" style="margin:0">of US consumers using generative AI for shopping say it gives a better experience than traditional methods.</p></div>
+  </div>
+  <div class="abs panel m-fade" style="--d:.5s">
+    <div class="bar"><span class="q"><span class="typed">a long camel coat for city rain</span><span class="caret"></span></span><span class="label grey">AI search · illustrative</span></div>
+    <svg style="position:absolute;left:0;top:0;width:1060px;height:580px" viewBox="0 0 1060 580" aria-hidden="true">
+      <use href="#coat" x="410" y="96" width="240" height="368" class="m-fade" style="--d:1.9s"/>
+      <g id="leaders" stroke="#D52B1E" stroke-width="1" fill="#D52B1E"></g>
+    </svg>
+    <div id="attrs"></div>
+    <div class="reco m-up" style="--d:4.5s">
+      <span class="label red">Recommendation</span>
+      <div class="looks"><svg viewBox="0 0 300 460"><use href="#coat"/></svg><svg viewBox="0 0 300 460" style="--coat-fill:#B9B8B4"><use href="#coat"/></svg><svg viewBox="0 0 300 460" style="--coat-fill:#F2EFE8"><use href="#coat"/></svg></div>
+      <span class="cap sm">3 looks assembled, ranked by fit, occasion and availability</span>
+    </div>
+  </div>
+  <div class="abs flood" aria-hidden="true"></div>
+  <div class="abs n4700"><span data-count="4700" data-delay="5400" data-dur="1400">4,700</span>%</div>
+  <p class="abs c4700 cap sm m-fade" style="--d:7.6s">growth in shopping-related generative AI searches, July 2024 to July 2025.</p>
+  <p class="src"><b>Source</b>The State of Fashion 2026, ch. 03 The AI Shopper. Search interface and product attributes are illustrative.</p>
+</section>
+
+<!-- ================= 06 SMART FRAMES ================= -->
+<section class="slide s6" data-arc="3" aria-label="Slide 6, rule 04, fashion is becoming interface">
+  <svg class="abs frames" viewBox="0 0 1920 1080" aria-hidden="true">
+    <defs>
+      <clipPath id="lensL"><path d="M-140 210 Q-140 170 -100 170 L840 170 Q880 170 880 215 L862 620 Q846 900 560 900 L120 900 Q-120 900 -136 640 Z"/></clipPath>
+    </defs>
+    <g class="m-fade" style="--d:.2s">
+      <path d="M-140 210 Q-140 170 -100 170 L840 170 Q880 170 880 215 L862 620 Q846 900 560 900 L120 900 Q-120 900 -136 640 Z" fill="#E8E3D9"/>
+      <path d="M2060 210 Q2060 170 2020 170 L1080 170 Q1040 170 1040 215 L1058 620 Q1074 900 1360 900 L1800 900 Q2040 900 2056 640 Z" fill="#E8E3D9"/>
+    </g>
+    <!-- left lens world -->
+    <g clip-path="url(#lensL)">
+      <path d="M-140 760 L880 760" stroke="#B9B8B4" stroke-width="1"/>
+      <g class="m-up" style="--d:.9s" fill="none" stroke="#101010" stroke-width="2" stroke-linejoin="round">
+        <path d="M300 470 L600 470 L630 740 L270 740 Z" fill="#101010"/>
+        <path d="M370 470 Q370 380 450 380 Q530 380 530 470" stroke-width="9" stroke="#101010"/>
+        <rect x="430" y="505" width="40" height="30" fill="#F2EFE8" stroke="#F2EFE8"/>
+        <path d="M286 600 L614 600" stroke="#55524C" stroke-dasharray="3 6"/>
+      </g>
+      <g stroke="#D52B1E" stroke-width="3" fill="none" class="m-fade" style="--d:1.6s">
+        <path d="M240 360 v-30 h30 M660 360 v-30 h-30 M240 760 v30 h30 M660 760 v30 h-30"/>
+      </g>
+      <g class="m-fade" style="--d:2.6s">
+        <path d="M80 830 L230 830 L230 812 M230 830 L300 830" stroke="#D52B1E" stroke-width="2" fill="none"/>
+        <path d="M300 820 l14 10 l-14 10" stroke="#D52B1E" stroke-width="2" fill="none"/>
+      </g>
+    </g>
+    <!-- frame -->
+    <g fill="none" stroke="#101010" stroke-width="30" stroke-linejoin="round" class="m-fade" style="--d:0s">
+      <path d="M-140 210 Q-140 170 -100 170 L840 170 Q880 170 880 215 L862 620 Q846 900 560 900 L120 900 Q-120 900 -136 640 Z"/>
+      <path d="M2060 210 Q2060 170 2020 170 L1080 170 Q1040 170 1040 215 L1058 620 Q1074 900 1360 900 L1800 900 Q2040 900 2056 640 Z"/>
+      <path d="M880 250 Q960 205 1040 250"/>
+    </g>
+    <circle cx="820" cy="214" r="5" fill="#D52B1E" class="m-fade" style="--d:.8s"/>
+  </svg>
+  <div class="ov r m-fade" style="left:120px;top:226px;--d:2s">Context<span>Rain after 16:00 · 12°C</span></div>
+  <div class="ov r m-fade" style="left:676px;top:392px;width:180px;--d:1.9s">Object recognised<span>Structured top-handle bag</span><span>Smooth calfskin, black</span></div>
+  <div class="ov r m-fade" style="left:96px;top:764px;--d:2.6s">Navigation<span>Atelier, 240 m</span></div>
+  <div class="ov m-fade" style="left:500px;top:800px;--d:2.9s;color:#55524C">Illustrative overlay</div>
+  <div class="abs rt rule-tag m-fade" style="--d:.5s"><span>Rule <em>04</em></span><i></i><span>The product is changing</span></div>
+  <h2 class="abs h-xl"><span class="mask"><span style="--d:.6s">FASHION IS</span></span><span class="mask"><span style="--d:.72s">BECOMING</span></span><span class="mask"><span style="--d:.84s">INTERFACE.</span></span></h2>
+  <div class="abs hud">
+    <div class="m-up" style="--d:1.4s"><div class="label red">Wearables</div><div class="n">+9%</div><p class="cap sm" style="margin:0">projected annual growth to 2028, the fastest-growing accessory category.</p></div>
+    <div class="m-up" style="--d:1.6s"><div class="label red">Smart frames</div><div class="n">$30B+</div><p class="cap sm" style="margin:0">projected category size by 2030, with smart eyewear emerging as a leading format.</p></div>
+    <div class="m-up" style="--d:1.8s"><div class="label red">Headroom</div><div class="n">&lt;10%</div><p class="cap sm" style="margin:0">smart eyewear share of eyewear volume, vs 35–40% for smart watches in watches.</p></div>
+  </div>
+  <p class="src"><b>Source</b>The State of Fashion 2026, ch. 05 Smart Frames. Lens overlays are illustrative.</p>
+</section>
+
+<!-- ================= 07 VALUE ================= -->
+<section class="slide s7" data-arc="4" aria-label="Slide 7, rule 05, value doesn't mean cheap anymore">
+  <div class="abs rt rule-tag m-fade"><span>Rule <em>05</em></span><i></i><span>Value has changed</span></div>
+  <h2 class="abs h-xl"><span class="mask"><span style="--d:.1s">VALUE DOESN'T MEAN</span></span><span class="mask"><span style="--d:.22s">CHEAP ANYMORE.</span></span></h2>
+  <div class="abs reading m-fade" style="--d:3.2s"><span class="label red">Our reading</span><p>Consumers are shifting value from “more” toward things that last, feel meaningful or can live again.</p></div>
+  <div class="obj" style="left:100px;top:420px">
+    <svg viewBox="0 0 520 250" class="m-up" style="--d:.6s" aria-hidden="true">
+      <g fill="none" stroke="#101010" stroke-width="2">
+        <ellipse cx="190" cy="168" rx="120" ry="46"/>
+        <ellipse cx="190" cy="168" rx="98" ry="34"/>
+        <path d="M70 168 L70 182 Q90 228 190 228 Q290 228 310 182 L310 168"/>
+        <path d="M160 126 L170 96 L210 96 L220 126 Z" fill="#F2EFE8"/>
+        <path d="M150 96 L190 50 L230 96 Z" fill="#F2EFE8"/>
+        <path d="M150 96 L230 96 M170 96 L190 50 L210 96 M175 96 L190 126 L205 96"/>
+      </g>
+      <path d="M244 46 l10 -10 M252 58 l14 0 M242 32 l0 -14" stroke="#D52B1E" stroke-width="2"/>
+    </svg>
+    <div class="word m-up" style="--d:.8s">Keep</div>
+    <div class="row m-up" style="--d:1s"><div class="n">4.1%</div><p class="cap sm" style="margin:0"><b>Jewellery.</b> Annual unit growth expected 2025–2028, four times the rate of clothing.</p></div>
+  </div>
+  <div class="obj" style="left:700px;top:470px">
+    <svg viewBox="0 0 520 250" class="m-wipe" style="--d:1.1s;animation-duration:2s" aria-hidden="true">
+      <g fill="none" stroke="#101010" stroke-width="1.6">
+        <path d="M20 40 C120 10 160 140 260 110 S420 30 500 70"/>
+        <path d="M20 70 C120 40 170 170 270 140 S420 60 500 100"/>
+        <path d="M20 100 C120 74 180 200 280 170 S430 92 500 130"/>
+        <path d="M20 130 C126 110 190 228 290 200 S440 124 500 160"/>
+        <path d="M20 160 C130 146 200 246 300 228 S446 156 500 190" stroke="#D52B1E"/>
+      </g>
+    </svg>
+    <div class="word m-up" style="--d:1.3s">Feel</div>
+    <div class="row m-up" style="--d:1.5s"><div class="n">84%</div><p class="cap sm" style="margin:0"><b>Wellbeing.</b> US consumers who say wellness is a top or important day-to-day priority.</p></div>
+  </div>
+  <div class="obj" style="left:1300px;top:440px">
+    <svg viewBox="0 0 520 250" class="m-up" style="--d:1.7s" aria-hidden="true">
+      <path d="M150 20 Q140 60 175 70" fill="none" stroke="#101010" stroke-width="2"/>
+      <rect x="170" y="62" width="200" height="176" fill="#F2EFE8" stroke="#101010" stroke-width="2"/>
+      <rect x="180" y="72" width="180" height="156" fill="none" stroke="#101010" stroke-width="1" stroke-dasharray="4 4"/>
+      <text x="270" y="112" text-anchor="middle" font-family="Archivo,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="3" fill="#101010">OWNER</text>
+      <text x="270" y="170" text-anchor="middle" font-family="Bodoni Moda,Didot,serif" font-size="54" font-weight="500" fill="#D52B1E">02</text>
+      <text x="270" y="206" text-anchor="middle" font-family="Archivo,Helvetica,Arial,sans-serif" font-size="10" letter-spacing=".8" fill="#55524C">WORN · KEPT · PASSED ON</text>
+    </svg>
+    <div class="word m-up" style="--d:1.9s">Reuse</div>
+    <div class="row m-up" style="--d:2.1s"><div class="n">2–3×</div><p class="cap sm" style="margin:0"><b>Resale.</b> Secondhand fashion and luxury forecast to grow 2–3× faster than first-hand through 2027.</p></div>
+  </div>
+  <p class="src"><b>Source</b>The State of Fashion 2026, ch. 04 Jewellery Sparkles, ch. 06 The Wellbeing Era, ch. 08 Resale Sprint. “Our reading” and Keep / Feel / Reuse are editorial interpretation.</p>
+</section>
+
+<!-- ================= 08 RESALE ================= -->
+<section class="slide s8" data-arc="4" aria-label="Slide 8, rule 06, the second life is becoming the first choice">
+  <div class="abs rt rule-tag m-fade"><span>Rule <em>06</em></span><i></i><span>Resale becomes mainstream</span></div>
+  <h2 class="abs h-xl"><span class="mask"><span style="--d:.1s">THE SECOND LIFE</span></span><span class="mask"><span style="--d:.2s">IS BECOMING</span></span><span class="mask"><span style="--d:.3s">THE FIRST CHOICE.</span></span></h2>
+  <div class="abs n60 m-up" style="--d:.5s"><small>~</small><span data-count="60" data-delay="500">60</span>%</div>
+  <p class="abs c60 cap sm m-up" style="--d:.7s">Almost 60% of global consumers say they are likely to shop resale in 2026.</p>
+  <div class="abs minis">
+    <div class="m-up" style="--d:.9s"><div class="n">&gt;70%</div><p class="cap sm" style="margin:0">in China say the same.</p></div>
+    <div class="m-up" style="--d:1s"><div class="n">2–3×</div><p class="cap sm" style="margin:0">faster growth than first-hand, forecast through 2027.</p></div>
+    <div class="m-up" style="--d:1.1s"><div class="n">~300%</div><p class="cap sm" style="margin:0">growth in the number of US brand-led resale programmes, 2021–2025.</p></div>
+  </div>
+  <div class="abs strip">
+    <div class="frame m-fade" style="left:0;--d:.3s">
+      <svg class="env" viewBox="0 0 540 440" aria-hidden="true"><g fill="none" stroke="#B9B8B4" stroke-width="2"><path d="M60 80 L480 80 M80 80 L80 420 M460 80 L460 420 M40 420 L500 420"/><path d="M270 80 L270 96" stroke="#101010"/></g></svg>
+      <div class="fl"><b>01</b><span class="label">Owner 01 · Bought new</span></div>
+    </div>
+    <div class="frame m-fade" style="left:590px;--d:.4s">
+      <svg class="env" viewBox="0 0 540 440" aria-hidden="true"><g fill="none" stroke="#B9B8B4" stroke-width="2"><path d="M20 420 L520 420"/><rect x="360" y="90" width="140" height="170"/><path d="M430 90 L430 260 M360 175 L500 175"/><path d="M60 300 L130 300 L130 420 M60 300 L60 420 M60 340 L130 340 M130 300 L130 230"/></g></svg>
+      <div class="fl"><b>02</b><span class="label">Owner 02 · Bought secondhand</span></div>
+    </div>
+    <div class="frame m-fade" style="left:1180px;--d:.5s">
+      <svg class="env" viewBox="0 0 540 440" aria-hidden="true"><g fill="none" stroke="#B9B8B4" stroke-width="2"><path d="M20 400 L520 400 M20 420 L520 420"/><path d="M470 400 L470 110 Q470 90 450 90 L420 90"/><path d="M60 120 l-10 24 M110 170 l-10 24 M70 240 l-10 24 M400 190 l-10 24 M440 260 l-10 24 M150 300 l-10 24 M380 320 l-10 24"/></g></svg>
+      <div class="fl"><b>03</b><span class="label red">Owner 03 · Bought secondhand again</span></div>
+    </div>
+    <svg class="coat ghost g1" style="left:175px;--coat-fill:transparent;--coat-line:#B9B8B4;--coat-dash:6 6" viewBox="0 0 300 460" aria-hidden="true"><use href="#coat"/></svg>
+    <svg class="coat ghost g2" style="left:765px;--coat-fill:transparent;--coat-line:#B9B8B4;--coat-dash:6 6" viewBox="0 0 300 460" aria-hidden="true"><use href="#coat"/></svg>
+    <svg class="coat traveller" style="left:1355px" viewBox="0 0 300 460" aria-label="The same coat, now with its third owner"><use href="#coat"/></svg>
+  </div>
+  <p class="src"><b>Source</b>The State of Fashion 2026, ch. 08 Resale Sprint. Ownership sequence is an illustrative story device.</p>
+</section>
+
+<!-- ================= 09 LUXURY ================= -->
+<section class="slide s9" data-arc="5" aria-label="Slide 9, rule 07, price is not prestige, craft is">
+  <div class="abs rt rule-tag m-fade"><span>Rule <em>07</em></span><i></i><span>Luxury must earn it again</span></div>
+  <h2 class="abs h-xl"><span class="mask"><span style="--d:.3s">PRICE IS NOT</span></span><span class="mask"><span style="--d:.5s">PRESTIGE.</span></span></h2>
+  <p class="abs craft">CRAFT IS.</p>
+  <div class="abs attr m-fade" style="--d:3.4s"><span class="label grey">No. 1 attribute that ultra-high-net-worth customers say epitomises luxury</span><q>Expertise and quality.</q></div>
+  <svg class="abs leather" viewBox="0 0 1920 230" aria-label="Leather edge with 15 saddle stitches, 9 in red"></svg>
+  <div class="abs legend m-fade" style="--d:3.8s"><span class="n">9 of 15</span><p class="cap sm" style="margin:0;max-width:880px">Each stitch is one of the 15 largest luxury brands. <span class="red">Red thread:</span> a new creative director appointed in the 12 months since September 2024.</p></div>
+  <p class="src"><b>Source</b>The State of Fashion 2026, ch. 10 Luxury Recalibrated.</p>
+</section>
+
+<!-- ================= 10 FINALE ================= -->
+<section class="slide s10 dark" data-arc="0" aria-label="Slide 10, finale">
+  <h2 class="abs l1"><span class="mask"><span style="--d:.2s">THE NEW RULES</span></span><span class="mask"><span style="--d:.32s">AREN'T ABOUT</span></span><span class="mask"><span style="--d:.44s">FASHION.</span></span></h2>
+  <p class="abs l2"><span class="mask"><span style="--d:1.7s">THEY'RE ABOUT</span></span><span class="mask"><span style="--d:1.85s" class="red">ADAPTATION.</span></span></p>
+  <p class="abs sm m-up" style="--d:2.7s">2026 rewards the brands that can change without losing what makes them worth choosing.</p>
+  <div class="abs verbs">
+    <div class="verb m-up" style="--d:3.2s"><b>ADAPT.</b><span>Trade · Rule 01</span></div>
+    <div class="verb m-up" style="--d:3.55s"><b>REWIRE.</b><span>AI at work · Rule 02</span></div>
+    <div class="verb m-up" style="--d:3.9s"><b>DISCOVER.</b><span>AI shopper, interface · 03–04</span></div>
+    <div class="verb m-up" style="--d:4.25s"><b>CREATE.</b><span>Craft · Rule 07</span></div>
+    <div class="verb m-up" style="--d:4.6s"><b>ENDURE.</b><span>Value, resale · 05–06</span></div>
+  </div>
+  <p class="abs sign m-fade" style="--d:5.2s">THE NEW RULES OF FASHION <span class="red">2026</span></p>
+  <p class="abs disc m-fade" style="--d:5.4s">Independent presentation redesign based on publicly available research from The Business of Fashion and McKinsey &amp; Company. Not commissioned by or affiliated with either organisation.</p>
+  <div class="folio"><b>10</b> / 10</div>
+</section>
+
+</div>
+</div>
+
+<nav id="controls" aria-label="Presentation controls">
+  <button id="prev" aria-label="Previous slide"><svg viewBox="0 0 16 16"><path d="M10 3 L5 8 L10 13"/></svg></button>
+  <span id="counter">01 / 10</span>
+  <button id="next" aria-label="Next slide"><svg viewBox="0 0 16 16"><path d="M6 3 L11 8 L6 13"/></svg></button>
+  <button id="replay" aria-label="Replay animation"><svg viewBox="0 0 16 16"><path d="M3 8 A5 5 0 1 0 5 4"/><path d="M2 2 L5 4 L3 7"/></svg></button>
+  <button id="fs" aria-label="Fullscreen"><svg viewBox="0 0 16 16"><path d="M2 6 V2 H6 M10 2 H14 V6 M14 10 V14 H10 M6 14 H2 V10"/></svg></button>
+</nav>
+<div id="progress"></div>
+
+<script>
+(function(){
+  const NS='http://www.w3.org/2000/svg';
+  const RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const el=(tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e};
+  const FONT='Archivo,Helvetica,Arial,sans-serif';
+  const stage=document.getElementById('stage');
+  const slides=[...document.querySelectorAll('.slide')];
+  const ARC=['Pressure','Rewiring','New consumer','New value','New luxury'];
+
+  /* chrome: running head, arc, folio */
+  slides.forEach((s,i)=>{
+    const a=+s.dataset.arc;
+    if(a>0){
+      const h=document.createElement('div');h.className='head';
+      h.innerHTML='<span>The New Rules of Fashion</span><span class="arc">'+ARC.map((t,j)=>'<span class="'+(j===a-1?'on':'')+'">'+t+'</span>').join('')+'</span>';
+      s.prepend(h);
+      if(!s.querySelector('.folio')){const f=document.createElement('div');f.className='folio';f.innerHTML='<b>'+String(i+1).padStart(2,'0')+'</b> / 10';s.appendChild(f)}
+    }
+  });
+
+  /* 02 tailor's tape ticks, 0–100 at 17.2px per unit */
+  const tk=document.getElementById('ticks');
+  for(let u=0;u<=100;u++){
+    const x=u*17.2, L=u%10===0?20:(u%5===0?13:7);
+    el('line',{x1:x,x2:x,y1:22,y2:22+L},tk);
+    if(u%10===0&&u>0&&u<100) el('text',{x:x+3,y:58,'font-family':FONT,'font-size':12,'font-weight':600,fill:'#101010',stroke:'none'},tk).textContent=u;
+  }
+
+  /* 03 pattern pieces: area proportional to 2024 export value to US */
+  const sheet=document.querySelector('.s3 .sheet');
+  for(let x=0;x<=1050;x+=35) el('line',{x1:x,x2:x,y1:0,y2:560,stroke:'#E8E3D9','stroke-width':1},sheet);
+  for(let y=0;y<=560;y+=35) el('line',{x1:0,x2:1050,y1:y,y2:y,stroke:'#E8E3D9','stroke-width':1},sheet);
+  // bodice block in unit box (w .82, h 1)
+  const block=(s)=>`M0 ${.14*s} L${.3*s} ${.05*s} Q${.41*s} ${.16*s} ${.52*s} ${.12*s} L${.58*s} 0 L${.8*s} ${.08*s} Q${.78*s} ${.3*s} ${.82*s} ${.42*s} L${.8*s} ${s} L${.04*s} ${s} Q${.06*s} ${.55*s} 0 ${.14*s} Z`;
+  const H=330; // height for China (30B)
+  const hubs=[
+    {n:'China',v:30,p:25,note:'−30%',row:0},
+    {n:'Vietnam',v:25,p:21,row:0},
+    {n:'EU',v:10,p:8,row:0},
+    {n:'Indonesia',v:8,p:6,row:1},
+    {n:'Bangladesh',v:7,p:6,row:1},
+    {n:'Cambodia',v:7,p:6,note:'+42%',row:1},
+    {n:'India',v:6,p:5,row:1}
+  ];
+  let cx=[20,20], rowY=[18,0], maxRow0=0, k=0;
+  hubs.forEach(h=>{h.s=H*Math.sqrt(h.v/30); if(h.row===0) maxRow0=Math.max(maxRow0,h.s)});
+  rowY[1]=18+maxRow0+30;
+  hubs.forEach((h,i)=>{
+    const s=h.s, x=h.row===0?cx[0]:cx[1]+ (h.row===1?0:0), y=h.row===0?rowY[0]+(maxRow0-s):rowY[1];
+    const g=el('g',{class:'m-up',style:`--d:${(1+i*.12).toFixed(2)}s`},el('g',{transform:`translate(${x} ${y})`},sheet));
+    el('path',{d:block(s),fill:i===0?'#E3CFC2':'#F2EFE8',stroke:'#101010','stroke-width':1.4},g);
+    const inset=8, sc=(s-2*inset)/s;
+    el('path',{d:block(s),transform:`translate(${inset+.0} ${inset}) scale(${sc})`,fill:'none',stroke:'#101010','stroke-width':.9/sc,'stroke-dasharray':`${4/sc} ${4/sc}`},g);
+    // grain line
+    el('path',{d:`M${.4*s} ${.3*s} L${.4*s} ${.85*s} M${.4*s} ${.3*s} l-5 9 M${.4*s} ${.3*s} l5 9 M${.4*s} ${.85*s} l-5 -9 M${.4*s} ${.85*s} l5 -9`,stroke:'#D52B1E','stroke-width':1.1,fill:'none'},g);
+    const fs=Math.max(13,Math.min(20,s*.07));
+    el('text',{x:.08*s+6,y:.32*s,'font-family':FONT,'font-size':fs,'font-weight':700,'letter-spacing':s<200?.6:1.6,fill:'#101010'},g).textContent=h.n.toUpperCase();
+    el('text',{x:.08*s+6,y:.32*s+fs*1.3,'font-family':FONT,'font-size':fs*.85,fill:'#55524C'},g).textContent='$'+h.v+'B · '+h.p+'%';
+    if(h.note) el('text',{x:.47*s,y:.95*s-4,'font-family':FONT,'font-size':Math.max(12,fs*.8),'font-weight':700,'letter-spacing':1,fill:'#D52B1E'},g).textContent=h.note;
+    if(h.row===0) cx[0]+=s*.82+30; else cx[1]+=s*.82+26;
+  });
+  // stitch seam linking row pieces
+  el('line',{x1:20,x2:1030,y1:rowY[1]-15,y2:rowY[1]-15,stroke:'#101010','stroke-width':1,'stroke-dasharray':'2 6',class:'m-wipe',style:'--d:1.8s'},sheet);
+
+  /* 03 price tags */
+  const tags=document.querySelector('.s3 .tags');
+  const T=[{d:'1 JAN 2025',v:13,t:1.4},{d:'2 APR 2025',v:54,t:2.0},{d:'27 AUG 2025',v:36,t:2.7}];
+  el('line',{x1:0,x2:520,y1:24,y2:24,stroke:'#101010','stroke-width':1.2},tags);
+  T.forEach((o,i)=>{
+    const x=10+i*170, cur=i===2;
+    const g=el('g',{class:'m-up',style:`--d:${o.t}s`},el('g',{transform:`translate(${x} 24)`},tags));
+    el('path',{d:'M80 0 L80 26',stroke:'#101010','stroke-width':1},g);
+    el('path',{d:'M20 50 L80 26 L140 50 L140 250 L20 250 Z',fill:cur?'#101010':'#F2EFE8',stroke:'#101010','stroke-width':1.4},g);
+    el('circle',{cx:80,cy:46,r:6,fill:'#F2EFE8',stroke:'#101010','stroke-width':1.2},g);
+    const c=cur?'#F2EFE8':'#101010';
+    el('text',{x:80,y:84,'text-anchor':'middle','font-family':FONT,'font-size':11,'font-weight':700,'letter-spacing':1.6,fill:c},g).textContent=o.d;
+    el('text',{x:80,y:150,'text-anchor':'middle','font-family':'Bodoni Moda,Didot,serif','font-size':54,'font-weight':500,fill:cur?'#F2EFE8':'#101010'},g).textContent=o.v+'%';
+    // bar scaled 0–60%
+    el('rect',{x:34,y:180,width:92,height:6,fill:'none',stroke:c,'stroke-width':.8},g);
+    el('rect',{x:34,y:180,width:92*o.v/60,height:6,fill:cur?'#D52B1E':'#101010'},g);
+    el('text',{x:80,y:214,'text-anchor':'middle','font-family':FONT,'font-size':10,'letter-spacing':1.4,fill:cur?'#B9B8B4':'#55524C'},g).textContent=cur?'LATEST RATE':(i===0?'BEFORE TARIFFS':'FIRST WAVE');
+    if(!cur){ // markdown strike
+      const st=el('line',{x1:30,x2:130,y1:150,y2:118,stroke:'#D52B1E','stroke-width':4,class:'m-wipe',style:`--d:${(o.t+.55).toFixed(2)}s`},g);
+    }
+  });
+  const tc=el('foreignObject',{x:540,y:30,width:510,height:250},tags);
+  tc.innerHTML='<div xmlns="http://www.w3.org/1999/xhtml" style="font:400 19px/1.4 var(--sans);color:#101010"><div class="label red" style="margin-bottom:10px">The price tag kept changing</div>Weighted average US tariff on apparel and footwear imports moved from <b>13%</b> to <b>54%</b> in spring 2025, then eased to <b>36%</b>, still well above historical norms. Bar scale 0–60%.</div>';
+  tc.setAttribute('class','m-fade');tc.setAttribute('style','--d:3.2s');
+
+  /* 04 craft → system → hybrid */
+  const g4=document.getElementById('grid4'), sm=document.getElementById('smooth4'), stp=document.getElementById('step4');
+  for(let x=0;x<=1720;x+=24) el('line',{x1:x,x2:x,y1:0,y2:300},g4);
+  for(let y=0;y<=300;y+=24) el('line',{x1:0,x2:1720,y1:y,y2:y},g4);
+  const curves=[
+    t=>150+70*Math.sin(t*6.2)+30*Math.sin(t*15),
+    t=>90+50*Math.sin(t*5+1)+20*Math.cos(t*11),
+    t=>220+40*Math.sin(t*7+2)+16*Math.sin(t*19)
+  ];
+  curves.forEach((f,ci)=>{
+    let d='',ds='';
+    for(let i=0;i<=344;i++){const x=i*5,t=x/1720,y=f(t);d+=(i?'L':'M')+x+' '+y.toFixed(1)}
+    let py=null;
+    for(let x=0;x<=1720;x+=24){const y=Math.round(f(x/1720)/24)*24; ds+= (py===null?'M'+x+' '+y:'L'+x+' '+py+' L'+x+' '+y); py=y}
+    el('path',{d,'stroke-width':ci===0?2:1.2},sm);
+    el('path',{d:ds,'stroke-width':ci===0?2:1.2},stp);
+  });
+  // notches on craft side
+  [[120,0],[300,1],[520,2]].forEach(([x,ci])=>{const y=curves[ci](x/1720);el('line',{x1:x,x2:x,y1:y-10,y2:y+10,stroke:'#101010','stroke-width':1.4},sm)});
+
+  /* 05 attributes and leader lines */
+  const attrs=document.getElementById('attrs'), ld=document.getElementById('leaders');
+  const A=[
+    ['Silhouette','Longline, straight',0,0,[454,142]],
+    ['Material','Wool blend',0,1,[434,256]],
+    ['Colour','Camel',0,2,[478,330]],
+    ['Fit','Relaxed',0,3,[470,448]],
+    ['Style','Minimal tailoring',1,0,[566,150]],
+    ['Occasion','City, rain',1,1,[572,206]],
+    ['Price','Within set budget',1,2,[566,340]],
+    ['Availability','In stock, size M',1,3,[622,336]]
+  ];
+  A.forEach(([l,v,side,row,pt],i)=>{
+    const y=110+row*86, d=(2.8+i*.16).toFixed(2);
+    const div=document.createElement('div');div.className='attr m-up'+(side?' r':'');div.style.cssText=`left:${side?730:30}px;top:${y}px;--d:${d}s`;
+    div.innerHTML=`<span class="label">${l}</span><div>${v}</div>`;attrs.appendChild(div);
+    const x0=side?720:330,y0=y+12;
+    const g=el('g',{class:'m-fade',style:`--d:${d}s`},ld);
+    el('path',{d:`M${x0} ${y0} L${side?x0-30:x0+30} ${y0} L${pt[0]} ${pt[1]}`,fill:'none'},g);
+    el('circle',{cx:pt[0],cy:pt[1],r:3.5},g);
+  });
+
+  /* 09 leather edge with 15 saddle stitches, 9 red */
+  const lv=document.querySelector('.s9 .leather');
+  el('path',{d:'M-10 40 L1930 40 L1930 200 Q1930 214 1916 214 L-10 214 Z',fill:'#1A1917'},lv);
+  el('path',{d:'M-10 200 L1930 200',stroke:'#3A3632','stroke-width':14},lv);
+  for(let i=0;i<260;i++){const x=Math.random()*1920,y=50+Math.random()*140;el('circle',{cx:x.toFixed(1),cy:y.toFixed(1),r:(Math.random()*1.4+.4).toFixed(2),fill:'#2A2724'},lv)}
+  el('path',{d:'M-10 72 L1930 72',stroke:'#2E2B28','stroke-width':1},lv);
+  el('path',{d:'M-10 168 L1930 168',stroke:'#2E2B28','stroke-width':1},lv);
+  const red=new Set([0,2,3,5,7,8,10,12,14]); // 9 of 15; order carries no brand identity
+  for(let i=0;i<15;i++){
+    const x=100+i*(1720/15)+20;
+    el('circle',{cx:x-8,cy:150,r:6,fill:'#0B0B0A'},lv);
+    el('circle',{cx:x+66,cy:92,r:6,fill:'#0B0B0A'},lv);
+    el('path',{d:`M${x-8} 150 L${x+66} 92`,stroke:red.has(i)?'#D52B1E':'#E8E3D9','stroke-width':11,'stroke-linecap':'round'},lv);
+    el('path',{d:`M${x-4} 146 L${x+60} 96`,stroke:'rgba(255,255,255,.18)','stroke-width':2,'stroke-linecap':'round'},lv);
+  }
+
+  /* ---------- deck engine ---------- */
+  let cur=0;
+  function fit(){
+    const s=Math.min(window.innerWidth/1920,window.innerHeight/1080);
+    stage.style.transform=`scale(${s}) translate(-50%,-50%)`;
+  }
+  fit(); addEventListener('resize',fit);
+
+  const fmt=(n,dec)=>n.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+  let timers=[];
+  function counts(s){
+    timers.forEach(clearTimeout);timers=[];
+    s.querySelectorAll('[data-count]').forEach(e=>{
+      const to=+e.dataset.count, dec=+(e.dataset.dec||0), delay=+(e.dataset.delay||400), dur=+(e.dataset.dur||1100);
+      if(RM){e.textContent=fmt(to,dec);return}
+      e.textContent=fmt(0,dec);
+      timers.push(setTimeout(()=>{
+        const t0=performance.now();
+        const step=t=>{const p=Math.min(1,(t-t0)/dur), v=to*(1-Math.pow(1-p,3)); e.textContent=fmt(p<1?Math.round(v):to,dec); if(p<1)requestAnimationFrame(step)};
+        requestAnimationFrame(step);
+      },delay));
+    });
+  }
+  function play(s){s.classList.remove('on');void s.offsetWidth;s.classList.add('on');counts(s)}
+  function go(n,turn=true){
+    n=Math.max(0,Math.min(slides.length-1,n));
+    const prev=slides[cur];
+    if(n!==cur){
+      slides.forEach(x=>x.classList.remove('leaving'));
+      prev.classList.remove('active','turn','on');prev.classList.add('leaving');
+      setTimeout(()=>prev.classList.remove('leaving'),1100);
+    }
+    cur=n; const s=slides[n];
+    s.classList.remove('turn'); void s.offsetWidth;
+    s.classList.add('active'); if(turn&&!RM) s.classList.add('turn');
+    play(s);
+    document.body.classList.toggle('dark',s.classList.contains('dark'));
+    document.getElementById('counter').textContent=String(n+1).padStart(2,'0')+' / '+slides.length;
+    document.getElementById('progress').style.width=((n+1)/slides.length*100)+'%';
+    try{history.replaceState(null,'','#s'+(n+1))}catch(e){}
+  }
+  document.getElementById('prev').onclick=()=>go(cur-1);
+  document.getElementById('next').onclick=()=>go(cur+1);
+  document.getElementById('replay').onclick=()=>play(slides[cur]);
+  const fsBtn=document.getElementById('fs');
+  fsBtn.onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}};
+  addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1)}
+    else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+    else if(e.key==='Home')go(0); else if(e.key==='End')go(slides.length-1);
+    else if(e.key==='r'||e.key==='R')play(slides[cur]);
+    else if(e.key==='f'||e.key==='F')fsBtn.click();
+  });
+  let tx=null;
+  addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+  addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)go(cur+(dx<0?1:-1));tx=null});
+  const m=/^#s(\d+)$/.exec(location.hash);
+  go(m?(+m[1]-1):0,false);
+})();
+</script>
+</body>
+</html>
