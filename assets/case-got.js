@@ -7,8 +7,11 @@
   const VID = 'assets/video/got/globe.mp4';        // plate 01 as rendered, with its title
   const VIDC = 'assets/video/got/globe-clean.mp4';  // plate 01 globe only: the live render with the plate's text hidden
   const I = (n, t) => `assets/img/got/${n}${t ? '-t' : ''}.webp`;
-  const pic = (n, alt, sizes, eager) => `<img src="${I(n, 1)}" srcset="${I(n, 1)} 960w, ${I(n)} 1920w" sizes="${sizes}" alt="${alt}"${eager ? '' : ' loading="lazy"'} decoding="async">`;
-  const thumb = (n, alt) => `<img src="${I(n, 1)}" alt="${alt}" loading="lazy" decoding="async">`;
+  // intrinsic ratios (thumb files): reserve each lazy image's height before it loads, so in-page links land on target
+  const IR = { 'b-cover':'560/725', 'b-p003':'560/725', 'b-p004':'560/725', 'b-p007':'560/725', 'b-p010':'560/725', 'b-p014':'560/725', 'b-p031':'560/725', 'b-p043':'560/725', 'b-p048':'560/725', 'b-p050':'560/725', 'c-ai':'640/490', 'c-aipaths':'960/435', 'c-chain':'960/239', 'c-ctrl':'321/48', 'c-distance':'960/375', 'c-fracture':'960/431', 'c-layers':'880/600', 'c-overlay':'960/474', 'c-redirect':'960/431', 'c-routes':'960/797', 'c-src':'960/36', 'c-subst':'840/620', 'g-cover':'960/540', 'g-globe':'960/495', 'g-mask':'900/860', 'g-nodes':'380/470', 'n02':'960/540', 'o02':'960/540', 's01':'960/540', 's02':'960/540', 's03':'960/540', 's04':'960/540', 's07':'960/540', 's08':'960/540', 's09':'960/540', 's09a':'960/540', 's10':'960/540', 's10g':'960/540' };
+  const ir = n => IR[n] ? ` style="aspect-ratio:auto ${IR[n]}"` : '';
+  const pic = (n, alt, sizes, eager) => `<img src="${I(n, 1)}" srcset="${I(n, 1)} 960w, ${I(n)} 1920w" sizes="${sizes}" alt="${alt}"${ir(n)}${eager ? '' : ' loading="lazy"'} decoding="async">`;
+  const thumb = (n, alt) => `<img src="${I(n, 1)}" alt="${alt}"${ir(n)} loading="lazy" decoding="async">`;
   const pad = n => String(n).padStart(2, '0');
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const AR = '<i class="ga-ar" aria-hidden="true">→</i>';
