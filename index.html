@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Khanim Azimli · Visual Storyteller &amp; Designer</title>
 <meta name="description" content="Khanim Azimli is a visual storyteller and designer working across presentations, editorial and book design, data storytelling and interactive visual experiences.">
-<meta name="theme-color" content="#071426">
+<meta name="theme-color" content="#ffffff">
 <meta property="og:title" content="Khanim Azimli · Visual Storyteller &amp; Designer">
 <meta property="og:description" content="Ideas, data and stories, designed to be understood. Presentations, editorial and book design, data storytelling and interactive experiences.">
 <meta property="og:image" content="https://khanimazimli.github.io/khanim_azimli/assets/og/og-home.jpg">
@@ -19,410 +19,60 @@
 <link rel="stylesheet" href="assets/app.css">
 <link rel="stylesheet" href="assets/case-gai.css">
 <link rel="stylesheet" href="assets/case-nrf.css">
-<link rel="stylesheet" href="assets/publishing-home.css">
-<link rel="stylesheet" href="assets/tools-home.css">
 <link rel="stylesheet" href="assets/case-sys.css">
 <link rel="stylesheet" href="assets/case-tmf.css">
 <link rel="stylesheet" href="assets/case-got.css">
-<link rel="stylesheet" href="assets/ppt-home.css">
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
+<a class="skip" href="#view" onclick="event.preventDefault();document.getElementById('view').focus()">Skip to content</a>
 
-<div class="cursor" id="cursor" aria-hidden="true"><span>View case</span></div>
-
-<header class="nav" id="nav">
-  <div class="wrap">
-    <a class="logo" href="#top" aria-label="Khanim Azimli, home">
+<!-- site navigation: persistent on every page view -->
+<header class="sn" id="sn">
+  <div class="wrap sn-in">
+    <a class="sn-logo" href="#/" aria-label="Khanim Azimli, home">
       <svg class="mark" viewBox="0 0 28 22" aria-hidden="true"><rect x="0" y="0" width="18" height="12" rx="1.5"/><rect x="9" y="9" width="18" height="12" rx="1.5" fill="none" stroke-width="2"/></svg>
       <span>Khanim Azimli</span>
     </a>
-    <nav aria-label="Primary"><a href="#work">Work</a><a href="#transformations">Before / After</a><a href="#publishing">Publishing</a><a href="#about">About</a><a href="#capabilities">Capabilities</a><a href="#tools">Tools</a><a href="#contact">Contact</a></nav>
-    <a class="btn btn-gold" href="#contact">Start a project</a>
-    <button class="burger" id="burger" aria-expanded="false" aria-controls="drawer"><span>Menu</span><i></i></button>
+    <nav class="sn-nav" aria-label="Primary"><a href="#/work" data-nav="work">Work</a><a href="#/about" data-nav="about">About</a><a href="#/services" data-nav="services">Services</a><a href="#/contact" data-nav="contact">Contact</a></nav>
+    <button class="sn-burger" id="snBurger" aria-expanded="false" aria-controls="snMenu"><span>Menu</span><i aria-hidden="true"></i></button>
   </div>
 </header>
-<nav class="drawer" id="drawer" aria-label="Mobile">
-  <a href="#work"><span>01</span>Work</a><a href="#transformations"><span>02</span>Before / After</a><a href="#publishing"><span>03</span>Publishing</a><a href="#about"><span>04</span>About</a><a href="#capabilities"><span>05</span>Capabilities</a><a href="#tools"><span>06</span>Tools</a><a href="#contact"><span>07</span>Contact</a>
-  <a class="btn btn-gold" href="#contact">Start a project <i>→</i></a>
+<nav class="sn-menu" id="snMenu" aria-label="Mobile" hidden>
+  <div class="wrap">
+    <a href="#/" data-nav="home"><span>00</span>Home</a>
+    <a href="#/work" data-nav="work"><span>01</span>Work</a>
+    <a href="#/about" data-nav="about"><span>02</span>About</a>
+    <a href="#/services" data-nav="services"><span>03</span>Services</a>
+    <a href="#/contact" data-nav="contact"><span>04</span>Contact</a>
+    <p class="sn-menu-f"><a href="mailto:khanimazimli0@gmail.com">khanimazimli0@gmail.com</a></p>
+  </div>
 </nav>
 
-<main id="top">
-
-  <!-- 01 HERO -->
-  <section class="hero" aria-label="Introduction">
-    <div class="wrap">
-      <div class="badges load">
-        <span class="badge"><i class="dot"></i>Baku · Working globally</span>
-        <span class="badge">Visual storytelling · Editorial · Interactive · 2026</span>
-      </div>
-
-      <h1 class="hero-title" aria-label="Khanim Azimli">
-        <span class="row r1">
-          <span class="ln"><span class="tx" data-drift="-1">Khanim</span></span>
-          <span class="role load d3"><i class="role-k">Practice</i><b>Visual Storyteller <br>&amp; Designer</b><span class="role-d">Presentations · Editorial · Data · Interactive</span></span>
-        </span>
-        <span class="row r2">
-          <span class="pos load d4"><b>Ideas, data and stories, <span>designed to be understood.</span></b><span class="pos-s">Making ideas easier to see, feel and remember.</span></span>
-          <span class="ln"><span class="tx" data-drift="1">Azimli</span></span>
-        </span>
-      </h1>
-
-      <div class="hero-foot load d4">
-        <a class="down" href="#work"><span>Selected work</span><i>↓</i></a>
-        <span class="rule"></span>
-        <a class="link-arrow" href="#contact">Let’s work together <i>→</i></a>
-      </div>
-
-      <nav class="hero-idx load d4" aria-label="Formats">
-        <a href="#work" data-filter-go="all"><span class="n">01</span><b>Presentations</b><span class="x">Strategy, research and data stories</span><i>→</i></a>
-        <a href="#publishing"><span class="n">02</span><b>Publications</b><span class="x">Textbooks · 469,810 copies printed</span><i>→</i></a>
-        <a href="#work" data-filter-go="interactive"><span class="n">03</span><b>Interactive</b><span class="x">Live HTML experiences and motion</span><i>→</i></a>
-      </nav>
-    </div>
-  </section>
-
-  <!-- 02 SELECTED WORK -->
-  <section class="sec work" id="work" aria-label="Selected work">
-    <div class="wrap">
-      <div class="work-head">
-        <h2 class="rv">Selected work</h2>
-        <p class="rv d1">Different formats.<br>Same goal: make the idea impossible to miss.</p>
-      </div>
-      <div class="filters rv" role="tablist" aria-label="Filter projects" id="filters"></div>
-      <div id="projects"></div>
-    </div>
-  </section>
-
-  <!-- 02a0 BEFORE → AFTER · TRANSFORMATION STUDIES (report → interactive) -->
-  <section class="sec tf" id="transformations" aria-labelledby="tf-title">
-    <div class="wrap">
-      <div class="tf-head">
-        <div><p class="label rv">Before <span aria-hidden="true">→</span> After</p><h2 class="rv" id="tf-title">Transformation<br>studies</h2></div>
-        <p class="rv d1">Each study changes how the content is structured before it changes how it looks. The source stays public; the thinking is what changes.</p>
-      </div>
-      <div id="tfMount"></div>
-    </div>
-  </section>
-
-  <!-- 02a POWERPOINT, REBUILT (series) -->
-  <section class="ppr" id="powerpoint" aria-labelledby="ppr-title">
-    <div class="wrap">
-      <div class="ppr-slug rv"><span>Presentation &amp; Data Storytelling</span><span>Series · 3 transformation studies · Before → After</span></div>
-      <div class="ppr-head">
-        <h2 class="ppr-h rv" id="ppr-title">PowerPoint,<br><span>rebuilt.</span></h2>
-        <div class="ppr-copy rv d1">
-          <p>Not every presentation starts with a glamorous subject. Sometimes the challenge is simply to make complex business content clear, structured and worth looking at.</p>
-          <p>These are transformation studies showing how far an ordinary corporate deck can move through hierarchy, storytelling and native PowerPoint design.</p>
-        </div>
-      </div>
-      <a class="ppr-card rv" href="powerpoint-rebuilt.html">
-        <figure class="ppr-fig b"><img src="assets/img/ppt/before-13.webp" alt="Before: original KPMG webcast slide, a dense litmus test table" width="1600" height="900" loading="lazy"><figcaption>Before · source slide 13</figcaption></figure>
-        <figure class="ppr-fig a"><img src="assets/img/ppt/after-05.webp" alt="After: the redesigned IN OR OUT? decision slide" width="1600" height="900" loading="lazy"><figcaption>After · redesign slide 05</figcaption></figure>
-        <div class="ppr-meta">
-          <span class="k">Transformation study 01</span>
-          <b>From Complexity to Control</b>
-          <span class="k">KPMG Future of SOX webcast · independent redesign</span>
-          <span class="n">49 → 10<small>Source slides → redesign</small></span>
-          <span class="ed">100% editable PowerPoint</span>
-          <span class="go">View the transformation <i>→</i></span>
-        </div>
-      </a>
-      <div class="ppr-more">
-        <a class="ppr-mini ppr-ai rv" href="powerpoint-rebuilt/ai-prioritized.html">
-          <span class="ppr-mini-vis"><img class="bf" src="powerpoint-rebuilt/ai-prioritized/img/before-s6.webp" alt="Before: KPMG AI webcast slide with five donut charts" width="1600" height="900" loading="lazy"><img class="af" src="powerpoint-rebuilt/ai-prioritized/img/slide-02.webp" alt="After: THE VALUE ISN’T THE QUESTION, promise versus pressure" width="1600" height="900" loading="lazy"></span>
-          <span class="ppr-mini-t"><span class="k">Transformation study 02</span><b>AI,<br>Prioritized.</b><span class="x">From 69 slides of possibilities to 10 slides of decisions.</span><span class="k">AI Strategy · Banking · KPMG AI webcast, independent redesign</span></span>
-          <span class="ppr-mini-n">69 → 10<small>Source slides → decision slides</small></span>
-          <span class="go">View the transformation <i>→</i></span>
-        </a>
-        <a class="ppr-mini ppr-vx rv d1" href="powerpoint-rebuilt/vaccine-innovation.html">
-          <span class="ppr-mini-vis"><img class="af" src="powerpoint-rebuilt/vaccine-innovation/img/f02.webp" alt="Cover of the vaccine innovation redesign" width="1600" height="900" loading="lazy"></span>
-          <span class="ppr-mini-t"><span class="k">Transformation study 03</span><b>The pipeline is growing.<br>The engine is stalling.</b><span class="x">A vaccine-innovation discussion rebuilt as a ten-slide diagnosis.</span><span class="k">Healthcare · Vaccine Innovation</span></span>
-          <span class="ppr-mini-n">40 → 10<small>Source slides → redesign</small></span>
-          <span class="go">View the transformation <i>→</i></span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 02b EDITORIAL & PUBLISHING -->
-  <section class="pub" id="publishing" aria-label="Editorial and publishing">
-    <div class="wrap">
-      <div class="p-slug p-mono rv"><span>Editorial &amp; Publishing</span><span>Print · Books · Annuals · Stage</span></div>
-      <h2 class="p-h rv">Design that<br>leaves the screen.</h2>
-      <div class="p-head">
-        <p class="p-disc rv">Books, learning systems,<br>annual publications<br>and cultural print.</p>
-        <ol class="p-idx rv d1" aria-label="Publishing structure">
-          <li><a href="#pub-edu"><span class="p-mono">01</span><b>Educational publishing</b><i>Game Changer · Təbiət 5 / Природа 5</i></a></li>
-          <li><a href="#pub-yb"><span class="p-mono">02</span><b>Annual publications</b><i>TISA Yearbooks · Five-year editorial series</i></a></li>
-          <li><a href="#pub-stage"><span class="p-mono">03</span><b>Stage &amp; Culture</b><i>Grease · Oliver! JR.</i></a></li>
-        </ol>
-      </div>
-
-      <!-- 01 · Educational publishing -->
-      <div class="p-grp rv" id="pub-edu"><span class="p-mono"><b>01</b>Educational publishing</span><span class="p-mono">Books used by students across Azerbaijan</span></div>
-      <div class="p-list">
-        <a class="p-row rv" href="publishing.html#game-changer">
-          <span class="p-books"><img src="assets/img/edu/gc5-cover.webp" alt="Game Changer Grade 5, Azerbaijan Edition, cover" width="1000" height="1438" loading="lazy"><img src="assets/img/edu/gc6-cover.webp" alt="Game Changer Grade 6, Azerbaijan Edition, cover" width="1000" height="1425" loading="lazy"></span>
-          <span class="p-t"><span class="p-mono">English · Grades 5 and 6</span><b>Game Changer, Azerbaijan Edition</b><span class="x">Cambridge × Azerbaijan. An international learning system, adapted for a national classroom.</span></span>
-          <span class="p-n">148,050<small>Copies · Grade 5 edition</small></span>
-          <i class="p-ar" aria-hidden="true">→</i>
-        </a>
-        <a class="p-row rv" href="publishing.html#tebiet">
-          <span class="p-books"><img src="assets/img/edu/taz-cover.webp" alt="Təbiət 5 textbook cover, Azerbaijani edition" width="1000" height="1249" loading="lazy"><img src="assets/img/edu/tru-cover.webp" alt="Природа 5 textbook cover, Russian edition" width="1000" height="1249" loading="lazy"></span>
-          <span class="p-t"><span class="p-mono">Nature · Grade 5</span><b>Təbiət 5 / Природа 5</b><span class="x">One visual system across Azerbaijani and Russian editions.</span></span>
-          <span class="p-n">152,775<small>Copies · Azerbaijani edition</small></span>
-          <i class="p-ar" aria-hidden="true">→</i>
-        </a>
-      </div>
-
-      <!-- 02 · Annual publications: TISA Yearbooks (featured, larger footprint) -->
-      <div class="p-grp rv" id="pub-yb"><span class="p-mono"><b>02</b>Annual publications</span><span class="p-mono">Five-year editorial series</span></div>
-      <a class="yb2" href="publishing.html#yearbooks" aria-label="TISA Yearbooks: five years of turning a school year into a book. Open the yearbooks.">
-        <span class="yb2-copy">
-          <span class="p-mono yb2-k rv">TISA Yearbooks</span>
-          <span class="yb2-h rv d1">Five years<br>of turning<br>a school year<br>into a book.</span>
-          <span class="yb2-sub rv d2"><b>5</b><span>Years.<br>One evolving<br>editorial system.</span></span>
-          <span class="yb2-x rv d2">For five consecutive years I designed the annual yearbook for The International School of Azerbaijan: portraits, events, academics and graduation, organised into one book every school year.</span>
-          <span class="yb2-go rv d3">Open the yearbooks <i>→</i></span>
-        </span>
-        <span class="yb2-vis" aria-hidden="true">
-          <span class="yb2-sp s1"><img src="assets/img/edu/yb-spread-dp.webp" alt="" width="2182" height="1556" loading="lazy"></span>
-          <span class="yb2-sp s2"><img src="assets/img/edu/yb-spread-life.webp" alt="" width="1458" height="1040" loading="lazy"></span>
-          <span class="yb2-cv"><img src="assets/img/edu/yb-cover.webp" alt="" width="732" height="1048" loading="lazy"><span class="yb2-tape"></span></span>
-          <span class="yb2-cap p-mono">Edition 2022–2023 · cover and spreads · student faces softened</span>
-        </span>
-      </a>
-
-      <!-- 03 · Stage & Culture -->
-      <div class="p-grp rv" id="pub-stage"><span class="p-mono"><b>03</b>Stage &amp; Culture</span><span class="p-mono">Two productions · two visual worlds</span></div>
-      <div class="stage">
-        <a class="st st-gr rv" href="publishing.html#grease" aria-label="Grease: theatre poster for TISA Drama. Open the project.">
-          <span class="gr-rays" aria-hidden="true"></span>
-          <span class="st-top"><span class="gr-tix">Now showing · TISA Drama</span><span class="gr-tix">1950s · Rock ’n’ roll</span></span>
-          <span class="st-vis"><span class="gr-moon" aria-hidden="true"></span><img class="st-poster" src="assets/img/edu/gr-poster.webp" alt="Grease poster for TISA Drama: two silhouettes in a red convertible against a full moon on hot pink, Baku skyline below" width="1078" height="1526" loading="lazy"></span>
-          <span class="st-t"><span class="gr-word" aria-hidden="true">Grease</span><span class="st-name">Grease</span><span class="x">Theatre visual identity · Poster · Promo trailer</span><span class="gr-line">The show started before the stage.</span></span>
-          <i class="p-ar" aria-hidden="true">→</i>
-        </a>
-        <a class="st st-ol rv d1" href="publishing.html#oliver" aria-label="Oliver! JR.: theatre programme. Open the project.">
-          <span class="ol-bill p-mono" aria-hidden="true"><span>The International School of Azerbaijan</span><span>Programme · Ten pages</span></span>
-          <span class="st-vis" aria-hidden="true"><span class="st-pair"><img src="assets/img/edu/ol-cover.webp" alt="" width="1000" height="1403" loading="lazy"><img src="assets/img/edu/ol-title.webp" alt="" width="1000" height="1403" loading="lazy"></span></span>
-          <span class="st-t"><span class="ol-pre">The theatre programme for</span><span class="ol-name">Oliver! JR.</span><span class="x">Victorian London, staged in Baku. A playbill carried through ten pages.</span><span class="ol-meta p-mono">4 performances · TISA, Baku</span></span>
-          <i class="p-ar" aria-hidden="true">→</i>
-        </a>
-      </div>
-
-      <div class="p-foot">
-        <span class="p-mono rv">Five projects · textbooks, yearbooks, theatre print · 469,810 textbook copies printed</span>
-        <a class="p-cta rv" href="publishing.html">Open the publishing case <i>→</i></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 03 ABOUT -->
-  <section class="sec about" id="about" aria-label="About">
-    <div class="wrap">
-      <p class="label rv">About</p>
-      <h2 class="statement rv d1">I design the system<br><span>around the story.</span></h2>
-      <div class="about-grid">
-        <dl class="about-facts rv">
-          <div><dt>Focus</dt><dd>Visual storytelling · Editorial systems · Information design</dd></div>
-          <div><dt>Works across</dt><dd>Presentation · Editorial · Interactive · Print</dd></div>
-          <div><dt>Tools</dt><dd>Adobe InDesign · Illustrator · Photoshop · Figma · PowerPoint · HTML/CSS</dd></div>
-          <div><dt>Format</dt><dd>Remote projects</dd></div>
-        </dl>
-        <div class="about-body rv d1">
-          <p class="lead">Whether the outcome is a presentation, a publication or an interactive experience, I start with the same question: what needs to be understood, and how should someone experience it?</p>
-          <p>I work at the intersection of information, storytelling and visual design. My projects range from executive presentations and data-heavy research to educational publishing, editorial systems and interactive HTML experiences.</p>
-          <p>I start with structure: what matters, what comes first and what should stay with the audience. Then I build the visual language around it.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 04 CAPABILITIES -->
-  <section class="sec services" id="capabilities" aria-label="Capabilities">
-    <div class="wrap">
-      <div class="work-head">
-        <h2 class="rv">What I work across</h2>
-        <p class="rv d1">One practice, five formats. The content decides which one.</p>
-      </div>
-      <div class="svc">
-        <a class="svc-row rv" href="#contact"><span class="n">01</span><h3>Presentation &amp; Storytelling</h3><p>Strategy decks, research presentations and visual narratives built around one clear argument.</p><i class="ar">→</i></a>
-        <a class="svc-row rv" href="#contact"><span class="n">02</span><h3>Editorial &amp; Book Design</h3><p>Books, publications and long-form systems where typography, structure and pacing work together.</p><i class="ar">→</i></a>
-        <a class="svc-row rv" href="#contact"><span class="n">03</span><h3>Data &amp; Information Design</h3><p>Complex research and information turned into visual systems people understand quickly.</p><i class="ar">→</i></a>
-        <a class="svc-row rv" href="#contact"><span class="n">04</span><h3>Interactive &amp; Motion</h3><p>Browser-based presentations, interactive experiences and purposeful motion.</p><i class="ar">→</i></a>
-        <a class="svc-row rv" href="#contact"><span class="n">05</span><h3>Art Direction</h3><p>Distinct visual languages built around the subject, instead of one aesthetic forced onto every project.</p><i class="ar">→</i></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 04b TOOLS -->
-  <section class="tl" id="tools" aria-labelledby="tl-title">
-    <div class="wrap">
-      <div class="tl-slug rv"><span class="label">Toolset</span><span class="tl-mono">Design · Motion · Publishing · AI · Code</span></div>
-      <div class="tl-head">
-        <h2 class="tl-title tl-lines rv" id="tl-title"><span class="ln"><span>Tools I</span></span><span class="ln"><span>think with</span></span></h2>
-        <div class="tl-intro">
-          <p class="tl-tag rv d1">Different tools.<br><span>One visual language.</span></p>
-          <p class="tl-lede rv d2">From first idea to final delivery, I move between design, motion, publishing and AI tools to build the right visual system for the work.</p>
-        </div>
-      </div>
-
-      <!-- 01 Adobe -->
-      <article class="tl-g rv" aria-labelledby="tg1">
-        <header class="tl-gh">
-          <span class="tl-n">01</span>
-          <h3 id="tg1">Adobe Creative Suite</h3>
-          <p>The core tools behind my visual work: from image treatment and vector systems to long-form publishing and motion.</p>
-        </header>
-        <ul class="tl-ad">
-          <li class="tl-app tl-it tl-hov" tabindex="0" style="--i:0;--b:#31A8FF;--bd:#001E36">
-            <svg class="tl-ic" viewBox="0 0 44 44" aria-hidden="true"><rect class="tile" x=".6" y=".6" width="42.8" height="42.8" rx="9"/><text x="22" y="28.5" text-anchor="middle">Ps</text></svg>
-            <b class="tl-w">Image.</b>
-            <span class="tl-sw"><span class="a">Adobe Photoshop</span><span class="b"><span class="tl-mono">Photoshop</span>Image editing · Retouching · Compositing</span></span>
-          </li>
-          <li class="tl-app tl-it tl-hov" tabindex="0" style="--i:1;--b:#FF9A00;--bd:#330000">
-            <svg class="tl-ic" viewBox="0 0 44 44" aria-hidden="true"><rect class="tile" x=".6" y=".6" width="42.8" height="42.8" rx="9"/><text x="22" y="28.5" text-anchor="middle">Ai</text></svg>
-            <b class="tl-w">Vector.</b>
-            <span class="tl-sw"><span class="a">Adobe Illustrator</span><span class="b"><span class="tl-mono">Illustrator</span>Vector graphics · Illustration · Diagrams</span></span>
-          </li>
-          <li class="tl-app tl-it tl-hov" tabindex="0" style="--i:2;--b:#FF3366;--bd:#49021F">
-            <svg class="tl-ic" viewBox="0 0 44 44" aria-hidden="true"><rect class="tile" x=".6" y=".6" width="42.8" height="42.8" rx="9"/><text x="22" y="28.5" text-anchor="middle">Id</text></svg>
-            <b class="tl-w">Editorial.</b>
-            <span class="tl-sw"><span class="a">Adobe InDesign</span><span class="b"><span class="tl-mono">InDesign</span>Editorial systems · Books · Print production</span></span>
-          </li>
-          <li class="tl-app tl-it tl-hov" tabindex="0" style="--i:3;--b:#9999FF;--bd:#00005B">
-            <svg class="tl-ic" viewBox="0 0 44 44" aria-hidden="true"><rect class="tile" x=".6" y=".6" width="42.8" height="42.8" rx="9"/><text x="22" y="28.5" text-anchor="middle">Ae</text></svg>
-            <b class="tl-w">Motion.</b>
-            <span class="tl-sw"><span class="a">Adobe After Effects</span><span class="b"><span class="tl-mono">After Effects</span>Motion · Transitions · Animated storytelling</span></span>
-          </li>
-        </ul>
-      </article>
-
-      <!-- 02 Figma (featured) + 03 Canva -->
-      <div class="tl-pair">
-        <article class="tl-g tl-fig tl-hov rv" tabindex="0" aria-labelledby="tg2">
-          <span class="tl-guides" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-          <div class="tl-gl"><span class="tl-n">02</span><h3 id="tg2">Figma</h3></div>
-          <svg class="tl-flogo" viewBox="0 0 38 57" aria-hidden="true"><path d="M19 .6H9.5a9.2 9.2 0 0 0 0 18.4H19z"/><path d="M19 .6h9.5a9.2 9.2 0 0 1 0 18.4H19z"/><path d="M19 19H9.5a9.2 9.2 0 0 0 0 18.4H19z"/><circle cx="28.5" cy="28.2" r="9.2"/><path d="M9.5 37.4H19v9.8a9.2 9.2 0 1 1-9.5-9.8z"/></svg>
-          <p class="tl-big"><span class="tl-sel">Systems before<br>screens.<i class="hd h1"></i><i class="hd h2"></i><i class="hd h3"></i><i class="hd h4"></i><span class="tl-sel-tag">Frame · Visual system</span></span></p>
-          <div class="tl-ffoot">
-            <p>For layout systems, interface thinking, visual structure and collaborative design.</p>
-            <ul class="tl-tags" aria-label="How I use Figma"><li style="--j:0">Layout</li><li style="--j:1">Prototyping</li><li style="--j:2">Visual Systems</li><li style="--j:3">UI Thinking</li></ul>
-          </div>
-        </article>
-        <article class="tl-g tl-cv tl-hov rv d1" tabindex="0" aria-labelledby="tg3">
-          <div class="tl-gl"><div><span class="tl-n">03</span><h3 id="tg3">Canva</h3></div><svg class="tl-clogo" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="14.2"/><text x="15" y="20.2" text-anchor="middle">C</text></svg></div>
-          <p class="tl-mid">When speed matters.</p>
-          <p class="cp">Fast visual production for lightweight presentation, social and campaign workflows.</p>
-          <span class="tl-speed" aria-hidden="true"></span>
-        </article>
-      </div>
-
-      <!-- 04 AI -->
-      <article class="tl-g rv" aria-labelledby="tg4">
-        <header class="tl-gh">
-          <span class="tl-n">04</span>
-          <h3 id="tg4">AI-assisted workflow</h3>
-          <p>I use AI across research, ideation, copy, visual exploration and rapid prototyping, as a creative partner, not a replacement for design thinking.</p>
-        </header>
-        <p class="tl-aiq tl-lines rv"><span class="ln"><span>AI helps me explore faster.</span></span><span class="ln"><span>Design judgment still leads.</span></span></p>
-        <div class="tl-judge" aria-hidden="true"><span class="tl-mono">Design judgment</span><i></i></div>
-        <ul class="tl-strip">
-          <li class="tl-ai tl-it tl-hov" tabindex="0" style="--i:0;--b:#10A37F">
-            <svg class="ai-ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><g><ellipse cx="16" cy="10.4" rx="4" ry="7.2"/><ellipse cx="16" cy="10.4" rx="4" ry="7.2" transform="rotate(60 16 16)"/><ellipse cx="16" cy="10.4" rx="4" ry="7.2" transform="rotate(120 16 16)"/><ellipse cx="16" cy="10.4" rx="4" ry="7.2" transform="rotate(180 16 16)"/><ellipse cx="16" cy="10.4" rx="4" ry="7.2" transform="rotate(240 16 16)"/><ellipse cx="16" cy="10.4" rx="4" ry="7.2" transform="rotate(300 16 16)"/></g></svg>
-            <b>ChatGPT</b><span class="tl-mono">Research · Structure · Ideation</span>
-          </li>
-          <li class="tl-ai tl-it tl-hov" tabindex="0" style="--i:1;--b:#D97757">
-            <svg class="ai-ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="16" y1="13" x2="16" y2="3"/><line x1="16" y1="13" x2="16" y2="6.5" transform="rotate(30 16 16)"/><line x1="16" y1="13" x2="16" y2="3" transform="rotate(60 16 16)"/><line x1="16" y1="13" x2="16" y2="6.5" transform="rotate(90 16 16)"/><line x1="16" y1="13" x2="16" y2="3" transform="rotate(120 16 16)"/><line x1="16" y1="13" x2="16" y2="6.5" transform="rotate(150 16 16)"/><line x1="16" y1="13" x2="16" y2="3" transform="rotate(180 16 16)"/><line x1="16" y1="13" x2="16" y2="6.5" transform="rotate(210 16 16)"/><line x1="16" y1="13" x2="16" y2="3" transform="rotate(240 16 16)"/><line x1="16" y1="13" x2="16" y2="6.5" transform="rotate(270 16 16)"/><line x1="16" y1="13" x2="16" y2="3" transform="rotate(300 16 16)"/><line x1="16" y1="13" x2="16" y2="6.5" transform="rotate(330 16 16)"/></svg>
-            <b>Claude</b><span class="tl-mono">Iteration · Build · Prototyping</span>
-          </li>
-          <li class="tl-ai tl-it tl-hov" tabindex="0" style="--i:2;--b:#6E9BF5">
-            <svg class="ai-ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M16 3C16 10.2 21.8 16 29 16C21.8 16 16 21.8 16 29C16 21.8 10.2 16 3 16C10.2 16 16 10.2 16 3Z"/></svg>
-            <b>Gemini</b><span class="tl-mono">Research · Exploration</span>
-          </li>
-          <li class="tl-ai tl-it tl-hov" tabindex="0" style="--i:3;--b:#A58BF7">
-            <svg class="ai-ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3.5" y="3.5" width="25" height="25" rx="7"/><path d="M21.5 12.2a6 6 0 1 0 .4 6.3H16" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <b>Gamma</b><span class="tl-mono">Rapid presentation prototyping</span>
-          </li>
-        </ul>
-      </article>
-
-      <!-- 05 Presentation & Interactive -->
-      <article class="tl-g rv" aria-labelledby="tg5">
-        <header class="tl-gh">
-          <span class="tl-n">05</span>
-          <h3 id="tg5">Presentation &amp; Interactive</h3>
-          <p>From editable business decks to interactive browser-based experiences.</p>
-        </header>
-        <div class="tl-code">
-          <div class="tl-cl tl-it tl-hov" tabindex="0" style="--i:0;--b:#E8663D">
-            <span class="no">01</span><code aria-label="PowerPoint">deck<span class="p">.</span>pptx</code>
-            <span class="ds"><span class="tl-mono">PowerPoint</span>Presentation design · Delivery</span>
-          </div>
-          <div class="tl-cl tl-it tl-hov" tabindex="0" style="--i:1;--b:#E9744F">
-            <span class="no">02</span><code aria-label="HTML and CSS"><span class="p">&lt;</span>html<span class="p">&gt;</span> <span class="p">+</span> <span class="p">{</span>css<span class="p">}</span></code>
-            <span class="ds"><span class="tl-mono">HTML / CSS</span>Interactive layouts · Responsive experiences</span>
-          </div>
-          <div class="tl-cl tl-it tl-hov" tabindex="0" style="--i:2;--b:#F0DB4F">
-            <span class="no">03</span><code aria-label="JavaScript">script<span class="p">.</span>js<span class="p">()</span></code>
-            <span class="ds"><span class="tl-mono">JavaScript</span>Motion · Interaction · Presentation logic</span>
-          </div>
-        </div>
-      </article>
-
-      <div class="tl-end">
-        <p class="tl-endh tl-lines rv"><span class="ln"><span>The tool changes.</span></span><span class="ln"><span>The thinking doesn’t.</span></span></p>
-        <ol class="tl-ends rv d1" aria-label="Order of decisions"><li><span>01</span>Structure first.</li><li><span>02</span>Visual language second.</li><li><span>03</span>Software last.</li></ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- 05 CONTACT -->
-  <section class="sec contact" id="contact" aria-label="Contact">
-    <div class="wrap">
-      <span class="badge rv"><i class="dot"></i>Available for remote design projects</span>
-      <h2 class="rv d1">Have an idea<br>that needs a <span>visual language?</span></h2>
-      <div class="ct-grid">
-        <div class="ct-links rv">
-          <a href="mailto:khanimazimli0@gmail.com"><span>Email</span><b>khanimazimli0@gmail.com</b><i>↗</i></a>
-          <a href="https://www.linkedin.com/in/khanim-azimli-50aa09a7" target="_blank" rel="noopener"><span>LinkedIn</span><b>Khanim Azimli</b><i>↗</i></a>
-        </div>
-        <div class="ct-cta rv d1">
-          <p>Tell me what you are trying to communicate, who needs to understand it and where it needs to live.<br><br>It might become a presentation, a publication or something interactive.</p>
-          <a class="btn btn-gold btn-lg" href="mailto:khanimazimli0@gmail.com?subject=Design%20project">Start a project <i>→</i></a>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- one page view at a time: Home, Work, About, Services, Contact -->
+<main class="view" id="view" tabindex="-1">
+  <noscript><div class="wrap pg"><h1>Khanim Azimli</h1><p>Visual Storyteller &amp; Designer. This portfolio needs JavaScript. Contact: <a href="mailto:khanimazimli0@gmail.com">khanimazimli0@gmail.com</a></p></div></noscript>
 </main>
 
-<footer class="foot">
-  <div class="wrap">
-    <div class="foot-top">
-      <div class="foot-brand">
-        <a class="logo" href="#top"><svg class="mark" viewBox="0 0 28 22" aria-hidden="true"><rect x="0" y="0" width="18" height="12" rx="1.5"/><rect x="9" y="9" width="18" height="12" rx="1.5" fill="none" stroke-width="2"/></svg><span>Khanim Azimli</span></a>
-        <p>Visual storyteller and designer working across presentations, editorial and interactive experiences.</p>
-      </div>
-      <div class="foot-col"><span>Navigate</span><a href="#work">Work</a><a href="#transformations">Before / After</a><a href="#publishing">Publishing</a><a href="#about">About</a><a href="#capabilities">Capabilities</a><a href="#tools">Tools</a><a href="#contact">Contact</a></div>
-      <div class="foot-col"><span>Contact</span><a href="mailto:khanimazimli0@gmail.com">Email</a><a href="https://www.linkedin.com/in/khanim-azimli-50aa09a7" target="_blank" rel="noopener">LinkedIn</a></div>
-      <div class="foot-col"><span>Local time</span><p class="clock"><b id="clock">--:--</b> Baku, GMT+4</p></div>
-    </div>
-    <div class="foot-bot">
-      <span>© 2026 Khanim Azimli · Visual Storyteller &amp; Designer</span>
-      <span>Consulting redesigns are independent exercises on public reports. In-house work is shown with figures altered.</span>
-    </div>
-  </div>
-</footer>
-
-<!-- CASE VIEW -->
-<div class="case" id="case" role="dialog" aria-modal="true" aria-labelledby="cTitle" tabindex="-1">
+<!-- case study layer -->
+<div class="case" id="case" role="region" aria-label="Case study" aria-hidden="true" tabindex="-1">
   <div class="cbar"><div class="wrap">
-    <button id="cBack"><i>←</i> All work</button>
+    <div class="cb-l">
+      <a class="cb-logo" href="#/" aria-label="Khanim Azimli, home"><svg class="mark" viewBox="0 0 28 22" aria-hidden="true"><rect x="0" y="0" width="18" height="12" rx="1.5"/><rect x="9" y="9" width="18" height="12" rx="1.5" fill="none" stroke-width="2"/></svg></a>
+      <a class="cb-back" href="#/work"><i aria-hidden="true">←</i> All work</a>
+    </div>
     <span class="ttl" id="cTtl"></span>
-    <div class="pn"><button id="cPrev">Prev</button><button id="cNext">Next</button></div>
+    <div class="pn"><a id="cPrev" href="#/work"><i aria-hidden="true">←</i><span>Prev</span></a><a id="cNext" href="#/work"><span>Next</span><i aria-hidden="true">→</i></a></div>
   </div></div>
   <div id="cBody"></div>
+</div>
+
+<!-- fullscreen slide -->
+<div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Slide, fullscreen" hidden>
+  <div class="lbx-top"><p class="lbx-cap" aria-live="polite"></p><span class="lbx-c"></span><button class="lbx-x">Close <span aria-hidden="true">×</span><span class="vh"> (Esc)</span></button></div>
+  <div class="lbx-st"><div class="lbx-fr"></div></div>
+  <button class="lbx-p" aria-label="Previous slide"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3L5 8l5 5"/></svg></button>
+  <button class="lbx-n" aria-label="Next slide"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3l5 5-5 5"/></svg></button>
 </div>
 
 <script src="assets/case-tmf.js" defer></script>

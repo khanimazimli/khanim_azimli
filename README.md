@@ -16,16 +16,37 @@ JavaScript, images, video and self-hosted web fonts.
 
 ## Structure
 
+The homepage is a small static web app (no framework, no build step). A hash
+router renders one view at a time instead of one long scrolling page:
+
 ```
-index.html                     Homepage (Selected work incl. Geometry of Trade, Before/After, PowerPoint, Publishing, About, Tools, Contact)
+#/                      Home (entry screen)
+#/work                  Work index
+#/case/<slug>           Case study, e.g. #/case/melbourne
+#/about  #/services  #/contact
+```
+
+Clean paths such as `/khanim_azimli/case/melbourne` also work: `404.html`
+forwards them to the matching `#/` route. Old anchors (`#work`, `#contact`,
+`#/work/mel` …) are redirected to the new routes.
+
+```
+index.html                     App shell: site nav, view container, case layer, fullscreen slide
+assets/app.js                  Router, views, case layer, slide viewer, before/after, key moves, project content
+assets/site.css                White editorial site UI and the standard case template
+assets/app.css                 Shared tokens + base for the art-directed case pages
+assets/case-*.css / case-*.js  Art-directed cases (New Rules of Fashion, Trade atlas, System, Tech Moves Fast, Generative AI)
 publishing.html                Editorial & educational publishing case
 powerpoint-rebuilt.html        PowerPoint, Rebuilt · 01 From Complexity to Control
 powerpoint-rebuilt/            02 AI, Prioritized · 03 The Pipeline Is Growing (pages, images, downloads)
-404.html                       Not-found page
-assets/                        CSS, JS, fonts, images, video, live interactive projects, PPTX downloads
+404.html                       Not-found page + clean-URL forwarding
 assets/live/                   Self-contained interactive HTML projects (opened from case studies)
 assets/og/                     Open Graph preview images (1200×630)
 ```
+
+Work order and slugs live at the top of `assets/app.js` (`WORK`, `SLUG`).
+The "Download CV" link on Contact points to `assets/cv/Khanim-Azimli-CV.pdf`;
+until that file exists it falls back to a "Request CV" email link.
 
 ## Notes
 
