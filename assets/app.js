@@ -146,11 +146,13 @@
     edu: {
       id: 'edu', title: 'Game Changer / Editorial Publishing', cat: 'Editorial & Educational Publishing', year: '2022–2025',
       href: 'publishing.html', img: 'assets/img/edu/home-shelf-t.webp', go: 'View publishing case',
+      kpi: '469,810', kpiCap: 'textbook copies printed across four editions',
       desc: 'Cambridge’s Game Changer adapted into a national edition for Azerbaijani classrooms, part of a wider print practice: textbooks, yearbooks and theatre.'
     },
     ppt: {
       id: 'ppt', title: 'PowerPoint, Rebuilt.', cat: 'Presentation Redesign · Native PowerPoint', year: '2026',
       href: 'powerpoint-rebuilt.html', img: 'assets/img/ppt/after-05.webp', go: 'View the transformations',
+      kpi: `158${TO}30`, kpiCap: 'source slides to redesigned slides, across 3 studies',
       desc: 'Three ordinary corporate decks rebuilt through hierarchy, storytelling and fully editable PowerPoint design.'
     }
   };
@@ -1379,43 +1381,40 @@
     (p.story || []).forEach(s => add(s[0], s[1]));
     return [...m].sort((a, b) => a[0].localeCompare(b[0]));
   };
-  const sh = (n, t, sub) => `<header class="sc-h"><span class="sc-hn">${n}</span><h2>${t}</h2>${sub ? `<p>${sub}</p>` : ''}</header>`;
+  // section head in the original case language: gold index, title, statement
+  const head = (n, t, p, small) => `<div class="c-h"><h2><span class="idx">${n}</span>${t}</h2><div><p${small ? ' class="sm"' : ''}>${p}</p></div></div>`;
   const stdCase = i => {
     const p = P[i], nxp = P[(i + 1) % P.length], deck = deckOf(p);
     const total = +((p.deliverables.match(/(\d+)-slide/) || [])[1]) || deck.length;
     let n = 0; const num = () => pad(++n);
-    const live = p.live ? `<a class="sc-live" href="assets/live/${p.live}.html" target="_blank" rel="noopener">Open the live presentation <i aria-hidden="true">↗</i><span class="vh"> (opens in a new tab)</span></a>` : '';
+    const live = p.live ? `<a class="link-arrow" href="assets/live/${p.live}.html" target="_blank" rel="noopener">Open the live presentation <i aria-hidden="true">↗</i><span class="vh"> (opens in a new tab)</span></a>` : '';
     let h = `
-    <article class="sc">
-      <header class="sc-hero wrap">
-        <p class="sc-k"><span>${wn(p.id)}</span><span>${p.cat}</span><span>${p.year}</span></p>
-        <h1 id="cTitle" tabindex="-1">${p.title}</h1>
-        <div class="sc-intro">
-          <p class="sc-lede">${p.lede}</p>
-          <dl class="sc-facts">
-            <div><dt>Role</dt><dd>${p.role}</dd></div>
-            <div><dt>Deliverables</dt><dd>${p.deliverables}</dd></div>
-            <div><dt>Year</dt><dd>${p.year}</dd></div>
-          </dl>
-          ${live}
+      <div class="wrap">
+        <header class="c-top">
+          <div class="badges c-in"><span class="badge">${wn(p.id)} / ${pad(WORK.length)}</span><span class="badge">${p.cat}</span><span class="badge">${p.year}</span></div>
+          <h1 id="cTitle" tabindex="-1"><span>${p.title}</span></h1>
+          <div class="c-lede c-in d2"><p>${p.lede}</p><span class="rule"></span>${live}</div>
+          <div class="c-facts c-in d3">
+            <div><span>Role</span>${p.role}</div>
+            <div><span>Deliverables</span>${p.deliverables}</div>
+            <div><span>Category</span>${p.cat}</div>
+            <div><span>Year</span>${p.year}</div>
+          </div>
+        </header>
+        <div class="c-cover"><div class="frame r169" id="cCover">${img(p.cover, '(max-width:1440px) 92vw, 1280px', true, p.title + ', cover slide')}</div></div>
+        <section class="c-sec tight rv">${head(num(), 'The brief', p.challenge)}</section>
+        <section class="c-sec rv">${head(num(), 'The thinking', p.approach)}</section>`;
+    if (p.story) h += `<section class="c-sec">${head(num(), 'Key moves', 'The decisions that shaped the deck. Select a move to see the slide.', true)}<div class="rv" data-moves></div></section>`;
+    if (p.ba) h += `<section class="c-sec">${head(num(), 'Original ↔ Redesign', 'Drag the handle to compare a page of the source report with the slide it became.', true)}<div class="rv" data-ba></div></section>`;
+    h += `<section class="c-sec">${head(num(), 'Selected slides', `${deck.length === total ? `The full ${total}-slide deck` : `${deck.length} of the ${total} slides`}, one at a time. Use the arrows, your keyboard or swipe, and open any slide fullscreen.`, true)}<div class="rv" data-viewer></div></section>`;
+    h += `<section class="c-sec">${head(num(), 'Outcome', p.outcome)}<div class="c-out rv">${p.out.map(o => `<div><b>${o[0]}</b><span>${o[1]}</span></div>`).join('')}</div>${p.note ? `<p class="c-note">${p.note}</p>` : ''}</section>
+      </div>
+      <a class="c-next" href="${caseHref(nxp.id)}" data-case="${nxp.id}">
+        <div class="wrap">
+          <div><span>Next project</span><b>${nxp.title} <i aria-hidden="true">→</i></b><small>${nxp.cat}</small></div>
+          <div class="nimg">${img(nxp.card, '(max-width:1024px) 92vw, 40vw')}</div>
         </div>
-      </header>
-      <figure class="sc-cover wrap"><div class="sc-cf" id="cCover">${img(p.cover, '(max-width:1440px) 92vw, 1280px', true, p.title + ', cover slide')}</div></figure>
-      <section class="sc-s wrap">${sh(num(), 'The brief')}<div class="sc-b"><p class="sc-big">${p.challenge}</p></div></section>
-      <section class="sc-s wrap">${sh(num(), 'The thinking')}<div class="sc-b"><p class="sc-big">${p.approach}</p></div></section>`;
-    if (p.story) h += `<section class="sc-s sc-wide wrap">${sh(num(), 'Key moves', 'The decisions that shaped the deck. Select a move to see the slide.')}<div data-moves></div></section>`;
-    if (p.ba) h += `<section class="sc-s sc-wide wrap">${sh(num(), 'Original <i aria-hidden="true">↔</i> Redesign', 'Drag the handle to compare a page of the source report with the slide it became.')}<div data-ba></div></section>`;
-    h += `<section class="sc-s sc-wide wrap">${sh(num(), 'Selected slides', `${deck.length === total ? `The full ${total}-slide deck` : `${deck.length} of the ${total} slides`}, one at a time. Use the arrows, your keyboard or swipe, and open any slide fullscreen.`)}<div data-viewer></div></section>`;
-    h += `<section class="sc-s wrap">${sh(num(), 'Outcome')}<div class="sc-b"><p class="sc-big">${p.outcome}</p>
-          <div class="sc-out">${p.out.map(o => `<div><b>${o[0]}</b><span>${o[1]}</span></div>`).join('')}</div>
-          ${p.note ? `<p class="sc-note">${p.note}</p>` : ''}</div></section>
-    </article>
-    <a class="sc-next" href="${caseHref(nxp.id)}" data-case="${nxp.id}">
-      <span class="wrap sc-next-in">
-        <span class="sc-next-t"><span class="sc-k"><span>Next project</span><span>${wn(nxp.id)}</span></span><b>${nxp.title} <i aria-hidden="true">→</i></b><small>${nxp.cat}</small></span>
-        <span class="sc-next-im">${img(nxp.card, '(max-width:900px) 92vw, 34vw')}</span>
-      </span>
-    </a>`;
+      </a>`;
     return h;
   };
   const initStd = i => {
@@ -1530,89 +1529,97 @@
   const MAIL = 'khanimazimli0@gmail.com';
   const LINKEDIN = 'https://www.linkedin.com/in/khanim-azimli-50aa09a7';
   const CV = 'assets/cv/Khanim-Azimli-CV.pdf';   // drop the PDF here; until then the link asks by email
+  // Work index cards: the original grid card (pill tag, index · year, title, line, metric, View case)
   const workItem = id => {
     const x = EXT[id], p = x ? null : P[PI[id]];
-    const t = x ? x.title : (LONG[id] || p.title), cat = x ? x.cat : p.cat, desc = x ? x.desc : p.desc;
-    const href = x ? x.href : caseHref(id);
+    const t = x ? x.title : (LONG[id] || p.title), cat = x ? x.cat : p.cat, desc = x ? x.desc : p.desc, year = x ? x.year : p.year;
+    const kpi = x ? x.kpi : p.kpi, cap = x ? x.kpiCap : p.kpiCap;
+    const href = x ? x.href : caseHref(id), dc = x ? '' : ` data-case="${id}"`;
     const pic = x ? `<img src="${x.img}" alt="" loading="lazy" decoding="async">` : img(p.card, '(max-width:820px) 92vw, 46vw');
     return `
-      <li class="wk-i">
-        <a href="${href}"${x ? '' : ` data-case="${id}"`}>
-          <span class="wk-fr">${pic}</span>
-          <span class="wk-m"><span class="wk-n">${wn(id)}</span><span>${cat}</span></span>
-          <span class="wk-t">${t}</span>
-          <span class="wk-d">${desc}</span>
-          <span class="lk">${x ? x.go : 'View case'} <i aria-hidden="true">→</i></span>
-        </a>
-      </li>`;
+      <article class="pc pc-std">
+        <a class="media" href="${href}"${dc} aria-label="${t}, ${x ? x.go.toLowerCase() : 'view case'}">${pic}</a>
+        <div class="txt">
+          <p class="meta"><span class="tag">${cat}</span><span>${wn(id)} · ${year}</span></p>
+          <h2><a href="${href}"${dc} tabindex="-1">${t}</a></h2>
+          <p class="desc">${desc}</p>
+          <div class="row">${kpi ? `<p class="kpi"><b>${kpi}</b><small>${cap}</small></p>` : ''}<span class="fill"></span><a class="go" href="${href}"${dc}>${x ? x.go : 'View case'} <i aria-hidden="true">→</i></a></div>
+        </div>
+      </article>`;
   };
   const foot = () => `
-    <footer class="ft"><div class="wrap ft-in">
+    <footer class="foot"><div class="wrap"><div class="foot-bot">
       <span>© 2026 Khanim Azimli · Visual Storyteller &amp; Designer</span>
       <span>Consulting redesigns are independent exercises on public reports. In-house work is shown with figures altered.</span>
-    </div></footer>`;
+    </div></div></footer>`;
   const feat = P[PI[WORK[0]]];
   const VIEWS = {
     home: {
       title: 'Khanim Azimli · Visual Storyteller & Designer',
       html: () => `
-      <section class="hm" aria-labelledby="hmT">
-        <div class="wrap hm-g">
-          <div class="hm-l">
-            <p class="kk"><i class="dot" aria-hidden="true"></i>Baku · Working globally</p>
-            <h1 class="hm-name" id="hmT" tabindex="-1">Khanim<br>Azimli</h1>
-            <p class="hm-role"><b>Visual Storyteller &amp; Designer</b><span>Presentations · Editorial · Data · Interactive</span></p>
-            <p class="hm-pos">Ideas, data and stories, designed to be understood.</p>
-            <div class="hm-cta"><a class="bt bt-ink" href="#/work">Explore work <i aria-hidden="true">→</i></a><a class="bt bt-line" href="#/contact">Start a project</a></div>
+      <section class="hero hm" aria-labelledby="hmT">
+        <div class="wrap">
+          <div class="badges load">
+            <span class="badge"><i class="dot" aria-hidden="true"></i>Baku · Working globally</span>
+            <span class="badge">Visual storytelling · Editorial · Interactive · 2026</span>
           </div>
-          <a class="hm-feat" href="${caseHref(feat.id)}" data-case="${feat.id}">
-            <span class="hm-fr">${img(feat.card, '(max-width:900px) 92vw, 60vw', true, '')}</span>
-            <span class="hm-cap"><span class="kk">Featured · ${wn(feat.id)}</span><b>${feat.title}</b><span class="hm-cat">${feat.cat}</span><span class="lk">View case <i aria-hidden="true">→</i></span></span>
-          </a>
+          <div class="hm-g">
+            <div class="hm-l">
+              <h1 class="hm-name" id="hmT" tabindex="-1" aria-label="Khanim Azimli"><span class="ln"><span class="tx">Khanim</span></span><span class="ln"><span class="tx">Azimli</span></span></h1>
+              <p class="hm-role load d3"><i class="role-k">Practice</i><b>Visual Storyteller &amp; Designer</b><span class="role-d">Presentations · Editorial · Data · Interactive</span></p>
+              <p class="hm-pos load d4"><b>Ideas, data and stories, <span>designed to be understood.</span></b><span class="pos-s">Making ideas easier to see, feel and remember.</span></p>
+              <div class="hm-cta load d4"><a class="btn btn-gold" href="#/work">Explore work <i aria-hidden="true">→</i></a><a class="link-arrow" href="#/contact">Let’s work together <i aria-hidden="true">→</i></a></div>
+            </div>
+            <a class="pc hm-feat load d3" href="${caseHref(feat.id)}" data-case="${feat.id}">
+              <span class="media">${img(feat.card, '(max-width:1024px) 92vw, 58vw', true, '')}</span>
+              <span class="meta"><span class="tag">${feat.cat}</span><span>${wn(feat.id)} · ${feat.year}</span><span class="fill"></span><span class="go">View case <i aria-hidden="true">→</i></span></span>
+              <b class="hm-ft">${feat.title}</b>
+            </a>
+          </div>
+          <nav class="hero-idx load d4" aria-label="Formats">
+            <a href="#/work"><span class="n">01</span><b>Presentations</b><span class="x">Strategy, research and data stories</span><i aria-hidden="true">→</i></a>
+            <a href="publishing.html"><span class="n">02</span><b>Publications</b><span class="x">Textbooks · 469,810 copies printed</span><i aria-hidden="true">→</i></a>
+            <a href="#/work"><span class="n">03</span><b>Interactive</b><span class="x">Live HTML experiences and motion</span><i aria-hidden="true">→</i></a>
+          </nav>
         </div>
-        <nav class="wrap hm-idx" aria-label="Selected work">
-          <span class="kk">Selected work</span>
-          ${WORK.slice(1, 4).map(id => { const x = EXT[id], p = x || P[PI[id]]; return `<a href="${x ? x.href : caseHref(id)}"${x ? '' : ` data-case="${id}"`}><span>${wn(id)}</span>${x ? x.title : (LONG[id] || p.title)}</a>`; }).join('')}
-          <a class="hm-all" href="#/work">All work <sup>${WORK.length}</sup> <i aria-hidden="true">→</i></a>
-        </nav>
       </section>`
     },
     work: {
       title: 'Work · Khanim Azimli',
       html: () => `
-      <section class="pv wk" aria-labelledby="wkT">
+      <section class="sec work pv" aria-labelledby="wkT">
         <div class="wrap">
-          <header class="pg-h">
-            <p class="kk">Work <span>${pad(WORK.length)} projects</span></p>
+          <p class="label">Work · ${pad(WORK.length)} projects</p>
+          <div class="work-head">
             <h1 id="wkT" tabindex="-1">Selected work</h1>
-            <p class="pg-lede">Different formats.<br>Same goal: make the idea impossible to miss.</p>
-          </header>
-          <ol class="wk-list">${WORK.map(workItem).join('')}</ol>
+            <p>Different formats.<br>Same goal: make the idea impossible to miss.</p>
+          </div>
+          <div class="pc-grid wk-grid">${WORK.map(workItem).join('')}</div>
         </div>
       </section>${foot()}`
     },
     about: {
       title: 'About · Khanim Azimli',
       html: () => `
-      <section class="pv ab" aria-labelledby="abT">
+      <section class="about pv" aria-labelledby="abT">
         <div class="wrap">
-          <p class="kk">About</p>
-          <h1 class="ab-st" id="abT" tabindex="-1">I design presentations from the business problem out, not from the template in.</h1>
-          <div class="ab-g">
-            <div class="ab-body">
-              <p class="ab-lead">Whether the outcome is a presentation, a publication or an interactive experience, I start with the same question: what needs to be understood, and how should someone experience it?</p>
+          <p class="label">About</p>
+          <h1 class="statement" id="abT" tabindex="-1">I design presentations from the business problem out, <span>not from the template in.</span></h1>
+          <div class="about-grid">
+            <dl class="about-facts">
+              <div><dt>Background</dt><dd>Presentation design · Business storytelling · Data · Customer experience · Research · Interactive work</dd></div>
+              <div><dt>Tools</dt><dd>Photoshop · Illustrator · InDesign · After Effects · Figma · Canva · PowerPoint · HTML · CSS · JavaScript · ChatGPT · Claude · Gemini · Gamma</dd></div>
+              <div><dt>Format</dt><dd>Baku · Remote projects</dd></div>
+            </dl>
+            <div class="about-body">
+              <p class="lead">Whether the outcome is a presentation, a publication or an interactive experience, I start with the same question: what needs to be understood, and how should someone experience it?</p>
               <p>I work at the intersection of information, storytelling and visual design. My projects range from executive presentations and data-heavy research to educational publishing, editorial systems and interactive HTML experiences.</p>
               <p>I start with structure: what matters, what comes first and what should stay with the audience. Then I build the visual language around it.</p>
             </div>
-            <dl class="ab-facts">
-              <div><dt>Background</dt><dd>Presentation design · Business storytelling · Data · Customer experience · Research · Interactive work</dd></div>
-              <div><dt>Tools I think with</dt><dd>Photoshop · Illustrator · InDesign · After Effects · Figma · Canva · PowerPoint · HTML · CSS · JavaScript · ChatGPT · Claude · Gemini · Gamma</dd></div>
-              <div><dt>Format</dt><dd>Baku · Remote projects</dd></div>
-            </dl>
           </div>
           <div class="ab-end">
             <p>The tool changes. <span>The thinking doesn’t.</span></p>
-            <a class="lk" href="#/services">Services <i aria-hidden="true">→</i></a>
+            <a class="link-arrow" href="#/services">Services <i aria-hidden="true">→</i></a>
           </div>
         </div>
       </section>`
@@ -1628,17 +1635,16 @@
           ['Interactive &amp; Motion Presentations', 'Browser-based presentations, interactive experiences and purposeful motion.', ['sys', 'tmf', 'gai']]
         ];
         return `
-      <section class="pv sv-pg" aria-labelledby="svT">
+      <section class="sec services pv" aria-labelledby="svT">
         <div class="wrap">
-          <header class="pg-h">
-            <p class="kk">Services</p>
+          <p class="label">Services</p>
+          <div class="work-head">
             <h1 id="svT" tabindex="-1">What I work across</h1>
-            <p class="pg-lede">One practice.<br>The content decides the format.</p>
-          </header>
-          <ol class="srv">${S.map((s, k) => `
-            <li><span class="srv-n">${pad(k + 1)}</span><h2>${s[0]}</h2><p>${s[1]}</p><p class="srv-in"><span>Seen in</span>${s[2].map(L).join('')}</p></li>`).join('')}
-          </ol>
-          <div class="srv-end"><p>Have an idea that needs a visual language?</p><a class="bt bt-ink" href="#/contact">Start a project <i aria-hidden="true">→</i></a></div>
+            <p>One practice.<br>The content decides the format.</p>
+          </div>
+          <div class="svc">${S.map((s, k) => `
+            <div class="svc-row"><span class="n">${pad(k + 1)}</span><h2>${s[0]}</h2><div class="svc-d"><p>${s[1]}</p><p class="svc-in"><span>Seen in</span>${s[2].map(L).join('')}</p></div><a class="ar" href="#/contact" aria-label="Start a project: ${s[0]}">→</a></div>`).join('')}
+          </div>
         </div>
       </section>`;
       }
@@ -1646,34 +1652,47 @@
     contact: {
       title: 'Contact · Khanim Azimli',
       html: () => `
-      <section class="pv ct" aria-labelledby="ctT">
+      <section class="sec contact pv" aria-labelledby="ctT">
         <div class="wrap">
-          <p class="kk"><i class="dot" aria-hidden="true"></i>Available for remote freelance / contract presentation projects.</p>
-          <h1 class="ct-h" id="ctT" tabindex="-1">Let’s work<br>together.</h1>
-          <ul class="ct-l">
-            <li><a href="mailto:${MAIL}?subject=Design%20project"><span>Email</span><b>${MAIL}</b><i aria-hidden="true">↗</i></a></li>
-            <li><a href="${LINKEDIN}" target="_blank" rel="noopener"><span>LinkedIn</span><b>Khanim Azimli</b><i aria-hidden="true">↗</i><span class="vh"> (opens in a new tab)</span></a></li>
-            <li><a href="${CV}" download data-cv><span>CV</span><b>Download CV</b><i aria-hidden="true">↓</i></a></li>
-          </ul>
-          <div class="ct-foot"><p>Tell me what you are trying to communicate, who needs to understand it and where it needs to live.</p><p class="kk">Baku · GMT+4 · <b id="clock">--:--</b></p></div>
+          <span class="badge"><i class="dot" aria-hidden="true"></i>Available for remote freelance / contract presentation projects.</span>
+          <h1 id="ctT" tabindex="-1">Let’s work <span>together.</span></h1>
+          <div class="ct-grid">
+            <div class="ct-links">
+              <a href="mailto:${MAIL}?subject=Design%20project"><span>Email</span><b>${MAIL}</b><i aria-hidden="true">↗</i></a>
+              <a href="${LINKEDIN}" target="_blank" rel="noopener"><span>LinkedIn</span><b>Khanim Azimli</b><i aria-hidden="true">↗</i><em class="vh"> (opens in a new tab)</em></a>
+              <a href="${CV}" download data-cv><span>CV</span><b>Download CV</b><i aria-hidden="true">↓</i></a>
+            </div>
+            <div class="ct-cta">
+              <p>Tell me what you are trying to communicate, who needs to understand it and where it needs to live.</p>
+              <p class="clock"><b id="clock">--:--</b> Baku, GMT+4</p>
+            </div>
+          </div>
         </div>
       </section>`
     },
     missing: {
       title: 'Page not found · Khanim Azimli',
       html: () => `
-      <section class="pv ct" aria-labelledby="nfT">
+      <section class="sec contact pv" aria-labelledby="nfT">
         <div class="wrap">
-          <p class="kk">404</p>
-          <h1 class="ct-h" id="nfT" tabindex="-1">This page<br>doesn’t exist.</h1>
-          <div class="hm-cta"><a class="bt bt-ink" href="#/work">See the work <i aria-hidden="true">→</i></a><a class="bt bt-line" href="#/">Home</a></div>
+          <p class="label">404</p>
+          <h1 id="nfT" tabindex="-1">This page <span>doesn’t exist.</span></h1>
+          <div class="hm-cta"><a class="btn btn-gold" href="#/work">See the work <i aria-hidden="true">→</i></a><a class="link-arrow" href="#/">Home <i aria-hidden="true">→</i></a></div>
         </div>
       </section>`
     }
   };
   let clockT = 0;
+  let viewIO = null;
   const initView = () => {
     clearInterval(clockT);
+    viewIO && viewIO.disconnect();
+    const els = $$('.pc, .rv', viewEl);
+    if (RM) els.forEach(el => el.classList.add('in'));
+    else {
+      viewIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); viewIO.unobserve(e.target); } }), { rootMargin: '0px 0px -6% 0px', threshold: .01 });
+      els.forEach(el => viewIO.observe(el));
+    }
     const clock = $('#clock', viewEl);
     if (clock) {
       const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Baku', hour: '2-digit', minute: '2-digit' });
