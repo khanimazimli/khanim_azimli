@@ -16,37 +16,38 @@ JavaScript, images, video and self-hosted web fonts.
 
 ## Structure
 
-The homepage is a small static web app (no framework, no build step). A hash
-router renders one view at a time instead of one long scrolling page:
+`index.html` holds the original portfolio sections unchanged. Each section is its own
+view and only one is shown at a time; Home is a single-screen entry page on desktop.
 
 ```
-#/                      Home (entry screen)
-#/work                  Work index
-#/case/<slug>           Case study, e.g. #/case/melbourne
-#/about  #/services  #/contact
+#/                  Home (hero)
+#/work              Selected work
+#/transformations   Before / After: transformation studies + PowerPoint, Rebuilt
+#/publishing        Editorial & Publishing
+#/about             About
+#/capabilities      Capabilities
+#/tools             Tools I think with
+#/contact           Contact
+#/case/<slug>       Project case (← All work · Prev · Next), e.g. #/case/melbourne
 ```
 
-Clean paths such as `/khanim_azimli/case/melbourne` also work: `404.html`
-forwards them to the matching `#/` route. Old anchors (`#work`, `#contact`,
-`#/work/mel` …) are redirected to the new routes.
+Old in-page anchors (`#work`, `#contact`, `#pub-yb`, `#/work/mel` …) open the matching
+view. Clean paths such as `/khanim_azimli/tools` are forwarded by `404.html`.
+The view switching lives at the end of `assets/app.js` (VIEWS); `assets/views.css`
+only hides inactive views and fits Home to one screen.
 
 ```
-index.html                     App shell: site nav, view container, case layer, fullscreen slide
-assets/app.js                  Router, views, case layer, slide viewer, before/after, key moves, project content
-assets/site.css                White editorial site UI and the standard case template
-assets/app.css                 Shared tokens + base for the art-directed case pages
-assets/case-*.css / case-*.js  Art-directed cases (New Rules of Fashion, Trade atlas, System, Tech Moves Fast, Generative AI)
+index.html                     The portfolio: nav, all sections (one view each), footer, case view
+assets/app.js                  Projects, cards, case pages, components and the view router
+assets/views.css               View switching + single-screen Home
 publishing.html                Editorial & educational publishing case
 powerpoint-rebuilt.html        PowerPoint, Rebuilt · 01 From Complexity to Control
 powerpoint-rebuilt/            02 AI, Prioritized · 03 The Pipeline Is Growing (pages, images, downloads)
 404.html                       Not-found page + clean-URL forwarding
+assets/                        CSS, JS, fonts, images, video, live interactive projects, PPTX downloads
 assets/live/                   Self-contained interactive HTML projects (opened from case studies)
 assets/og/                     Open Graph preview images (1200×630)
 ```
-
-Work order and slugs live at the top of `assets/app.js` (`WORK`, `SLUG`).
-The "Download CV" link on Contact points to `assets/cv/Khanim-Azimli-CV.pdf`;
-until that file exists it falls back to a "Request CV" email link.
 
 ## Notes
 
