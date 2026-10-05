@@ -381,6 +381,19 @@ html:not(.top) .sn{border-bottom-color:var(--line)}
 .km-t{display:none;margin-top:14px;font-size:var(--t-md);line-height:1.45;color:var(--fg-2);max-width:34ch}
 .km-list button[aria-selected="true"] .km-t{display:block}
 
+/* ============ HOME = one screen: a hub, never a scrolling page (desktop) ============ */
+.hm-hub{grid-template-columns:repeat(4,minmax(0,1fr))}
+.hm-hub a[aria-current]{color:var(--fg)}
+@media (min-width:1025px){
+  html.is-home,html.is-home body{height:100%;overflow:hidden}
+  body[data-view="home"] .view{height:100vh;height:100svh;min-height:0;overflow:hidden}
+  .hm{height:calc(100vh - 68px);height:calc(100svh - 68px);min-height:0;overflow:hidden}
+  .hm-g{min-height:0}
+  .hm-name{font-size:min(var(--t-d1),14.5vh)}
+  .hm-feat .media{max-height:42vh;aspect-ratio:16/9;margin-left:auto;margin-right:0}
+  .hm-feat{justify-self:end;width:min(100%,calc(42vh * 16 / 9 + 32px))}
+}
+
 /* ============ RESPONSIVE (original breakpoints) ============ */
 @media (max-height:760px) and (min-width:1025px){
   .hm{padding-top:20px;padding-bottom:16px}
@@ -393,6 +406,8 @@ html:not(.top) .sn{border-bottom-color:var(--line)}
   .hero-idx a{padding-top:16px;padding-bottom:14px}
 }
 @media (max-width:1024px){
+  .hm-hub{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hm-hub a:nth-child(3){padding-left:0;border-left:0}
   .hm-g{grid-template-columns:1fr;align-items:start;gap:48px}
   .hm-feat{margin:0;padding:0}
   .about-facts{grid-column:1/-1}
@@ -410,7 +425,7 @@ html:not(.top) .sn{border-bottom-color:var(--line)}
   .pc,.pc-std{padding:0;border:0;margin-bottom:24px}
   .wk-grid{margin:0;row-gap:32px}
   .pc:hover{background:none}
-  .hero-idx{grid-template-columns:1fr}
+  .hero-idx,.hm-hub{grid-template-columns:1fr}
   .hero-idx a,.hero-idx a+a{padding:18px 0;border-left:0;border-bottom:1px solid var(--line)}
   .cbar .wrap{grid-template-columns:minmax(0,1fr) auto}
   .cbar .ttl{display:none}

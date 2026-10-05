@@ -1568,7 +1568,6 @@
               <h1 class="hm-name" id="hmT" tabindex="-1" aria-label="Khanim Azimli"><span class="ln"><span class="tx">Khanim</span></span><span class="ln"><span class="tx">Azimli</span></span></h1>
               <p class="hm-role load d3"><i class="role-k">Practice</i><b>Visual Storyteller &amp; Designer</b><span class="role-d">Presentations · Editorial · Data · Interactive</span></p>
               <p class="hm-pos load d4"><b>Ideas, data and stories, <span>designed to be understood.</span></b><span class="pos-s">Making ideas easier to see, feel and remember.</span></p>
-              <div class="hm-cta load d4"><a class="btn btn-gold" href="#/work">Explore work <i aria-hidden="true">→</i></a><a class="link-arrow" href="#/contact">Let’s work together <i aria-hidden="true">→</i></a></div>
             </div>
             <a class="pc hm-feat load d3" href="${caseHref(feat.id)}" data-case="${feat.id}">
               <span class="media">${img(feat.card, '(max-width:1024px) 92vw, 58vw', true, '')}</span>
@@ -1576,10 +1575,11 @@
               <b class="hm-ft">${feat.title}</b>
             </a>
           </div>
-          <nav class="hero-idx load d4" aria-label="Formats">
-            <a href="#/work"><span class="n">01</span><b>Presentations</b><span class="x">Strategy, research and data stories</span><i aria-hidden="true">→</i></a>
-            <a href="publishing.html"><span class="n">02</span><b>Publications</b><span class="x">Textbooks · 469,810 copies printed</span><i aria-hidden="true">→</i></a>
-            <a href="#/work"><span class="n">03</span><b>Interactive</b><span class="x">Live HTML experiences and motion</span><i aria-hidden="true">→</i></a>
+          <nav class="hero-idx hm-hub load d4" aria-label="Portfolio">
+            <a href="#/work"><span class="n">01</span><b>Work</b><span class="x">${WORK.length} projects · presentations, publishing, interactive</span><i aria-hidden="true">→</i></a>
+            <a href="#/about"><span class="n">02</span><b>About</b><span class="x">Background, approach and tools</span><i aria-hidden="true">→</i></a>
+            <a href="#/services"><span class="n">03</span><b>Services</b><span class="x">Presentations, strategy decks, data, interactive</span><i aria-hidden="true">→</i></a>
+            <a href="#/contact"><span class="n">04</span><b>Contact</b><span class="x">Remote freelance and contract projects</span><i aria-hidden="true">→</i></a>
           </nav>
         </div>
       </section>`
@@ -1729,6 +1729,7 @@
     const swap = () => {
       viewEl.innerHTML = v.html();
       viewEl.dataset.view = name; document.body.dataset.view = name;
+      document.documentElement.classList.toggle('is-home', name === 'home');
       initView();
       scrollTo(0, y || 0);
       viewEl.classList.remove('out');
