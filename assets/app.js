@@ -1,12 +1,16 @@
 /* Khanim Azimli · portfolio
-   Home + SPA case view. Components: project list (featured + grid) with filters,
-   case view, slide viewer, before/after slider, scroll story, cursor label. No libraries. */
+   A small static web app. A hash router renders one view at a time:
+     #/            Home (entry screen)
+     #/work        Work index
+     #/case/<slug> Case study (own layer: All work · Prev · Next)
+     #/about  #/services  #/contact
+   Components: slide viewer with fullscreen, before/after comparison, key moves.
+   The art-directed cases (nrf, got, sys, tmf, gai) keep their own page code and identity. No libraries. */
 (() => {
   'use strict';
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const T = p => `assets/img/${p}-t.webp`;   // 960w
   const F = p => `assets/img/${p}.webp`;     // 2000w
   const pad = n => String(n).padStart(2, '0');
@@ -18,17 +22,8 @@
 
   /* ================================================================
      CONTENT
-     kpi / kpiCap: the one figure shown on the card (taken from the project facts, nothing invented)
-     out: outcome figures for the case page · groups: filter membership
+     kpi / out: figures from the project facts, nothing invented. custom: art-directed case page.
      ================================================================ */
-  const GROUPS = [
-    ['all', 'All work'],
-    ['redesign', 'Report redesigns'],
-    ['exec', 'Executive & pitch decks'],
-    ['data', 'Data storytelling'],
-    ['interactive', 'Interactive & motion'],
-    ['editorial', 'Editorial & print']
-  ];
   const P = [
     {
       // featured interactive atlas: home block, case page and transformation study live in case-got.js / case-got.css (the atlas's own ink / cobalt / cyan system)
@@ -137,231 +132,43 @@
       note: 'Portfolio adaptation of an in-house deck. Fictional brand, synthetic data.'
     }
   ];
-  const PI = Object.fromEntries(P.map((p, i) => [p.id, i]));
 
-  /* Selected Work: curated home order. Cases not listed here (gai, mel, indo, pas) stay reachable
-     through Before / After and case navigation. XP = home cards that link to their own pages. */
-  const HOME = ['nrf', 'got', 'sys', 'edu', 'ppt', 'tmf']; // got replaced the 'trade' link card (XP.trade kept, unused)
-  const XP = {
-    trade: {
-      id: 'trade', title: 'The World Is Still Trading. Just Differently.', cat: 'Interactive Data Atlas · Data Storytelling', year: '2026', groups: ['redesign', 'data', 'interactive'],
-      href: 'assets/live/geometry-of-trade-2026-atlas.html', ext: true, go: 'Open live experience', goI: '↗',
-      img: 'assets/img/trade/s01', thumbs: ['assets/img/trade/s02', 'assets/img/trade/s07'],
-      desc: 'McKinsey Global Institute’s 2026 trade research reinterpreted as a 10-plate interactive atlas, built around a globe that turns as the story moves.',
-      kpi: '10', kpiCap: 'plates · one globe · one trade story'
-    },
+  /* Work order follows the curated hierarchy: the six selected projects first, then the
+     report-redesign cases. Publishing and PowerPoint, Rebuilt are their own HTML pages (EXT). */
+  const WORK = ['nrf', 'got', 'sys', 'edu', 'ppt', 'tmf', 'mel', 'indo', 'gai', 'pas'];
+  const SLUG = {
+    nrf: 'the-new-rules-of-fashion', got: 'the-world-is-still-trading', sys: 'the-system-is-waking-up', tmf: 'tech-moves-fast',
+    mel: 'melbourne', indo: 'indonesia', gai: 'generative-ai', pas: 'personalization-at-scale'
+  };
+  // full titles for the Work index where the case title is a short form
+  const LONG = { got: 'The World Is Still Trading. Just Differently.', tmf: 'Tech Moves Fast. People Decide If It Lands.' };
+  const EXT = {
     edu: {
-      id: 'edu', title: 'Game Changer / Editorial Publishing', cat: 'Editorial & Educational Publishing', year: '2022–2025', groups: ['editorial'],
-      href: 'publishing.html#game-changer', go: 'View publishing case', goI: '→',
-      img: 'assets/img/edu/home-shelf',
-      desc: 'Cambridge’s Game Changer adapted into a national edition for Azerbaijani classrooms, part of a wider print practice: textbooks, yearbooks and theatre.',
-      kpi: '469,810', kpiCap: 'textbook copies printed across four editions'
+      id: 'edu', title: 'Game Changer / Editorial Publishing', cat: 'Editorial & Educational Publishing', year: '2022–2025',
+      href: 'publishing.html', img: 'assets/img/edu/home-shelf-t.webp', go: 'View publishing case',
+      kpi: '469,810', kpiCap: 'textbook copies printed across four editions',
+      desc: 'Cambridge’s Game Changer adapted into a national edition for Azerbaijani classrooms, part of a wider print practice: textbooks, yearbooks and theatre.'
     },
     ppt: {
-      id: 'ppt', title: 'PowerPoint, Rebuilt.', cat: 'Presentation Redesign · Native PowerPoint', year: '2026', groups: ['redesign', 'exec'],
-      href: 'powerpoint-rebuilt.html', go: 'View the transformations', goI: '→',
-      img: 'assets/img/ppt/after-05', full: true, thumbs: ['assets/img/ppt/before-13', 'powerpoint-rebuilt/ai-prioritized/img/slide-02'],
-      desc: 'Three ordinary corporate decks rebuilt through hierarchy, storytelling and fully editable PowerPoint design.',
-      kpi: `158${TO}30`, kpiCap: 'source slides to redesigned slides, across 3 studies'
+      id: 'ppt', title: 'PowerPoint, Rebuilt.', cat: 'Presentation Redesign · Native PowerPoint', year: '2026',
+      href: 'powerpoint-rebuilt.html', img: 'assets/img/ppt/after-05.webp', go: 'View the transformations',
+      kpi: `158${TO}30`, kpiCap: 'source slides to redesigned slides, across 3 studies',
+      desc: 'Three ordinary corporate decks rebuilt through hierarchy, storytelling and fully editable PowerPoint design.'
     }
   };
-  const homeList = () => HOME.map(id => XP[id] || P[PI[id]]).filter(Boolean);
-  const xImg = (x, sizes) => x.full
-    ? `<img src="${x.img}.webp" alt="" loading="lazy" decoding="async">`
-    : `<img src="${x.img}-t.webp" srcset="${x.img}-t.webp 960w, ${x.img}.webp 2000w" sizes="${sizes}" alt="" loading="lazy" decoding="async">`;
-  const linkCard = (x, n, flip) => {
-    const tgt = x.ext ? ' target="_blank" rel="noopener"' : '';
-    return `
-    <article class="pc pc-feat pc-link${flip ? ' flip' : ''}">
-      <a class="media" href="${x.href}"${tgt} aria-label="${x.title}, ${x.go.toLowerCase()}">${xImg(x, '(max-width:1024px) 92vw, 760px')}</a>
-      <div class="txt">
-        ${x.thumbs ? `<div class="thumbs">${x.thumbs.map(t => `<div class="frame"><img src="${t}${/\/img\/(trade)\//.test(t) ? '-t' : ''}.webp" alt="" loading="lazy" decoding="async"></div>`).join('')}</div>` : ''}
-        <h3>${x.title}</h3>
-        <p class="desc">${x.desc}</p>
-        <div class="bottom">
-          <div class="bar"><p class="meta"><span class="tag">${x.cat}</span><span>${n} · ${x.year}</span></p><span class="fill"></span><a class="go" href="${x.href}"${tgt}>${x.go} <i>${x.goI}</i></a></div>
-          <p class="kpi"><b>${x.kpi}</b><small>${x.kpiCap}</small></p>
-        </div>
-      </div>
-    </article>`;
-  };
+  P.sort((a, b) => WORK.indexOf(a.id) - WORK.indexOf(b.id));
+  const PI = Object.fromEntries(P.map((p, i) => [p.id, i]));
+  const BY_SLUG = Object.fromEntries(P.map(p => [SLUG[p.id], p.id]));
+  const wn = id => pad(WORK.indexOf(id) + 1);           // number shown on the Work index
+  const caseHref = id => '#/case/' + SLUG[id];
 
-  /* ================================================================
-     HOME
-     ================================================================ */
-  requestAnimationFrame(() => setTimeout(() => document.body.classList.add('ready'), 60));
-
-  // nav
-  const nav = $('#nav');
-  const navLinks = $$('.nav nav a');
-  const onScroll = () => {
-    nav.classList.toggle('line', scrollY > 8);
-    const y = scrollY + innerHeight * .4; let cur = '';
-    navLinks.forEach(a => { const s = $(a.getAttribute('href')); if (s && s.offsetTop <= y) cur = a.getAttribute('href'); });
-    navLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === cur));
-  };
-  addEventListener('scroll', onScroll, { passive: true }); onScroll();
-
-  const burger = $('#burger'), drawer = $('#drawer');
-  const setDrawer = on => {
-    drawer.classList.toggle('on', on); burger.setAttribute('aria-expanded', on);
-    $('span', burger).textContent = on ? 'Close' : 'Menu';
-    document.body.classList.toggle('lock', on);
-  };
-  burger.addEventListener('click', () => setDrawer(!drawer.classList.contains('on')));
-  $$('a', drawer).forEach(a => a.addEventListener('click', () => setDrawer(false)));
-
-  // hero: slight horizontal drift of the two name lines on scroll
-  const drift = $$('[data-drift]');
-  if (!RM && drift.length && matchMedia('(min-width: 821px)').matches) {
-    let tick = false;
-    const run = () => {
-      const k = Math.min(scrollY, 700) * .05;
-      drift.forEach(el => { el.parentElement.style.transform = `translate3d(${(+el.dataset.drift * k).toFixed(1)}px,0,0)`; });
-      tick = false;
-    };
-    addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(run); } }, { passive: true });
-  }
-
-  // reveal
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .01 });
-  const observe = els => { if (RM) els.forEach(el => el.classList.add('in')); else els.forEach(el => io.observe(el)); };
-  observe($$('.rv'));
-
-  /* ---------- project list ---------- */
-  const img = (p, sizes, eager) => `<img${Z(p)} src="${T(p)}" srcset="${T(p)} 960w, ${F(p)} 2000w" sizes="${sizes}" alt="" ${eager ? '' : 'loading="lazy"'} decoding="async">`;
-  const featCard = (p, flip) => {
-    const i = PI[p.id];
-    return `
-    <article class="pc pc-feat${flip ? ' flip' : ''}" data-open="${p.id}">
-      <a class="media" href="#/work/${p.id}" data-open="${p.id}" aria-label="${p.title}, view case">${img(p.card, '(max-width:1024px) 92vw, 760px', i === 0)}</a>
-      <div class="txt">
-        ${p.thumbs ? `<div class="thumbs">${p.thumbs.map(t => `<div class="frame">${img(t, '300px')}</div>`).join('')}</div>` : ''}
-        <h3>${p.title}</h3>
-        <p class="desc">${p.desc}</p>
-        <div class="bottom">
-          <div class="bar"><p class="meta"><span class="tag">${p.cat}</span><span>${pad(i + 1)} · ${p.year}</span></p><span class="fill"></span><a class="go" href="#/work/${p.id}" data-open="${p.id}">View case <i>→</i></a></div>
-          <p class="kpi"><b>${p.kpi}</b><small>${p.kpiCap}</small></p>
-        </div>
-      </div>
-    </article>`;
-  };
-  const stdCard = p => {
-    const i = PI[p.id];
-    return `
-    <article class="pc pc-std" data-open="${p.id}">
-      <a class="media" href="#/work/${p.id}" data-open="${p.id}" aria-label="${p.title}, view case">${img(p.card, '(max-width:820px) 92vw, 600px')}</a>
-      <div class="txt">
-        <p class="meta"><span class="tag">${p.cat}</span><span>${pad(i + 1)} · ${p.year}</span></p>
-        <h3>${p.title}</h3>
-        <p class="desc">${p.desc}</p>
-        <div class="row"><p class="kpi"><b>${p.kpi}</b><small>${p.kpiCap}</small></p><span class="fill"></span><a class="go" href="#/work/${p.id}" data-open="${p.id}">View case <i>→</i></a></div>
-      </div>
-    </article>`;
-  };
-  // layout: featured cards first (one or two, alternating sides), then two-up grid rows
-  const gaiCard = () => `
-    <article class="gx" data-open="gai">
-      <div class="gx-bar"><span class="gx-ix">01</span><span>/ Presentation Redesign · Data Storytelling</span><i class="gx-rule"></i><span class="gx-yr">Featured case · 2026</span></div>
-      <div class="gx-grid">
-        <div class="gx-txt">
-          <h3><span class="ln"><span>Generative AI</span></span><span class="ln"><span>&amp; the Future of Work</span></span></h3>
-          <p class="gx-hook"><span>76 pages of research</span> <em>→</em> <span>10 slides of visual storytelling.</span></p>
-          <p class="gx-desc">Turning a 76-page research report into a 10-slide visual story about how AI is reshaping work.</p>
-          <a class="gx-go" href="#/work/gai" data-open="gai"><span>View case</span><i>→</i></a>
-        </div>
-        <a class="gx-stage" href="#/work/gai" data-open="gai" aria-label="Generative AI and the Future of Work, view case">
-          <span class="gx-f f4" style="--d:.35"><img src="${T('gai/s08')}" alt="" loading="lazy" decoding="async"></span>
-          <span class="gx-f f3" style="--d:.6"><img src="${T('gai/s02')}" alt="" loading="lazy" decoding="async"></span>
-          <span class="gx-f f2" style="--d:.85"><img src="${T('gai/s10')}" alt="" loading="lazy" decoding="async"></span>
-          <span class="gx-f f1" style="--d:1.2"><img src="${T('gai/s01')}" srcset="${T('gai/s01')} 960w, ${F('gai/s01')} 1920w" sizes="(max-width:1024px) 80vw, 640px" alt="Cover slide: Generative AI and the future of work" decoding="async"></span>
-          <span class="gx-cue"><i></i>01 / 10</span>
-        </a>
-      </div>
-    </article>`;
-  const initGaiCard = root => {
-    const st = $('.gx-stage', root); if (!st || !FINE || RM) return;
-    let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
-    const loop = () => {
-      x += (tx - x) * .08; y += (ty - y) * .08;
-      st.style.setProperty('--mx', x.toFixed(3)); st.style.setProperty('--my', y.toFixed(3));
-      raf = (Math.abs(tx - x) > .002 || Math.abs(ty - y) > .002) ? requestAnimationFrame(loop) : 0;
-    };
-    const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
-    st.addEventListener('pointermove', e => { const r = st.getBoundingClientRect(); tx = (e.clientX - r.left) / r.width * 2 - 1; ty = (e.clientY - r.top) / r.height * 2 - 1; kick(); });
-    st.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); });
-  };
-  // The New Rules of Fashion: a special issue that interrupts the sequence.
-  // Navy whitespace, a red thread, then an ivory spread opening from its spine.
+  // The New Rules of Fashion image helper
   const NI = (p, w) => `assets/img/${p}${w === 't' ? '-t' : ''}.webp`;
-  const nxCard = nn => {
-    const n = nn || pad(PI.nrf + 1);
-    const fig = (cls, src, srcT, alt, idx, cap, sizes) => `
-          <figure class="nx-f ${cls}"><span class="nx-fr"><img src="${srcT}" srcset="${srcT} 960w, ${src} 1920w" sizes="${sizes}" alt="${alt}" loading="lazy" decoding="async"></span><figcaption><i>${idx}</i>${cap}</figcaption></figure>`;
-    return `
-    <section class="nx" aria-label="Special project: The New Rules of Fashion">
-      <div class="nx-air" aria-hidden="true"><i class="nx-thread"></i><span class="nx-air-lab">${n} / Special issue</span></div>
-      <div class="nx-sheet" data-open="nrf">
-        <div class="wrap">
-          <div class="nx-mast"><span class="nx-tag"><b>Special project</b> / Editorial data storytelling</span><i class="nx-rule"></i><span class="nx-iss">${n} · 2026</span></div>
-          <div class="nx-comp">
-            <h3 class="nx-title" aria-label="The New Rules of Fashion, 2026">
-              <span class="nx-w the" aria-hidden="true">THE NEW</span>
-              <span class="nx-w rules" aria-hidden="true">RULES</span>
-              <span class="nx-w of" aria-hidden="true">OF FASHION</span>
-              <span class="nx-w yr" aria-hidden="true">2026</span>
-            </h3>
-            <p class="nx-sub">143 pages of fashion research reframed as a 10-slide editorial narrative.</p>
-            ${fig('fa', NI('nrf/c-46v'), NI('nrf/c-46v', 't'), 'Slide 02 detail, the 46% figure', '02', 'The old playbook no longer works', '(max-width:900px) 62vw, 28vw')}
-            ${fig('fb', NI('nrf/s05'), NI('nrf/s05', 't'), 'Slide 05, the next shopper may not be human, with the AI shopping interface and 4,700%', '05', 'The next shopper may not be human', '(max-width:900px) 92vw, 64vw')}
-            ${fig('fc', NI('nrf/c-glass'), NI('nrf/c-glass', 't'), 'Slide 06 detail, smart glasses interface', '06', 'Fashion is becoming interface', '(max-width:900px) 78vw, 40vw')}
-            ${fig('fd', NI('nrf/c-stitch'), NI('nrf/c-stitch', 't'), 'Slide 09 detail, stitched leather edge', '09', 'Price is not prestige. Craft is.', '(max-width:900px) 92vw, 44vw')}
-            <div class="nx-cta">
-              <ol class="nx-arc" aria-label="Five shifts"><li>Pressure</li><li>Rewiring</li><li>New consumer</li><li>New value</li><li>New luxury</li></ol>
-              <a class="nx-go" href="#/work/nrf" data-open="nrf"><span>View case study</span><i>→</i></a>
-              <a class="nx-live" href="assets/live/the-new-rules-of-fashion.html" target="_blank" rel="noopener"><span>Open live experience</span><i>↗</i><small>10-slide interactive HTML</small></a>
-              <p class="nx-meta">Presentation design · Data storytelling · Editorial art direction · Motion</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>`;
-  };
-  // scroll: thread draws, the spread opens, the nav turns ivory while the sheet is under it
-  let nxUpd = null;
-  const nclamp = v => Math.min(1, Math.max(0, v));
-  const neio = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  const caseOpen = () => $('#case').classList.contains('open');
-  const initNx = root => {
-    const nx = $('.nx', root); nxUpd = null;
-    document.body.classList.remove('nx-zone', 'nx-hot');
-    if (!nx) return;
-    const air = $('.nx-air', nx), sheet = $('.nx-sheet', nx);
-    nxUpd = () => {
-      if (caseOpen()) return;
-      const vh = innerHeight, ra = air.getBoundingClientRect(), rs = sheet.getBoundingClientRect();
-      const p = RM ? 1 : nclamp((vh * .96 - ra.top) / (ra.height + vh * .12));
-      const q = RM ? 1 : nclamp((vh * .9 - rs.top) / (vh * .42));
-      nx.style.setProperty('--p', p.toFixed(4));
-      nx.style.setProperty('--q', neio(q).toFixed(4));
-      if (q > .62) nx.classList.add('in');
-      document.body.classList.toggle('nx-zone', q > .98 && rs.top < 68 && rs.bottom > 68);
-    };
-    nxUpd();
-    if (FINE) {
-      sheet.addEventListener('pointerenter', () => { nx.classList.add('hot'); document.body.classList.add('nx-hot'); });
-      sheet.addEventListener('pointerleave', () => { nx.classList.remove('hot'); document.body.classList.remove('nx-hot'); });
-    }
-  };
-  let nxTick = false;
-  addEventListener('scroll', () => { if (nxUpd && !nxTick) { nxTick = true; requestAnimationFrame(() => { nxTick = false; nxUpd && nxUpd(); }); } }, { passive: true });
-  addEventListener('resize', () => nxUpd && nxUpd());
 
   /* ================================================================
      THE SYSTEM IS WAKING UP · interactive report redesign
      Keeps its own identity (graphite, mineral white, signal green, violet, steel).
-     Home block (syCard + initSy), Before → After studies (#transformations, tfStudy + initTf),
-     dedicated case (sysCase + initSys). Styles in case-sys.css. Frames are captured from the live HTML.
+     Dedicated case (sysCase + initSys). Styles in case-sys.css. Frames are captured from the live HTML.
      ================================================================ */
   const SY_LIVE = 'assets/live/tech-trends-2025-the-system-is-waking-up.html';
   const SI = (p, w) => `assets/img/sys/${p}${w === 't' ? '-t' : ''}.webp`;
@@ -384,371 +191,20 @@
     { from: 'Summary', to: 'Resolution', before: 'A technology outlook ends as a collection of trends.', bimg: 'r09', bsrc: 'Original report · Exhibit 2, p.7', after: 'The future is not a tool.<br>It is a system.', aimg: 's10', slide: '10',
       copy: 'The last slide returns to the opening network, now fully connected, and answers the question the cover asked.' }
   ];
-  const syPanel = (s, k) => `
-            <div class="tfs-pb"><span class="tfs-lab">Before</span><span class="tfs-page"><img src="${SI(s.bimg, 't')}" alt="Original report page: ${s.bsrc.replace('Original report · ', '')}" loading="lazy" decoding="async"></span><p>${s.before}</p><small>${s.bsrc}</small></div>
-            <div class="tfs-pt"><span class="tfs-big"><span>${s.from}</span><em>↓</em><span>${s.to}</span></span><p>${s.copy}</p></div>
-            <div class="tfs-pa"><span class="tfs-lab g">After · Slide ${s.slide}</span><span class="tfs-fr">${syImg(s.aimg, 'Redesigned slide ' + s.slide, '(max-width:900px) 92vw, 46vw')}</span><p class="tfs-ah">${s.after}</p>${s.chips ? `<div class="tfs-chips">${s.chips.join('')}</div>` : ''}</div>`;
-
-  // 13 list items → one topology (same three regions as slide 02)
-  const syMorph = () => {
-    const pos = [[100, 150], [100, 210], [60, 108], [146, 120], [154, 196], [104, 268], [46, 214], [100, 62], [176, 72], [190, 244], [118, 330], [20, 286], [12, 150]];
-    const edges = [[0, 1], [0, 2], [0, 3], [1, 4], [1, 5], [1, 6], [0, 7], [3, 8], [4, 9], [5, 10], [6, 11], [2, 12], [2, 7], [4, 3], [6, 5]];
-    let s = `<svg viewBox="0 0 200 380" aria-hidden="true"><text class="m-cap a" x="0" y="8">List</text>`;
-    pos.forEach((p, k) => { s += `<line class="m-bar" x1="${30}" y1="${30 + k * 26}" x2="${70}" y2="${30 + k * 26}"/>`; });
-    edges.forEach(([a, b], k) => { s += `<path class="m-ln" pathLength="1" style="--d:${(1.5 + k * .05).toFixed(2)}s" d="M${pos[a][0]} ${pos[a][1]}L${pos[b][0]} ${pos[b][1]}"/>`; });
-    pos.forEach((p, k) => {
-      const cls = k < 2 ? 'fill:#7657FF' : k < 7 ? 'fill:#ECEDE8' : 'fill:#B6F500';
-      s += `<circle class="m-dot" r="${k < 2 ? 6 : 4.5}" cx="0" cy="0" style="${cls};--x0:20px;--y0:${30 + k * 26}px;--x1:${p[0]}px;--y1:${p[1]}px;--d:${(k * .04).toFixed(2)}s"/>`;
-    });
-    return s + `<text class="m-cap b" x="200" y="378" text-anchor="end">Topology</text></svg>`;
-  };
-
-  const tfStudy = () => `
-    <article class="tfs" aria-label="Transformation study: The System Is Waking Up">
-      <div class="tfs-bar"><span class="tfs-kind">01 · Report → Interactive system</span><span>Technology Trends Outlook 2025 · 108-page report → 10-slide interactive HTML</span><span class="tfs-no">Research → Interactive story</span></div>
-      <h3 class="tfs-line" aria-label="13 separate trends, to one connected system"><span class="a">13 separate trends</span><i class="tfs-arr" aria-hidden="true"></i><span class="b">One connected <em>system</em></span></h3>
-      <div class="tfs-ba">
-        <figure class="tfs-before">
-          <span class="tfs-lab">Before · The report</span>
-          <div class="tfs-pages">${SY_PROFILES.map(p => `<span><img src="assets/img/sys/q${String(p[2]).padStart(3, '0')}-t.webp" alt="" loading="lazy" decoding="async"><i>${p[0]}</i></span>`).join('')}<span class="more">13 separate chapters</span><span class="more">108 pages</span></div>
-          <figcaption>A conventional research structure: thirteen trend chapters, each with its own scoring charts, read one after another.<small>McKinsey Technology Trends Outlook 2025 · trend profiles, pp.12–98</small></figcaption>
-        </figure>
-        <div class="tfs-morph">${syMorph()}</div>
-        <figure class="tfs-after">
-          <span class="tfs-lab g">After · The live HTML</span>
-          <a class="tfs-fr" href="#/work/sys" data-open="sys" aria-label="View the case study">${syVid('wake', SI('m01-3', 't'), 'The opening slide of the live presentation: disconnected nodes connect into one system', true)}</a>
-          <figcaption><b>The System Is Waking Up.</b> One 10-slide interactive narrative. Every trend becomes a node in the same system, and the system builds from slide to slide.<small>Recorded from the live HTML · no images were used to build the deck</small></figcaption>
-        </figure>
-      </div>
-      <div class="tfs-steps">
-        <div class="tfs-steps-h"><span>Five restructuring moves</span><span>Before: the report · After: the slide</span></div>
-        <div class="tfs-tabs" role="tablist" aria-label="Transformation steps">${SY_STUDIES.map((s, k) => `<button role="tab" id="tfsT${k}" aria-controls="tfsP" aria-selected="${k === 0}" tabindex="${k ? -1 : 0}" data-k="${k}"><i>0${k + 1}</i><b>${s.from}<em>→</em>${s.to}</b></button>`).join('')}</div>
-        <div class="tfs-panel" id="tfsP" role="tabpanel" aria-labelledby="tfsT0" aria-live="polite">${syPanel(SY_STUDIES[0], 0)}</div>
-      </div>
-      <div class="tfs-foot">
-        <a class="y-go" href="#/work/sys" data-open="sys"><span>View case study</span><i>→</i></a>
-        ${syLive()}
-        <p class="tfs-disc">${SY_DISC}</p>
-      </div>
-    </article>
-    ${window.TMF ? TMF.tfStudy() : ''}
-    ${window.GOT ? GOT.tfStudy() : ''}
-    <div class="tfo">
-      <p class="tfo-h"><span>More before → after studies</span><span>Different starting points, different outputs</span></p>
-      <a class="tfo-row" href="powerpoint-rebuilt.html"><span class="tfo-kind">PowerPoint → Decision story</span><b>From Complexity to Control</b><span class="tfo-n">49 slides → 10</span><span class="tfo-th"><span><img src="assets/img/ppt/before-13.webp" alt="Original source slide" loading="lazy" decoding="async"></span><span><img src="assets/img/ppt/after-05.webp" alt="Redesigned slide" loading="lazy" decoding="async"></span></span><i>→</i></a>
-      <a class="tfo-row" href="#/work/mel" data-open="mel"><span class="tfo-kind">Report → Executive presentation</span><b>Melbourne</b><span class="tfo-n">56 pages → 12 slides</span><span class="tfo-th"><span><img src="${T('mel/b06')}" alt="Original report page" loading="lazy" decoding="async"></span><span><img src="${T('mel/s06')}" alt="Redesigned slide" loading="lazy" decoding="async"></span></span><i>→</i></a>
-      <a class="tfo-row" href="#/work/indo" data-open="indo"><span class="tfo-kind">Report → Data story</span><b>Indonesia</b><span class="tfo-n">69 pages → 11 slides</span><span class="tfo-th"><span><img src="${T('indo/b03')}" alt="Original report page" loading="lazy" decoding="async"></span><span><img src="${T('indo/s03')}" alt="Redesigned slide" loading="lazy" decoding="async"></span></span><i>→</i></a>
-    </div>`;
-
-  const initTabs = root => {
-    const tabs = $$('.tfs-tabs button', root), panel = $('.tfs-panel', root);
-    if (!tabs.length || !panel) return;
-    const sel = (k, focus) => {
-      tabs.forEach((b, n) => { b.setAttribute('aria-selected', n === k); b.tabIndex = n === k ? 0 : -1; });
-      if (focus) tabs[k].focus();
-      panel.setAttribute('aria-labelledby', 'tfsT' + k);
-      panel.classList.add('swap');
-      setTimeout(() => { panel.innerHTML = syPanel(SY_STUDIES[k], k); panel.classList.remove('swap'); }, RM ? 0 : 220);
-    };
-    const fit = () => {
-      panel.style.minHeight = '';
-      const keep = panel.innerHTML; let h = 0;
-      SY_STUDIES.forEach((s, k) => { panel.innerHTML = syPanel(s, k); h = Math.max(h, panel.offsetHeight); });
-      panel.innerHTML = keep; panel.style.minHeight = h + 'px';
-    };
-    fit(); document.fonts && document.fonts.ready.then(fit); let fitT; addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(fit, 200); });
-    tabs.forEach((b, k) => b.addEventListener('click', () => sel(k)));
-    $('.tfs-tabs', root).addEventListener('keydown', e => {
-      const k = tabs.findIndex(b => b.getAttribute('aria-selected') === 'true');
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); sel((k + 1) % tabs.length, true); }
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); sel((k - 1 + tabs.length) % tabs.length, true); }
-    });
-  };
   // looping clips play only while visible
   const syPlay = (vids, root) => {
     if (RM) return;
     const vo = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting) { if (!v.loop && v.ended) return; v.preload = 'auto'; const pr = v.play(); pr && pr.catch(() => {}); } else v.pause(); }), { root: root || null, threshold: .3 });
     vids.forEach(v => vo.observe(v));
   };
-  const initTf = () => {
-    const m = $('#tfMount'); if (!m) return;
-    m.innerHTML = (window.GOT ? GOT.tfSeries() : window.TMF ? TMF.tfSeries() : '') + tfStudy();
-    const st = $('.tfs', m);
-    const o = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { st.classList.add('in'); o.disconnect(); } }, { rootMargin: '0px 0px -25% 0px' });
-    RM ? st.classList.add('in') : o.observe(st);
-    initTabs(m);
-    window.TMF && TMF.initTf(m);
-    window.GOT && GOT.initTf(m);
-    syPlay($$('video', m));
-  };
-
-  // Selected work block
-  const syCard = nn => {
-    const n = nn || pad(PI.sys + 1);
-    const fr = (cls, inner, idx, cap) => `<figure class="sy-f ${cls}"><span class="sy-fr">${inner}</span><figcaption><i>${idx}</i>${cap}</figcaption></figure>`;
-    return `
-    <section class="sy" aria-label="Featured project: The System Is Waking Up">
-      <i class="sy-sig" aria-hidden="true"></i>
-      <div class="wrap">
-        <div class="sy-bar"><span class="sy-ix">${n}</span><span>/ Interactive presentation · Data storytelling · Technology</span><i class="sy-rule"></i><span>Live HTML · 2026</span></div>
-        <div class="sy-head">
-          <h3 class="sy-title" aria-label="The System Is Waking Up"><span class="sy-t1" aria-hidden="true">The System is</span><span class="sy-t2" aria-hidden="true">Waking up</span></h3>
-          <p class="sy-sub">13 technologies.<br>One increasingly intelligent world.</p>
-        </div>
-        <a class="sy-stage" href="#/work/sys" data-open="sys" aria-label="The System Is Waking Up, view case study">
-          ${fr('fa', syVid('wake', SI('m01-3', 't'), 'Slide 01 of the live presentation: the nodes connect into one system'), '01', 'The System Is Waking Up · live HTML')}
-          ${fr('fb', syImg('c-net', 'Slide 02 detail: 13 trends mapped as one topology', '(max-width:900px) 46vw, 24vw', true, 800, 1600), '02', '13 trends. One system.')}
-          ${fr('fc', syImg('c-985', 'Slide 03 detail: +985% and $1.1B', '(max-width:900px) 92vw, 40vw', true, 820, 1640), '03', 'Software started acting')}
-          ${fr('fd', syImg('s07', 'Slide 07: the breakthrough is the combination', '(max-width:900px) 92vw, 48vw'), '07', 'The breakthrough is the combination')}
-          ${fr('fe', syImg('c-trust', 'Slide 09 detail: the trust gate', '(max-width:900px) 92vw, 44vw', true, 1000, 2000), '09', 'The more autonomous the system, the more trust matters')}
-          <svg class="sy-net" aria-hidden="true"></svg>
-        </a>
-        <div class="sy-low">
-          <div class="sy-copy">
-            <p class="sy-pos">Turning a dense technology report into one connected 10-slide interactive system.</p>
-            <p class="sy-desc">A technology-trends report transformed into a 10-slide interactive narrative about what happens when AI, infrastructure, connectivity and physical systems begin working together.</p>
-            <ul class="sy-tags" aria-label="Disciplines"><li>Data storytelling</li><li>Interactive</li><li>HTML</li><li>Motion</li></ul>
-          </div>
-          <div class="sy-cta">
-            <a class="y-go" href="#/work/sys" data-open="sys"><span>View case study</span><i>→</i></a>
-            ${syLive()}
-            <span class="sy-note">10-slide interactive HTML · opens in a new tab</span>
-          </div>
-        </div>
-      </div>
-    </section>`;
-  };
-  // connectors between the frames, drawn in the deck's own line language
-  let syUpd = null;
-  const initSy = root => {
-    const sy = $('.sy', root); syUpd = null;
-    document.body.classList.remove('sy-near', 'sy-zone');
-    if (!sy) return;
-    const stage = $('.sy-stage', sy), net = $('.sy-net', sy), sig = $('.sy-sig', sy);
-    const draw = () => {
-      if (getComputedStyle(net).display === 'none') return;
-      const R = stage.getBoundingClientRect();
-      const r = c => { const b = $('.sy-f.' + c + ' .sy-fr', sy).getBoundingClientRect(); return { l: b.left - R.left, t: b.top - R.top, r: b.right - R.left, b: b.bottom - R.top, w: b.width, h: b.height }; };
-      const A = r('fa'), B = r('fb'), C = r('fc'), D = r('fd'), E = r('fe');
-      const P = [
-        [[A.r, A.t + A.h * .3], [(A.r + B.l) / 2, A.t + A.h * .3], [(A.r + B.l) / 2, B.t + B.h * .55], [B.l, B.t + B.h * .55]],
-        [[B.l + B.w * .5, B.b], [B.l + B.w * .5, C.t]],
-        [[C.l + C.w * .78, C.b], [C.l + C.w * .78, D.t]],
-        [[A.l + A.w * .2, A.b], [A.l + A.w * .2, E.t]],
-        [[E.r, E.t + E.h * .62], [(E.r + D.l) / 2, E.t + E.h * .62], [(E.r + D.l) / 2, D.t + D.h * .5], [D.l, D.t + D.h * .5]],
-        [[A.r, A.b - A.h * .12], [D.l + D.w * .14, A.b - A.h * .12], [D.l + D.w * .14, D.t]]
-      ];
-      let s = '';
-      P.forEach((pts, k) => {
-        const d = 'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L');
-        s += `<path class="ln" pathLength="1" d="${d}" style="transition-delay:${(.5 + k * .12).toFixed(2)}s"/><path class="pl" pathLength="1" d="${d}" style="--d:${(1.7 + k * .35).toFixed(2)}s"/>`;
-        const [a, b] = [pts[0], pts[pts.length - 1]];
-        s += `<rect class="nd" x="${(a[0] - 4).toFixed(1)}" y="${(a[1] - 4).toFixed(1)}" width="8" height="8"/><circle class="nd${k % 2 ? ' v' : ''}" cx="${b[0].toFixed(1)}" cy="${b[1].toFixed(1)}" r="4.5"/>`;
-      });
-      net.setAttribute('viewBox', `0 0 ${R.width.toFixed(1)} ${R.height.toFixed(1)}`);
-      net.innerHTML = s;
-    };
-    draw();
-    if ('ResizeObserver' in window) new ResizeObserver(() => draw()).observe(stage);
-    syPlay($$('video', sy));
-    syUpd = () => {
-      if (caseOpen()) return;
-      const vh = innerHeight, rs = sy.getBoundingClientRect();
-      const p = RM ? 1 : nclamp((vh * .95 - rs.top) / (vh * .55));
-      sig.style.setProperty('--p', p.toFixed(4));
-      if (p > .45) sy.classList.add('in');
-      document.body.classList.toggle('sy-near', rs.top < vh * .55 && rs.bottom > vh * .45);
-      document.body.classList.toggle('sy-zone', rs.top < 68 && rs.bottom > 68);
-    };
-    syUpd();
-  };
-  let syTick = false;
-  addEventListener('scroll', () => { if (syUpd && !syTick) { syTick = true; requestAnimationFrame(() => { syTick = false; syUpd && syUpd(); }); } }, { passive: true });
-  addEventListener('resize', () => syUpd && syUpd());
-
-  // Selected Work: one block per project, in the curated HOME order (numbers follow that order)
-  const layout = list => {
-    let flip = false;
-    return list.map(p => {
-      const n = pad(HOME.indexOf(p.id) + 1);
-      if (p.id === 'nrf') return nxCard(n);
-      if (p.id === 'sys') return syCard(n);
-      if (p.id === 'tmf') return window.TMF ? TMF.card(n, HOME.length) : '';
-      if (p.id === 'got') return window.GOT ? GOT.card(n, HOME.length) : '';
-      if (XP[p.id]) { const c = linkCard(p, n, flip); flip = !flip; return c; }
-      return '';
-    }).join('');
-  };
-  const layoutStd = list => {
-    const n = list.length, nf = n <= 2 ? n : (n % 2 ? 1 : 2);
-    const b = list.slice(0, nf).map((p, k) => featCard(p, k % 2 === 1));
-    const rest = list.slice(nf);
-    for (let k = 0; k < rest.length; k += 2) b.push(`<div class="pc-grid">${rest.slice(k, k + 2).map(stdCard).join('')}</div>`);
-    return b;
-  };
-  const projects = $('#projects'), filters = $('#filters');
-  let group = 'all';
-  const renderList = () => {
-    const list = homeList().filter(p => group === 'all' || p.groups.includes(group));
-    projects.innerHTML = layout(list);
-    observe($$('.pc, .gx', projects));
-    initGaiCard(projects);
-    initNx(projects);
-    initSy(projects);
-    window.TMF && TMF.initCard(projects);
-    window.GOT && GOT.initCard(projects);
-  };
-  filters.innerHTML = GROUPS.map(([k, label]) => {
-    const H = homeList(), c = k === 'all' ? H.length : H.filter(p => p.groups.includes(k)).length;
-    return `<button role="tab" data-g="${k}" aria-selected="${k === group}" class="${k === group ? 'on' : ''}">${label}<sup>${pad(c)}</sup></button>`;
-  }).join('');
-  $$('button', filters).forEach(b => b.addEventListener('click', () => {
-    if (b.dataset.g === group) return;
-    group = b.dataset.g;
-    $$('button', filters).forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); });
-    projects.classList.add('fade');
-    setTimeout(() => { renderList(); projects.classList.remove('fade'); }, RM ? 0 : 320);
-  }));
-  renderList();
-  initTf();
-  // hero format index: jump to work with the matching filter
-  $$('[data-filter-go]').forEach(a => a.addEventListener('click', () => { const b = $(`button[data-g="${a.dataset.filterGo}"]`, filters); b && b.click(); }));
-
-  /* ---------- cursor label over project images ---------- */
-  const cursor = $('#cursor');
-  const cursorLab = cursor && $('span', cursor);
-  if (FINE && !RM && cursor) {
-    let mx = -200, my = -200, x = mx, y = my, s = 0, want = 0, raf = 0;
-    const loop = () => {
-      x += (mx - x) * .2; y += (my - y) * .2; s += (want - s) * .16;
-      cursor.style.transform = `translate3d(${x}px,${y}px,0) scale(${s.toFixed(3)})`;
-      raf = (Math.abs(want - s) > .002 || Math.abs(mx - x) > .3 || Math.abs(my - y) > .3) ? requestAnimationFrame(loop) : 0;
-    };
-    addEventListener('pointermove', e => {
-      if (e.pointerType !== 'mouse') return;
-      mx = e.clientX; my = e.clientY;
-      const t = e.target.closest ? e.target : null;
-      const red = !isOpen() && !!(t && t.closest('.nx-sheet')) && !t.closest('.nx-live');
-      const grn = !isOpen() && !!(t && t.closest('.sy-stage, .tfs-after .tfs-fr'));
-      const on = red || grn || (!isOpen() && !!(t && t.closest('.pc .media, .gx-stage')));
-      const lk = !red && t && t.closest('.pc-link');
-      const lab = red ? 'Open issue' : lk ? (lk.querySelector('.media[target]') ? 'Open live' : 'Open') : 'View case';
-      cursor.classList.toggle('red', red); if (cursorLab.textContent !== lab) cursorLab.textContent = lab;
-      cursor.classList.toggle('sy', grn);
-      want = on ? 1 : 0; cursor.classList.toggle('on', on || s > .02);
-      if (!raf) raf = requestAnimationFrame(loop);
-    }, { passive: true });
-  }
-
-  /* ---------- local time (footer) ---------- */
-  const clock = $('#clock');
-  if (clock) {
-    const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Baku', hour: '2-digit', minute: '2-digit' });
-    const tickClock = () => { clock.textContent = fmt.format(new Date()); };
-    tickClock(); setInterval(tickClock, 20000);
-  }
 
   /* ================================================================
-     COMPONENTS
-     ================================================================ */
-
-  // slide viewer
-  const viewerHTML = (slides, uid) => `
-    <div class="viewer" id="${uid}" tabindex="0" aria-roledescription="slide viewer">
-      <div class="vstage"><img src="${F(slides[0][0])}" alt="${slides[0][1]}"><button class="hit l" aria-label="Previous slide"></button><button class="hit r" aria-label="Next slide"></button></div>
-      <div class="vbar">
-        <p class="vcap"><b>${slides[0][1]}</b></p>
-        <div class="vnav"><button class="vp" aria-label="Previous slide">${ARROW_L}</button><span class="vc">01 / ${pad(slides.length)}</span><button class="vn" aria-label="Next slide">${ARROW_R}</button></div>
-        <button class="vfull">Full screen</button>
-      </div>
-      <div class="vthumbs">${slides.map((s, i) => `<button class="${i ? '' : 'on'}" aria-label="Slide ${i + 1}: ${s[1]}"><img src="${T(s[0])}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>
-    </div>`;
-  const viewers = [];
-  const initViewer = (el, slides) => {
-    const stage = $('.vstage', el), cap = $('.vcap', el), cnt = $('.vc', el), th = $$('.vthumbs button', el);
-    let i = 0, busy = false, cur = $('img', stage);
-    const pre = k => { const im = new Image(); im.src = F(slides[(k + slides.length) % slides.length][0]); };
-    pre(1);
-    const go = (k, dir) => {
-      k = (k + slides.length) % slides.length; if (k === i || busy) return;
-      dir = dir || (k > i ? 1 : -1); busy = true;
-      const nx = document.createElement('img'); nx.src = F(slides[k][0]); nx.alt = slides[k][1];
-      nx.className = dir > 0 ? 'out-r' : 'out-l';
-      stage.insertBefore(nx, $('.hit', stage));
-      const run = () => {
-        requestAnimationFrame(() => requestAnimationFrame(() => { cur.className = dir > 0 ? 'out-l' : 'out-r'; nx.className = ''; }));
-        setTimeout(() => { cur.remove(); cur = nx; busy = false; }, RM ? 0 : 560);
-      };
-      nx.decode ? nx.decode().then(run, run) : run();
-      i = k;
-      cap.innerHTML = `<b>${slides[k][1]}</b>`; cnt.textContent = `${pad(k + 1)} / ${pad(slides.length)}`;
-      th.forEach((b, n) => b.classList.toggle('on', n === k));
-      th[k] && th[k].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
-      pre(k + 1); pre(k - 1);
-    };
-    $('.vn', el).addEventListener('click', () => go(i + 1, 1));
-    $('.vp', el).addEventListener('click', () => go(i - 1, -1));
-    $('.hit.r', el).addEventListener('click', () => go(i + 1, 1));
-    $('.hit.l', el).addEventListener('click', () => go(i - 1, -1));
-    th.forEach((b, n) => b.addEventListener('click', () => go(n)));
-    $('.vfull', el).addEventListener('click', () => { if (document.fullscreenElement) document.exitFullscreen(); else el.requestFullscreen && el.requestFullscreen().catch(() => {}); });
-    let sx = null, sy = 0;
-    stage.addEventListener('pointerdown', e => { sx = e.clientX; sy = e.clientY; });
-    stage.addEventListener('pointerup', e => { if (sx === null) return; const dx = e.clientX - sx, dy = e.clientY - sy; if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(i + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); sx = null; });
-    viewers.push({ el, next: () => go(i + 1, 1), prev: () => go(i - 1, -1) });
-  };
-
-  // before / after
-  const baHTML = (pairs, labels) => `
-    <div class="ba-block">
-      ${pairs.length > 1 ? `<div class="ba-tabs">${pairs.map((p, i) => `<button class="${i ? '' : 'on'}">${p[2]}</button>`).join('')}</div>` : ''}
-      <div class="ba" style="--x:50%">
-        <div class="pane"><img class="bf" src="${F(pairs[0][0])}" alt="Original"><img class="aft" src="${F(pairs[0][1])}" alt="Redesign"></div>
-        <i class="hd"></i><span class="tg l">${labels ? labels[0] : pairs[0][3]}</span><span class="tg r">${labels ? labels[1] : 'Redesign'}</span>
-        <input type="range" min="0" max="100" value="50" aria-label="Drag to compare original and redesign">
-      </div>
-      <p class="ba-cap"><b>${pairs[0][2]}.</b> ${pairs[0][4]}</p>
-    </div>`;
-  const initBA = (el, pairs, labels) => {
-    const ba = $('.ba', el), inp = $('input', ba), pane = $('.pane', ba), bf = $('.bf', ba), af = $('.aft', ba), tl = $('.tg.l', ba), cap = $('.ba-cap', el);
-    const set = () => ba.style.setProperty('--x', inp.value + '%');
-    inp.addEventListener('input', set); set();
-    $$('.ba-tabs button', el).forEach((b, k) => b.addEventListener('click', () => {
-      $$('.ba-tabs button', el).forEach(x => x.classList.toggle('on', x === b));
-      pane.style.opacity = 0;
-      const n1 = new Image(), n2 = new Image(); n1.src = F(pairs[k][0]); n2.src = F(pairs[k][1]);
-      Promise.all([n1.decode().catch(() => {}), n2.decode().catch(() => {})]).then(() => setTimeout(() => {
-        bf.src = n1.src; af.src = n2.src; if (!labels) tl.textContent = pairs[k][3];
-        cap.innerHTML = `<b>${pairs[k][2]}.</b> ${pairs[k][4]}`;
-        inp.value = 50; set(); pane.style.opacity = 1;
-      }, 200));
-    }));
-  };
-
-  // scroll story (left text, right sticky slide)
-  const storyHTML = steps => `
-    <div class="story">
-      <div class="steps">${steps.map((s, i) => `<div class="step${i ? '' : ' on'}" data-k="${i}"><div class="m frame r169"><img src="${T(s[0])}" alt="" loading="lazy"></div><span class="idx">${pad(i + 1)}</span><h3>${s[1]}</h3><p>${s[2]}</p></div>`).join('')}</div>
-      <div class="stick"><div class="frame">${steps.map((s, i) => `<img class="${i ? '' : 'on'}" src="${F(s[0])}" alt="${s[1]}" ${i ? 'loading="lazy"' : ''} decoding="async">`).join('')}</div></div>
-    </div>`;
-  const initStory = (el, root) => {
-    const steps = $$('.step', el), imgs = $$('.stick img', el);
-    const o = new IntersectionObserver(es => es.forEach(e => {
-      if (!e.isIntersecting) return;
-      const k = +e.target.dataset.k;
-      steps.forEach((s, n) => s.classList.toggle('on', n === k));
-      imgs.forEach((im, n) => im.classList.toggle('on', n === k));
-    }), { root, rootMargin: '-45% 0px -45% 0px' });
-    steps.forEach(s => o.observe(s));
-  };
-
-  /* ================================================================
-     CASE VIEW
+     CASE LAYER
+     Every case opens in #case, its own scroll container under a case bar
+     (logo · All work · title · Prev / Next). The art-directed pages below observe it as root.
      ================================================================ */
   const cs = $('#case'), cb = $('#cBody');
-  let cur = -1, lastFocus = null;
   const isOpen = () => cs.classList.contains('open');
-  const head = (n, t, p, small) => `<div class="c-h"><h2><span class="idx">${n}</span>${t}</h2><div><p${small ? ' class="sm"' : ''}>${p}</p></div></div>`;
 
   /* ================================================================
      GENERATIVE AI · editorial case page
@@ -799,7 +255,7 @@
       <!-- 01 HERO -->
       <section class="g-hero">
         <div class="wrap">
-          <div class="g-meta c-in"><span class="gold">${pad(i + 1)} / ${pad(P.length)}</span><span>Independent Presentation Redesign</span><span>Data Storytelling · Motion · HTML</span></div>
+          <div class="g-meta c-in"><span class="gold">${wn(P[i].id)} / ${pad(WORK.length)}</span><span>Independent Presentation Redesign</span><span>Data Storytelling · Motion · HTML</span></div>
           <h1 id="cTitle" class="g-title"><span class="ln"><span>Generative AI</span></span><span class="ln"><span>&amp; the Future of Work</span></span></h1>
           <div class="g-hero-low">
             <div class="g-big c-in d2" aria-label="76 pages of research to 10 slides of visual storytelling">
@@ -1146,7 +602,7 @@
     <article class="nf">
       <!-- 00 HERO -->
       <section class="f-hero">
-        <div class="wrap f-mast c-in"><span>The New Rules of Fashion</span><span>Special project / Editorial data storytelling</span><span class="f-mast-r"><a class="f-mlive" href="${live}" target="_blank" rel="noopener">Live presentation <i>↗</i></a><span>${pad(i + 1)} / ${pad(P.length)}</span></span></div>
+        <div class="wrap f-mast c-in"><span>The New Rules of Fashion</span><span>Special project / Editorial data storytelling</span><span class="f-mast-r"><a class="f-mlive" href="${live}" target="_blank" rel="noopener">Live presentation <i>↗</i></a><span>${wn(P[i].id)} / ${pad(WORK.length)}</span></span></div>
         <h1 id="cTitle" class="f-sr">The New Rules of Fashion, 2026</h1>
         <div class="f-cover" aria-hidden="true">
           <span class="f-cw the">THE NEW</span><span class="f-cw rules">RULES</span><span class="f-cw of">OF FASHION</span><span class="f-cw yr">2026</span>
@@ -1503,7 +959,7 @@
       <!-- 00 HERO -->
       <section class="sx-hero">
         ${syHeroNet()}
-        <div class="wrap sx-mast c-in"><b>The System Is Waking Up</b><span>Independent interactive redesign</span><span class="r">${syLive('', 'Open live experience')}<span>${pad(i + 1)} / ${pad(P.length)}</span></span></div>
+        <div class="wrap sx-mast c-in"><b>The System Is Waking Up</b><span>Independent interactive redesign</span><span class="r">${syLive('', 'Open live experience')}<span>${wn(P[i].id)} / ${pad(WORK.length)}</span></span></div>
         <div class="wrap sx-hero-in">
           <h1 id="cTitle" aria-label="The System Is Waking Up"><span class="sx-t1" aria-hidden="true">The System is</span><span class="sx-t2" aria-hidden="true">Waking up</span></h1>
           <div class="sx-hero-low">
@@ -1730,54 +1186,213 @@
     $$('.sx-end, .sx-b', root).forEach(el => RM ? el.classList.add('in') : so.observe(el));
   };
 
-  const render = i => {
-    const p = P[i], nx = P[(i + 1) % P.length];
-    scrollFx = [];
-    cs.classList.toggle('custom', !!p.custom);
-    cs.classList.toggle('nrf', p.custom === 'nrf');
-    cs.classList.toggle('sys', p.custom === 'sys');
-    cs.classList.toggle('tmf', p.custom === 'tmf');
-    cs.classList.toggle('got', p.custom === 'got');
-    cs.classList.remove('f-dark');
-    if (p.custom === 'got' && window.GOT) {
-      const ni = (i + 1) % P.length;
-      cb.innerHTML = GOT.page(i, P.length, ni, P[ni]);
-      $('#cTtl').textContent = 'The World Is Still Trading · Interactive atlas';
-      viewers.length = 0;
-      const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { root: cs, rootMargin: '0px 0px -8% 0px' });
-      if (RM) $$('.rv', cb).forEach(el => el.classList.add('in')); else $$('.rv', cb).forEach(el => o.observe(el));
-      cs.scrollTop = 0;
-      GOT.init(cb, cs);
-      return;
-    }
-    if (p.custom === 'tmf' && window.TMF) {
-      const ni = (i + 1) % P.length;
-      cb.innerHTML = TMF.page(i, P.length, ni, P[ni]);
-      $('#cTtl').textContent = 'Tech Moves Fast · Interactive presentation';
-      viewers.length = 0;
-      const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { root: cs, rootMargin: '0px 0px -8% 0px' });
-      if (RM) $$('.rv', cb).forEach(el => el.classList.add('in')); else $$('.rv', cb).forEach(el => o.observe(el));
-      cs.scrollTop = 0;
-      TMF.init(cb, cs);
-      return;
-    }
-    if (p.custom) {
-      cb.innerHTML = p.custom === 'nrf' ? nrfCase(i) : p.custom === 'sys' ? sysCase(i) : gaiCase(i);
-      $('#cTtl').textContent = p.custom === 'nrf' || p.custom === 'sys' ? p.title : `${p.title} · ${p.cat}`;
-      viewers.length = 0;
-      const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { root: cs, rootMargin: '0px 0px -8% 0px' });
-      if (RM) $$('.rv', cb).forEach(el => el.classList.add('in')); else $$('.rv', cb).forEach(el => o.observe(el));
-      cs.scrollTop = 0;
-      p.custom === 'nrf' ? initNrf() : p.custom === 'sys' ? initSys() : initGai();
-      return;
-    }
+  /* ================================================================
+     COMPONENTS
+     ================================================================ */
+  const img = (p, sizes, eager, alt = '') => `<img${Z(p)} src="${T(p)}" srcset="${T(p)} 960w, ${F(p)} 2000w" sizes="${sizes}" alt="${alt}"${eager ? '' : ' loading="lazy"'} decoding="async">`;
+  const typing = el => el && (/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) || el.isContentEditable);
+
+  /* ---------- fullscreen slide lightbox (shared by every viewer) ---------- */
+  const lbx = $('#lbx'), lbFr = $('.lbx-fr', lbx), lbCap = $('.lbx-cap', lbx), lbCnt = $('.lbx-c', lbx);
+  let lbOwner = null, lbReturn = null;
+  const lbShow = dir => {
+    const k = lbOwner.index(), s = lbOwner.slides[k];
+    const old = $('img.on', lbFr), nx = document.createElement('img');
+    nx.src = F(s[0]); nx.alt = s[1]; nx.decoding = 'async';
+    lbCap.textContent = s[1]; lbCnt.textContent = `${pad(k + 1)} / ${pad(lbOwner.slides.length)}`;
+    $$('img:not(.on)', lbFr).forEach(im => im.remove());
+    if (!old || RM) { if (old) old.remove(); nx.className = 'on'; lbFr.appendChild(nx); return; }
+    nx.className = dir > 0 ? 'from-r' : 'from-l'; lbFr.appendChild(nx);
+    const swap = () => requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (!nx.isConnected) return;
+      old.className = dir > 0 ? 'to-l' : 'to-r'; nx.className = 'on';
+      setTimeout(() => old.remove(), 360);
+    }));
+    nx.decode ? nx.decode().then(swap, swap) : swap();
+  };
+  const lbOpen = owner => {
+    lbOwner = owner; lbReturn = document.activeElement;
+    lbFr.innerHTML = ''; lbShow(0);
+    lbx.hidden = false; document.documentElement.classList.add('lb-on');
+    requestAnimationFrame(() => lbx.classList.add('on'));
+    $('.lbx-x', lbx).focus();
+  };
+  const lbClose = () => {
+    if (lbx.hidden) return;
+    lbx.classList.remove('on'); document.documentElement.classList.remove('lb-on');
+    setTimeout(() => { if (!lbx.classList.contains('on')) { lbx.hidden = true; lbFr.innerHTML = ''; } }, RM ? 0 : 220);
+    lbOwner = null;
+    lbReturn && lbReturn.focus && lbReturn.focus({ preventScroll: true });
+  };
+  const lbStep = d => { if (!lbOwner) return; lbOwner.go(lbOwner.index() + d, d); lbShow(d); };
+  $('.lbx-x', lbx).addEventListener('click', lbClose);
+  $('.lbx-p', lbx).addEventListener('click', () => lbStep(-1));
+  $('.lbx-n', lbx).addEventListener('click', () => lbStep(1));
+  lbx.addEventListener('click', e => { if ((e.target === lbx || e.target.classList.contains('lbx-st')) && !$('.lbx-st', lbx).dataset.sw) lbClose(); });
+  lbx.addEventListener('keydown', e => {          // keep focus inside the dialog
+    if (e.key !== 'Tab') return;
+    const f = $$('button', lbx), a = f[0], z = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+    else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+  });
+  const swipe = (el, fn) => {
+    let x0 = null, y0 = 0; el.dataset.sw = '';
+    el.addEventListener('pointerdown', e => { if (e.button) return; x0 = e.clientX; y0 = e.clientY; });
+    el.addEventListener('pointerup', e => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0, dy = e.clientY - y0; x0 = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) { el.dataset.sw = '1'; setTimeout(() => { el.dataset.sw = ''; }, 0); fn(dx < 0 ? 1 : -1); }
+    });
+    el.addEventListener('pointercancel', () => { x0 = null; });
+  };
+  swipe($('.lbx-st', lbx), lbStep);
+
+  /* ---------- slide viewer: one large slide, counter, thumbnails, swipe, keys, fullscreen ---------- */
+  const FULL_I = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg>';
+  const viewerHTML = (slides, uid) => `
+    <div class="sv" id="${uid}" tabindex="0" role="region" aria-roledescription="slide viewer" aria-label="Slides. Left and right arrow keys move between slides.">
+      <div class="sv-stage">
+        <img class="on" src="${F(slides[0][0])}" alt="${slides[0][1]}" decoding="async">
+        <button class="sv-hit l" tabindex="-1" aria-hidden="true"></button><button class="sv-hit r" tabindex="-1" aria-hidden="true"></button>
+      </div>
+      <div class="sv-bar">
+        <p class="sv-cap" aria-live="polite"><span class="sv-n">01</span><b>${slides[0][1]}</b></p>
+        <div class="sv-nav"><button class="sv-p" aria-label="Previous slide">${ARROW_L}</button><span class="sv-c"><b>01</b> / ${pad(slides.length)}</span><button class="sv-x" aria-label="Next slide">${ARROW_R}</button></div>
+        <button class="sv-full">${FULL_I}<span>View fullscreen</span></button>
+      </div>
+      <div class="sv-thumbs">${slides.map((s, i) => `<button aria-label="Slide ${i + 1}: ${s[1]}"${i ? '' : ' aria-current="true"'}><img src="${T(s[0])}" alt="" loading="lazy" decoding="async"><span>${pad(i + 1)}</span></button>`).join('')}</div>
+    </div>`;
+  const viewers = [];
+  const initViewer = (el, slides) => {
+    const stage = $('.sv-stage', el), capN = $('.sv-n', el), capB = $('.sv-cap b', el), cnt = $('.sv-c b', el), tw = $('.sv-thumbs', el), th = $$('button', tw);
+    const n = slides.length; let i = 0;
+    const pre = k => { const im = new Image(); im.src = F(slides[(k + n) % n][0]); };
+    pre(1);
+    const go = (k, dir) => {
+      k = ((k % n) + n) % n; if (k === i) return;
+      dir = dir || (k > i ? 1 : -1);
+      $$('img:not(.on)', stage).forEach(im => im.remove());
+      const old = $('img.on', stage), nx = document.createElement('img');
+      nx.src = F(slides[k][0]); nx.alt = slides[k][1]; nx.decoding = 'async';
+      if (RM) { old && old.remove(); nx.className = 'on'; stage.insertBefore(nx, stage.firstChild); }
+      else {
+        nx.className = dir > 0 ? 'from-r' : 'from-l'; stage.insertBefore(nx, $('.sv-hit', stage));
+        const swap = () => requestAnimationFrame(() => requestAnimationFrame(() => {
+          if (!nx.isConnected) return;
+          if (old) old.className = dir > 0 ? 'to-l' : 'to-r';
+          nx.className = 'on';
+          setTimeout(() => old && old.remove(), 380);
+        }));
+        nx.decode ? nx.decode().then(swap, swap) : swap();
+      }
+      i = k;
+      capN.textContent = pad(k + 1); capB.textContent = slides[k][1]; cnt.textContent = pad(k + 1);
+      th.forEach((b, m) => m === k ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current'));
+      const b = th[k]; if (b) tw.scrollTo({ left: b.offsetLeft - (tw.clientWidth - b.offsetWidth) / 2, behavior: RM ? 'auto' : 'smooth' });
+      pre(k + 1); pre(k - 1);
+    };
+    const api = { el, slides, index: () => i, go, next: () => go(i + 1, 1), prev: () => go(i - 1, -1) };
+    $('.sv-x', el).addEventListener('click', api.next);
+    $('.sv-p', el).addEventListener('click', api.prev);
+    $('.sv-hit.r', el).addEventListener('click', () => { if (!stage.dataset.sw) api.next(); });
+    $('.sv-hit.l', el).addEventListener('click', () => { if (!stage.dataset.sw) api.prev(); });
+    th.forEach((b, m) => b.addEventListener('click', () => go(m)));
+    $('.sv-full', el).addEventListener('click', () => lbOpen(api));
+    stage.addEventListener('dblclick', () => lbOpen(api));
+    swipe(stage, d => go(i + d, d));
+    el.addEventListener('keydown', e => {
+      if (e.target !== el) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); e.stopPropagation(); api.next(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); e.stopPropagation(); api.prev(); }
+    });
+    viewers.push(api);
+    return api;
+  };
+
+  /* ---------- before / after: original ↔ redesign, drag to compare ---------- */
+  const baLab = s => s.replace(/^Original\s*/, '');
+  const baHTML = pairs => `
+    <div class="ba-block">
+      ${pairs.length > 1 ? `<div class="ba-tabs" role="tablist" aria-label="Comparisons">${pairs.map((p, i) => `<button role="tab" aria-selected="${!i}" tabindex="${i ? -1 : 0}"><span>${pad(i + 1)}</span>${p[2]}</button>`).join('')}</div>` : ''}
+      <div class="ba" style="--x:50%">
+        <div class="pane"><img class="bf" src="${F(pairs[0][0])}" alt="Original: ${pairs[0][2]}"><img class="aft" src="${F(pairs[0][1])}" alt="Redesign: ${pairs[0][2]}"></div>
+        <i class="hd" aria-hidden="true"></i><span class="tg l">Original <em>${baLab(pairs[0][3])}</em></span><span class="tg r">Redesign</span>
+        <input type="range" min="0" max="100" value="50" aria-label="Compare original and redesign. Lower values show more of the original.">
+      </div>
+      <p class="ba-cap" aria-live="polite"><b>${pairs[0][2]}.</b> ${pairs[0][4]}</p>
+    </div>`;
+  const initBA = (el, pairs) => {
+    const ba = $('.ba', el), inp = $('input', ba), pane = $('.pane', ba), bf = $('.bf', ba), af = $('.aft', ba), tl = $('.tg.l em', ba), cap = $('.ba-cap', el);
+    const tabs = $$('.ba-tabs button', el);
+    const set = () => ba.style.setProperty('--x', inp.value + '%');
+    inp.addEventListener('input', set); set();
+    const sel = (k, focus) => {
+      tabs.forEach((b, n) => { b.setAttribute('aria-selected', n === k); b.tabIndex = n === k ? 0 : -1; });
+      if (focus) tabs[k].focus();
+      pane.style.opacity = 0;
+      const n1 = new Image(), n2 = new Image(); n1.src = F(pairs[k][0]); n2.src = F(pairs[k][1]);
+      Promise.all([n1.decode().catch(() => {}), n2.decode().catch(() => {})]).then(() => setTimeout(() => {
+        bf.src = n1.src; af.src = n2.src; bf.alt = 'Original: ' + pairs[k][2]; af.alt = 'Redesign: ' + pairs[k][2];
+        tl.textContent = baLab(pairs[k][3]);
+        cap.innerHTML = `<b>${pairs[k][2]}.</b> ${pairs[k][4]}`;
+        inp.value = 50; set(); pane.style.opacity = 1;
+      }, RM ? 0 : 140));
+    };
+    tabs.forEach((b, k) => b.addEventListener('click', () => sel(k)));
+    tabs.length && $('.ba-tabs', el).addEventListener('keydown', e => {
+      const k = tabs.findIndex(b => b.getAttribute('aria-selected') === 'true');
+      if (e.key === 'ArrowRight') { e.preventDefault(); e.stopPropagation(); sel((k + 1) % tabs.length, true); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); e.stopPropagation(); sel((k - 1 + tabs.length) % tabs.length, true); }
+    });
+    inp.addEventListener('keydown', e => e.stopPropagation());
+  };
+
+  /* ---------- key moves: the decisions that shaped the deck, one at a time ---------- */
+  const movesHTML = (steps, uid) => `
+    <div class="km">
+      <div class="km-fig"><div class="km-fr">${steps.map((s, i) => `<img class="${i ? '' : 'on'}" src="${T(s[0])}" srcset="${T(s[0])} 960w, ${F(s[0])} 2000w" sizes="(max-width:900px) 92vw, 60vw" alt="${s[1]}"${i ? ' loading="lazy"' : ''} decoding="async">`).join('')}</div></div>
+      <div class="km-list" role="tablist" aria-label="Key moves" aria-orientation="vertical">${steps.map((s, i) => `<button role="tab" id="${uid}-${i}" aria-selected="${!i}" tabindex="${i ? -1 : 0}"><span class="km-n">${pad(i + 1)}</span><b>${s[1]}</b><span class="km-t">${s[2]}</span></button>`).join('')}</div>
+    </div>`;
+  const initMoves = el => {
+    const tabs = $$('.km-list button', el), ims = $$('.km-fr img', el);
+    const sel = (k, focus) => {
+      tabs.forEach((b, n) => { b.setAttribute('aria-selected', n === k); b.tabIndex = n === k ? 0 : -1; });
+      ims.forEach((im, n) => im.classList.toggle('on', n === k));
+      if (focus) tabs[k].focus();
+    };
+    tabs.forEach((b, k) => b.addEventListener('click', () => sel(k)));
+    $('.km-list', el).addEventListener('keydown', e => {
+      const k = tabs.findIndex(b => b.getAttribute('aria-selected') === 'true');
+      const d = (e.key === 'ArrowDown' || e.key === 'ArrowRight') ? 1 : (e.key === 'ArrowUp' || e.key === 'ArrowLeft') ? -1 : 0;
+      if (!d) return;
+      e.preventDefault(); e.stopPropagation(); sel((k + d + tabs.length) % tabs.length, true);
+    });
+  };
+
+  /* ================================================================
+     STANDARD CASE (Melbourne is the prototype; Indonesia and Personalization at Scale share it)
+     Hero → The brief → The thinking → Key moves → Original ↔ Redesign → Slides → Outcome → Next
+     ================================================================ */
+  // the whole deck in slide order, captions taken from the case content
+  const deckOf = p => {
+    const m = new Map(), add = (k, t) => { if (!m.has(k)) m.set(k, t); };
+    (p.slides || []).forEach(s => add(s[0], s[1]));
+    (p.ba || []).forEach(b => add(b[1], b[2]));
+    (p.story || []).forEach(s => add(s[0], s[1]));
+    return [...m].sort((a, b) => a[0].localeCompare(b[0]));
+  };
+  // section head in the original case language: gold index, title, statement
+  const head = (n, t, p, small) => `<div class="c-h"><h2><span class="idx">${n}</span>${t}</h2><div><p${small ? ' class="sm"' : ''}>${p}</p></div></div>`;
+  const stdCase = i => {
+    const p = P[i], nxp = P[(i + 1) % P.length], deck = deckOf(p);
+    const total = +((p.deliverables.match(/(\d+)-slide/) || [])[1]) || deck.length;
     let n = 0; const num = () => pad(++n);
-    const live = p.live ? `<a class="link-arrow" href="assets/live/${p.live}.html" target="_blank" rel="noopener">${p.liveLabel || 'Open the live presentation'} <i>↗</i></a>` : '';
+    const live = p.live ? `<a class="link-arrow" href="assets/live/${p.live}.html" target="_blank" rel="noopener">Open the live presentation <i aria-hidden="true">↗</i><span class="vh"> (opens in a new tab)</span></a>` : '';
     let h = `
       <div class="wrap">
         <header class="c-top">
-          <div class="badges c-in"><span class="badge">${pad(i + 1)} / ${pad(P.length)}</span><span class="badge">${p.cat}</span><span class="badge">${p.year}</span></div>
-          <h1 id="cTitle"><span>${p.title}</span></h1>
+          <div class="badges c-in"><span class="badge">${wn(p.id)} / ${pad(WORK.length)}</span><span class="badge">${p.cat}</span><span class="badge">${p.year}</span></div>
+          <h1 id="cTitle" tabindex="-1"><span>${p.title}</span></h1>
           <div class="c-lede c-in d2"><p>${p.lede}</p><span class="rule"></span>${live}</div>
           <div class="c-facts c-in d3">
             <div><span>Role</span>${p.role}</div>
@@ -1786,97 +1401,428 @@
             <div><span>Year</span>${p.year}</div>
           </div>
         </header>
-        <div class="c-cover"><div class="frame r169" id="cCover"><img${Z(p.cover)} src="${F(p.cover)}" alt="${p.title}, cover"></div></div>
-        <section class="c-sec tight rv">${head(num(), 'Challenge', p.challenge)}</section>
-        <section class="c-sec rv">${head(num(), 'Approach', p.approach)}</section>`;
-    if (p.story) h += `<section class="c-sec">${head(num(), 'How it reads', 'Scroll through the key moves in the story.', true)}<div data-story></div></section>`;
-    if (p.ba) h += `<section class="c-sec">${head(num(), 'Before / after', 'Drag the handle to compare the original with the redesign.', true)}<div class="rv" data-ba></div></section>`;
-    if (p.phones) h += `<section class="c-sec">${head(num(), 'The stories', 'Animated 9:16 in-app stories built on one visual grammar. Shown here as still frames.', true)}<div class="phones rv">${p.phones.map(k => `<img src="${T('stories/' + k)}" alt="" loading="lazy" decoding="async">`).join('')}</div></section>`;
-    if (p.video) h += `<section class="c-sec">${head(num(), 'In motion', 'The opener as it runs on screen. Press play.', true)}<div class="c-video rv"><video controls playsinline preload="none" poster="${F(p.cover)}"><source src="assets/video/${p.video}.webm" type="video/webm"><source src="assets/video/${p.video}.mp4" type="video/mp4"></video></div></section>`;
-    if (p.slides) h += `<section class="c-sec">${head(num(), 'Selected slides', `${p.slides.length} slides from the deck. Use the arrows, your keyboard or swipe.`, true)}<div class="rv" data-viewer></div></section>`;
-    h += `<section class="c-sec">${head(num(), 'Outcome', p.outcome)}<div class="c-out rv">${p.out.map(o => `<div><b>${o[0]}</b><span>${o[1]}</span></div>`).join('')}</div>${p.note ? `<p class="c-note">${p.note}</p>` : ''}</section>`;
-    h += `</div>
-      <button class="c-next" data-goto="${(i + 1) % P.length}">
+        <div class="c-cover"><div class="frame r169" id="cCover">${img(p.cover, '(max-width:1440px) 92vw, 1280px', true, p.title + ', cover slide')}</div></div>
+        <section class="c-sec tight rv">${head(num(), 'The brief', p.challenge)}</section>
+        <section class="c-sec rv">${head(num(), 'The thinking', p.approach)}</section>`;
+    if (p.story) h += `<section class="c-sec">${head(num(), 'Key moves', 'The decisions that shaped the deck. Select a move to see the slide.', true)}<div class="rv" data-moves></div></section>`;
+    if (p.ba) h += `<section class="c-sec">${head(num(), 'Original ↔ Redesign', 'Drag the handle to compare a page of the source report with the slide it became.', true)}<div class="rv" data-ba></div></section>`;
+    h += `<section class="c-sec">${head(num(), 'Selected slides', `${deck.length === total ? `The full ${total}-slide deck` : `${deck.length} of the ${total} slides`}, one at a time. Use the arrows, your keyboard or swipe, and open any slide fullscreen.`, true)}<div class="rv" data-viewer></div></section>`;
+    h += `<section class="c-sec">${head(num(), 'Outcome', p.outcome)}<div class="c-out rv">${p.out.map(o => `<div><b>${o[0]}</b><span>${o[1]}</span></div>`).join('')}</div>${p.note ? `<p class="c-note">${p.note}</p>` : ''}</section>
+      </div>
+      <a class="c-next" href="${caseHref(nxp.id)}" data-case="${nxp.id}">
         <div class="wrap">
-          <div><span>Next project</span><b>${nx.title} <i>→</i></b><small>${nx.cat}</small></div>
-          <div class="nimg"><img${Z(nx.card)} src="${T(nx.card)}" alt="" loading="lazy" decoding="async"></div>
+          <div><span>Next project</span><b>${nxp.title} <i aria-hidden="true">→</i></b><small>${nxp.cat}</small></div>
+          <div class="nimg">${img(nxp.card, '(max-width:1024px) 92vw, 40vw')}</div>
         </div>
-      </button>`;
-    cb.innerHTML = h;
-    $('#cTtl').textContent = `${p.title} · ${p.cat}`;
-    viewers.length = 0;
-    const bv = $('[data-ba]', cb); if (bv) { bv.innerHTML = baHTML(p.ba, p.baLabels); initBA(bv, p.ba, p.baLabels); }
-    const sv = $('[data-story]', cb); if (sv) { sv.innerHTML = storyHTML(p.story); initStory(sv, cs); }
-    const vv = $('[data-viewer]', cb); if (vv) { vv.innerHTML = viewerHTML(p.slides, 'v-' + p.id); initViewer(vv.firstElementChild, p.slides); }
-    const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { root: cs, rootMargin: '0px 0px -6% 0px' });
-    if (RM) $$('.rv', cb).forEach(el => el.classList.add('in')); else $$('.rv', cb).forEach(el => o.observe(el));
-    cs.scrollTop = 0;
+      </a>`;
+    return h;
+  };
+  const initStd = i => {
+    const p = P[i];
+    const mv = $('[data-moves]', cb); if (mv) { mv.innerHTML = movesHTML(p.story, 'km-' + p.id); initMoves(mv); }
+    const bv = $('[data-ba]', cb); if (bv) { bv.innerHTML = baHTML(p.ba); initBA(bv, p.ba); }
+    const vv = $('[data-viewer]', cb); if (vv) { const d = deckOf(p); vv.innerHTML = viewerHTML(d, 'v-' + p.id); initViewer(vv.firstElementChild, d); }
   };
 
-  const openCase = (id, fromEl, push = true) => {
-    const i = PI[id]; if (i === undefined) return;
-    if (!isOpen()) lastFocus = document.activeElement;
-    cur = i; render(i);
-    if (push) history.pushState({ id }, '', '#/work/' + id);
-    cs.classList.remove('ready', 'zoomed');
-    if (cursor) cursor.classList.remove('on');
-    const src = fromEl && fromEl.querySelector && fromEl.querySelector('img');
-    const r0 = src && src.getBoundingClientRect();
-    const show = () => { cs.classList.add('open'); document.body.classList.add('lock'); cs.focus({ preventScroll: true }); requestAnimationFrame(() => cs.classList.add('ready')); };
-    if (RM || P[i].custom || !r0 || !r0.width || r0.bottom < 0 || r0.top > innerHeight || isOpen()) { show(); return; }
-    // card → case: the clicked image scales into the case cover while the page fades in
-    cs.classList.add('zoomed');
-    cs.style.transition = 'none'; cs.classList.add('open'); cs.style.opacity = '0';
-    const r1 = $('#cCover').getBoundingClientRect();
-    cs.classList.remove('open'); cs.style.opacity = ''; void cs.offsetWidth; cs.style.transition = '';
+  /* ================================================================
+     CASE LAYER: render · open · close
+     ================================================================ */
+  const CUSTOM = ['nrf', 'sys', 'tmf', 'got'];
+  const cTtl = $('#cTtl'), cPrev = $('#cPrev'), cNext = $('#cNext');
+  let cur = -1;
+  const reveal = () => {
+    const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { root: cs, rootMargin: '0px 0px -8% 0px' });
+    if (RM) $$('.rv', cb).forEach(el => el.classList.add('in')); else $$('.rv', cb).forEach(el => o.observe(el));
+  };
+  const renderCase = i => {
+    const p = P[i], ni = (i + 1) % P.length, pi = (i - 1 + P.length) % P.length;
+    scrollFx = []; viewers.length = 0;
+    $$('video', cb).forEach(v => v.pause());
+    cs.classList.remove('custom', 'std', 'f-dark', ...CUSTOM);
+    cs.classList.add(p.custom ? 'custom' : 'std');
+    if (CUSTOM.includes(p.custom)) cs.classList.add(p.custom);
+    if (p.custom === 'got' && window.GOT) cb.innerHTML = GOT.page(WORK.indexOf(p.id), WORK.length, ni, P[ni]);
+    else if (p.custom === 'tmf' && window.TMF) cb.innerHTML = TMF.page(WORK.indexOf(p.id), WORK.length, ni, P[ni]);
+    else if (p.custom === 'nrf') cb.innerHTML = nrfCase(i);
+    else if (p.custom === 'sys') cb.innerHTML = sysCase(i);
+    else if (p.custom === 'gai') cb.innerHTML = gaiCase(i);
+    else cb.innerHTML = stdCase(i);
+    cTtl.textContent = LONG[p.id] && !p.custom ? LONG[p.id] : p.title;
+    cPrev.dataset.case = P[pi].id; cPrev.href = caseHref(P[pi].id); cPrev.setAttribute('aria-label', 'Previous project: ' + P[pi].title);
+    cNext.dataset.case = P[ni].id; cNext.href = caseHref(P[ni].id); cNext.setAttribute('aria-label', 'Next project: ' + P[ni].title);
+    cs.setAttribute('aria-label', p.title + ', case study');
+    reveal();
+    cs.scrollTop = 0;
+    if (p.custom === 'got' && window.GOT) GOT.init(cb, cs);
+    else if (p.custom === 'tmf' && window.TMF) TMF.init(cb, cs);
+    else if (p.custom === 'nrf') initNrf();
+    else if (p.custom === 'sys') initSys();
+    else if (p.custom === 'gai') initGai();
+    else initStd(i);
+    cur = i;
+  };
+
+  // shared-image transition: the clicked preview grows into the case cover, then the case fades in
+  let zoomSrc = null;
+  const zoomInto = (src, done) => {
+    const r0 = src.getBoundingClientRect(), c = $('#cCover', cb);
+    if (RM || !r0.width || r0.bottom < 0 || r0.top > innerHeight) { done(); return; }
+    const vw = innerWidth, top = 68 + 24;
+    let r1 = c ? c.getBoundingClientRect() : null;
+    if (!r1 || r1.top > innerHeight) { const w = Math.min(vw - 32, 1280); r1 = { left: (vw - w) / 2, top, width: w, height: w * 9 / 16 }; }
     const z = document.createElement('div'); z.className = 'zoomer';
     z.innerHTML = `<img${src.classList.contains('z') ? ` class="z" style="--z:${src.style.getPropertyValue('--z')}"` : ''} src="${src.currentSrc || src.src}" alt="">`;
-    Object.assign(z.style, { left: r0.left + 'px', top: r0.top + 'px', width: r0.width + 'px', height: r0.height + 'px', transition: 'none' });
-    document.body.appendChild(z); document.body.classList.add('lock');
-    requestAnimationFrame(() => requestAnimationFrame(() => { z.style.transition = ''; Object.assign(z.style, { left: r1.left + 'px', top: r1.top + 'px', width: r1.width + 'px', height: r1.height + 'px', borderRadius: '6px' }); }));
-    setTimeout(() => { show(); setTimeout(() => z.remove(), 500); }, 620);
+    Object.assign(z.style, { left: r0.left + 'px', top: r0.top + 'px', width: r0.width + 'px', height: r0.height + 'px' });
+    document.body.appendChild(z);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      z.classList.add('go');
+      Object.assign(z.style, { left: r1.left + 'px', top: r1.top + 'px', width: r1.width + 'px', height: r1.height + 'px' });
+    }));
+    setTimeout(() => { done(); setTimeout(() => { z.classList.add('fade'); setTimeout(() => z.remove(), 220); }, 160); }, 380);
   };
-  const closeCase = (push = true) => {
-    cs.classList.remove('open', 'ready'); document.body.classList.remove('lock');
-    scrollFx = [];
+  // move focus to the case title so keyboard and screen-reader users land at the start of the case
+  const focusTitle = () => {
+    const t = $('#cTitle', cb);
+    if (!t) { cs.focus({ preventScroll: true }); return; }
+    if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+    t.focus({ preventScroll: true });
+  };
+  const openCase = id => {
+    const i = PI[id];
+    const was = isOpen();
+    closeMenu();
+    if (was && i === cur) return;
+    if (!was) { cs.classList.remove('ready'); renderCase(i); }
+    else {
+      // case → case: quick cross-fade of the body, bar stays in place
+      cs.classList.remove('ready');
+      cb.classList.add('swap');
+      setTimeout(() => { renderCase(i); cb.classList.remove('swap'); requestAnimationFrame(() => cs.classList.add('ready')); focusTitle(); }, RM ? 0 : 140);
+      return;
+    }
+    const show = () => {
+      cs.classList.add('open'); cs.removeAttribute('aria-hidden'); cs.inert = false;
+      document.documentElement.classList.add('case-on');
+      viewEl.inert = true; siteNav.inert = true;
+      requestAnimationFrame(() => cs.classList.add('ready'));
+      focusTitle();
+    };
+    const src = zoomSrc; zoomSrc = null;
+    if (src && src.isConnected) zoomInto(src, show); else show();
+  };
+  const closeCase = () => {
+    if (!isOpen()) return;
+    lbClose();
+    cs.classList.remove('open', 'ready'); cs.setAttribute('aria-hidden', 'true'); cs.inert = true;
+    document.documentElement.classList.remove('case-on');
+    viewEl.inert = false; siteNav.inert = false;
+    scrollFx = []; viewers.length = 0;
     if (document.fullscreenElement) document.exitFullscreen();
     $$('video', cb).forEach(v => v.pause());
-    if (push) history.pushState({}, '', location.pathname + location.search + '#work');
-    lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true });
-    setTimeout(() => { if (!isOpen()) { cb.innerHTML = ''; cs.classList.remove('nrf', 'f-dark', 'sys', 'tmf', 'got'); } }, 450);
-    document.body.classList.remove('nx-hot'); $$('.nx.hot').forEach(n => n.classList.remove('hot'));
-    nxUpd && nxUpd();
-    syUpd && syUpd();
+    setTimeout(() => { if (!isOpen()) { cb.innerHTML = ''; cs.classList.remove('custom', 'std', 'f-dark', ...CUSTOM); cur = -1; } }, 320);
   };
-  $('#cBack').addEventListener('click', () => closeCase());
-  $('#cPrev').addEventListener('click', () => openCase(P[(cur - 1 + P.length) % P.length].id));
-  $('#cNext').addEventListener('click', () => openCase(P[(cur + 1) % P.length].id));
 
-  document.addEventListener('click', e => {
-    if (e.target.closest('a[target="_blank"]')) return; // live experiences open in a new tab, never the case view
-    const g = e.target.closest('[data-goto]'); if (g) { openCase(P[+g.dataset.goto].id); return; }
-    const o = e.target.closest('[data-open]'); if (!o) return;
-    e.preventDefault();
-    const card = o.closest('.pc') || o;
-    openCase(o.dataset.open, card.querySelector('.media') || card);
-  });
+  /* ================================================================
+     VIEWS
+     ================================================================ */
+  const viewEl = $('#view'), siteNav = $('#sn'), menu = $('#snMenu'), burger = $('#snBurger');
+  const MAIL = 'khanimazimli0@gmail.com';
+  const LINKEDIN = 'https://www.linkedin.com/in/khanim-azimli-50aa09a7';
+  const CV = 'assets/cv/Khanim-Azimli-CV.pdf';   // drop the PDF here; until then the link asks by email
+  // Work index cards: the original grid card (pill tag, index · year, title, line, metric, View case)
+  const workItem = id => {
+    const x = EXT[id], p = x ? null : P[PI[id]];
+    const t = x ? x.title : (LONG[id] || p.title), cat = x ? x.cat : p.cat, desc = x ? x.desc : p.desc, year = x ? x.year : p.year;
+    const kpi = x ? x.kpi : p.kpi, cap = x ? x.kpiCap : p.kpiCap;
+    const href = x ? x.href : caseHref(id), dc = x ? '' : ` data-case="${id}"`;
+    const pic = x ? `<img src="${x.img}" alt="" loading="lazy" decoding="async">` : img(p.card, '(max-width:820px) 92vw, 46vw');
+    return `
+      <article class="pc pc-std">
+        <a class="media" href="${href}"${dc} aria-label="${t}, ${x ? x.go.toLowerCase() : 'view case'}">${pic}</a>
+        <div class="txt">
+          <p class="meta"><span class="tag">${cat}</span><span>${wn(id)} · ${year}</span></p>
+          <h2><a href="${href}"${dc} tabindex="-1">${t}</a></h2>
+          <p class="desc">${desc}</p>
+          <div class="row">${kpi ? `<p class="kpi"><b>${kpi}</b><small>${cap}</small></p>` : ''}<span class="fill"></span><a class="go" href="${href}"${dc}>${x ? x.go : 'View case'} <i aria-hidden="true">→</i></a></div>
+        </div>
+      </article>`;
+  };
+  const foot = () => `
+    <footer class="foot"><div class="wrap"><div class="foot-bot">
+      <span>© 2026 Khanim Azimli · Visual Storyteller &amp; Designer</span>
+      <span>Consulting redesigns are independent exercises on public reports. In-house work is shown with figures altered.</span>
+    </div></div></footer>`;
+  const feat = P[PI[WORK[0]]];
+  const VIEWS = {
+    home: {
+      title: 'Khanim Azimli · Visual Storyteller & Designer',
+      html: () => `
+      <section class="hero hm" aria-labelledby="hmT">
+        <div class="wrap">
+          <div class="badges load">
+            <span class="badge"><i class="dot" aria-hidden="true"></i>Baku · Working globally</span>
+            <span class="badge">Visual storytelling · Editorial · Interactive · 2026</span>
+          </div>
+          <div class="hm-g">
+            <div class="hm-l">
+              <h1 class="hm-name" id="hmT" tabindex="-1" aria-label="Khanim Azimli"><span class="ln"><span class="tx">Khanim</span></span><span class="ln"><span class="tx">Azimli</span></span></h1>
+              <p class="hm-role load d3"><i class="role-k">Practice</i><b>Visual Storyteller &amp; Designer</b><span class="role-d">Presentations · Editorial · Data · Interactive</span></p>
+              <p class="hm-pos load d4"><b>Ideas, data and stories, <span>designed to be understood.</span></b><span class="pos-s">Making ideas easier to see, feel and remember.</span></p>
+            </div>
+            <a class="pc hm-feat load d3" href="${caseHref(feat.id)}" data-case="${feat.id}">
+              <span class="media">${img(feat.card, '(max-width:1024px) 92vw, 58vw', true, '')}</span>
+              <span class="meta"><span class="tag">${feat.cat}</span><span>${wn(feat.id)} · ${feat.year}</span><span class="fill"></span><span class="go">View case <i aria-hidden="true">→</i></span></span>
+              <b class="hm-ft">${feat.title}</b>
+            </a>
+          </div>
+          <nav class="hero-idx hm-hub load d4" aria-label="Portfolio">
+            <a href="#/work"><span class="n">01</span><b>Work</b><span class="x">${WORK.length} projects · presentations, publishing, interactive</span><i aria-hidden="true">→</i></a>
+            <a href="#/about"><span class="n">02</span><b>About</b><span class="x">Background, approach and tools</span><i aria-hidden="true">→</i></a>
+            <a href="#/services"><span class="n">03</span><b>Services</b><span class="x">Presentations, strategy decks, data, interactive</span><i aria-hidden="true">→</i></a>
+            <a href="#/contact"><span class="n">04</span><b>Contact</b><span class="x">Remote freelance and contract projects</span><i aria-hidden="true">→</i></a>
+          </nav>
+        </div>
+      </section>`
+    },
+    work: {
+      title: 'Work · Khanim Azimli',
+      html: () => `
+      <section class="sec work pv" aria-labelledby="wkT">
+        <div class="wrap">
+          <p class="label">Work · ${pad(WORK.length)} projects</p>
+          <div class="work-head">
+            <h1 id="wkT" tabindex="-1">Selected work</h1>
+            <p>Different formats.<br>Same goal: make the idea impossible to miss.</p>
+          </div>
+          <div class="pc-grid wk-grid">${WORK.map(workItem).join('')}</div>
+        </div>
+      </section>${foot()}`
+    },
+    about: {
+      title: 'About · Khanim Azimli',
+      html: () => `
+      <section class="about pv" aria-labelledby="abT">
+        <div class="wrap">
+          <p class="label">About</p>
+          <h1 class="statement" id="abT" tabindex="-1">I design presentations from the business problem out, <span>not from the template in.</span></h1>
+          <div class="about-grid">
+            <dl class="about-facts">
+              <div><dt>Background</dt><dd>Presentation design · Business storytelling · Data · Customer experience · Research · Interactive work</dd></div>
+              <div><dt>Tools</dt><dd>Photoshop · Illustrator · InDesign · After Effects · Figma · Canva · PowerPoint · HTML · CSS · JavaScript · ChatGPT · Claude · Gemini · Gamma</dd></div>
+              <div><dt>Format</dt><dd>Baku · Remote projects</dd></div>
+            </dl>
+            <div class="about-body">
+              <p class="lead">Whether the outcome is a presentation, a publication or an interactive experience, I start with the same question: what needs to be understood, and how should someone experience it?</p>
+              <p>I work at the intersection of information, storytelling and visual design. My projects range from executive presentations and data-heavy research to educational publishing, editorial systems and interactive HTML experiences.</p>
+              <p>I start with structure: what matters, what comes first and what should stay with the audience. Then I build the visual language around it.</p>
+            </div>
+          </div>
+          <div class="ab-end">
+            <p>The tool changes. <span>The thinking doesn’t.</span></p>
+            <a class="link-arrow" href="#/services">Services <i aria-hidden="true">→</i></a>
+          </div>
+        </div>
+      </section>`
+    },
+    services: {
+      title: 'Services · Khanim Azimli',
+      html: () => {
+        const L = id => { const x = EXT[id]; return `<a href="${x ? x.href : caseHref(id)}"${x ? '' : ` data-case="${id}"`}>${x ? x.title : P[PI[id]].title}</a>`; };
+        const S = [
+          ['Presentation Design', 'Strategy decks, research presentations and visual narratives built around one clear argument.', ['ppt', 'mel', 'gai']],
+          ['Executive &amp; Strategy Decks', 'Decks for leadership, built in the order decision-makers ask the questions, with one message per slide.', ['pas', 'ppt']],
+          ['Data Storytelling', 'Complex research and information turned into visual systems people understand quickly.', ['indo', 'got', 'nrf']],
+          ['Interactive &amp; Motion Presentations', 'Browser-based presentations, interactive experiences and purposeful motion.', ['sys', 'tmf', 'gai']]
+        ];
+        return `
+      <section class="sec services pv" aria-labelledby="svT">
+        <div class="wrap">
+          <p class="label">Services</p>
+          <div class="work-head">
+            <h1 id="svT" tabindex="-1">What I work across</h1>
+            <p>One practice.<br>The content decides the format.</p>
+          </div>
+          <div class="svc">${S.map((s, k) => `
+            <div class="svc-row"><span class="n">${pad(k + 1)}</span><h2>${s[0]}</h2><div class="svc-d"><p>${s[1]}</p><p class="svc-in"><span>Seen in</span>${s[2].map(L).join('')}</p></div><a class="ar" href="#/contact" aria-label="Start a project: ${s[0]}">→</a></div>`).join('')}
+          </div>
+        </div>
+      </section>`;
+      }
+    },
+    contact: {
+      title: 'Contact · Khanim Azimli',
+      html: () => `
+      <section class="sec contact pv" aria-labelledby="ctT">
+        <div class="wrap">
+          <span class="badge"><i class="dot" aria-hidden="true"></i>Available for remote freelance / contract presentation projects.</span>
+          <h1 id="ctT" tabindex="-1">Let’s work <span>together.</span></h1>
+          <div class="ct-grid">
+            <div class="ct-links">
+              <a href="mailto:${MAIL}?subject=Design%20project"><span>Email</span><b>${MAIL}</b><i aria-hidden="true">↗</i></a>
+              <a href="${LINKEDIN}" target="_blank" rel="noopener"><span>LinkedIn</span><b>Khanim Azimli</b><i aria-hidden="true">↗</i><em class="vh"> (opens in a new tab)</em></a>
+              <a href="${CV}" download data-cv><span>CV</span><b>Download CV</b><i aria-hidden="true">↓</i></a>
+            </div>
+            <div class="ct-cta">
+              <p>Tell me what you are trying to communicate, who needs to understand it and where it needs to live.</p>
+              <p class="clock"><b id="clock">--:--</b> Baku, GMT+4</p>
+            </div>
+          </div>
+        </div>
+      </section>`
+    },
+    missing: {
+      title: 'Page not found · Khanim Azimli',
+      html: () => `
+      <section class="sec contact pv" aria-labelledby="nfT">
+        <div class="wrap">
+          <p class="label">404</p>
+          <h1 id="nfT" tabindex="-1">This page <span>doesn’t exist.</span></h1>
+          <div class="hm-cta"><a class="btn btn-gold" href="#/work">See the work <i aria-hidden="true">→</i></a><a class="link-arrow" href="#/">Home <i aria-hidden="true">→</i></a></div>
+        </div>
+      </section>`
+    }
+  };
+  let clockT = 0;
+  let viewIO = null;
+  const initView = () => {
+    clearInterval(clockT);
+    viewIO && viewIO.disconnect();
+    const els = $$('.pc, .rv', viewEl);
+    if (RM) els.forEach(el => el.classList.add('in'));
+    else {
+      viewIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); viewIO.unobserve(e.target); } }), { rootMargin: '0px 0px -6% 0px', threshold: .01 });
+      els.forEach(el => viewIO.observe(el));
+    }
+    const clock = $('#clock', viewEl);
+    if (clock) {
+      const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Baku', hour: '2-digit', minute: '2-digit' });
+      const tick = () => { clock.textContent = fmt.format(new Date()); };
+      tick(); clockT = setInterval(tick, 20000);
+    }
+    const cv = $('[data-cv]', viewEl);
+    if (cv) fetch(CV, { method: 'HEAD' }).then(r => { if (!r.ok) throw 0; }).catch(() => {
+      cv.removeAttribute('download'); cv.href = `mailto:${MAIL}?subject=CV%20request`;
+      $('b', cv).textContent = 'Request CV'; $('i', cv).textContent = '↗';
+    });
+  };
 
-  // keyboard: arrows drive the slide viewer nearest the middle of the screen
-  addEventListener('keydown', e => {
-    if (!isOpen()) { if (e.key === 'Escape' && drawer.classList.contains('on')) setDrawer(false); return; }
-    if (e.key === 'Escape') { if (!document.fullscreenElement) closeCase(); return; }
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-    if (/INPUT/.test(document.activeElement.tagName)) return;
-    const v = viewers.find(v => { const r = v.el.getBoundingClientRect(); return r.top < innerHeight * .8 && r.bottom > innerHeight * .2; }) || (document.fullscreenElement && viewers[0]);
-    if (!v) return;
-    e.preventDefault(); e.key === 'ArrowRight' ? v.next() : v.prev();
-  });
-
+  /* ================================================================
+     ROUTER
+     ================================================================ */
+  let curView = '', navTop = false, booted = false;
+  const mem = {};                                   // scroll position per page view, for Back / Forward
+  const LEGACY = { work: 'work', top: '', about: 'about', capabilities: 'services', services: 'services', contact: 'contact', tools: 'about', publishing: 'work', powerpoint: 'work', transformations: 'work' };
+  const parse = () => {
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (h && h[0] !== '/') return { redirect: '#/' + (LEGACY[h] !== undefined ? LEGACY[h] : '') };
+    const s = h.replace(/^\/+|\/+$/g, '').split('/');
+    if (s[0] === 'work' && s[1]) return PI[s[1]] !== undefined ? { redirect: caseHref(s[1]) } : { view: 'missing' };   // old #/work/<id>
+    if (s[0] === 'case') return BY_SLUG[s[1]] ? { view: 'work', caseId: BY_SLUG[s[1]] } : { view: 'missing' };
+    if (s[0] === '') return { view: 'home' };
+    return VIEWS[s[0]] && s[0] !== 'missing' && !s[1] ? { view: s[0] } : { view: 'missing' };
+  };
+  const markNav = name => {
+    $$('[data-nav]').forEach(a => a.dataset.nav === name ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+  };
+  const showView = (name, y) => {
+    const v = VIEWS[name];
+    const swap = () => {
+      viewEl.innerHTML = v.html();
+      viewEl.dataset.view = name; document.body.dataset.view = name;
+      document.documentElement.classList.toggle('is-home', name === 'home');
+      initView();
+      scrollTo(0, y || 0);
+      viewEl.classList.remove('out');
+    };
+    if (curView && !RM && !isOpen()) { viewEl.classList.add('out'); setTimeout(swap, 130); }
+    else swap();
+    curView = name;
+  };
   const route = () => {
-    const m = location.hash.match(/^#\/work\/(\w+)/);
-    if (m && PI[m[1]] !== undefined) openCase(m[1], null, false);
-    else if (isOpen()) closeCase(false);
+    const r = parse();
+    if (r.redirect) { history.replaceState(null, '', r.redirect); route(); return; }
+    closeMenu();
+    const top = navTop; navTop = false;
+    if (r.caseId) {
+      if (!curView) showView(r.view, 0);           // deep link: the Work index sits under the case
+      markNav('work');
+      document.title = `${LONG[r.caseId] || P[PI[r.caseId]].title} · Khanim Azimli`;
+      openCase(r.caseId);
+      booted = true;
+      return;
+    }
+    const wasCase = isOpen();
+    closeCase();
+    markNav(r.view);
+    document.title = VIEWS[r.view].title;
+    const y = top ? 0 : (mem[r.view] || 0);
+    if (r.view === curView) {
+      if (!wasCase) scrollTo({ top: y, behavior: RM ? 'auto' : 'smooth' });
+    } else {
+      if (curView) mem[curView] = scrollY;
+      showView(r.view, y);
+    }
+    const h1 = $('h1', viewEl);
+    if (booted && h1) setTimeout(() => h1.focus({ preventScroll: true }), RM ? 0 : 150);
+    booted = true;
   };
-  addEventListener('popstate', route);
+
+  /* ---------- menu (mobile) ---------- */
+  function closeMenu() {
+    if (!menu.classList.contains('on')) return;
+    menu.classList.remove('on'); burger.setAttribute('aria-expanded', 'false');
+    $('span', burger).textContent = 'Menu';
+    document.documentElement.classList.remove('menu-on');
+    setTimeout(() => { if (!menu.classList.contains('on')) menu.hidden = true; }, RM ? 0 : 220);
+  }
+  burger.addEventListener('click', () => {
+    if (menu.classList.contains('on')) { closeMenu(); burger.focus(); return; }
+    menu.hidden = false; burger.setAttribute('aria-expanded', 'true'); $('span', burger).textContent = 'Close';
+    document.documentElement.classList.add('menu-on');
+    requestAnimationFrame(() => menu.classList.add('on'));
+  });
+
+  /* ---------- clicks: internal links set "start at top"; case previews carry their image ---------- */
+  document.addEventListener('click', e => {
+    if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const g = e.target.closest('[data-goto]');
+    if (g) { e.preventDefault(); location.hash = caseHref(P[+g.dataset.goto].id); return; }
+    const a = e.target.closest('a[href]');
+    if (!a || a.target === '_blank') return;
+    const href = a.getAttribute('href');
+    const legacy = a.dataset.open;                   // links inside the art-directed pages
+    if (legacy && PI[legacy] !== undefined) { e.preventDefault(); navTop = true; location.hash = caseHref(legacy); return; }
+    if (href[0] !== '#') return;
+    navTop = true;
+    if (a.dataset.case && !isOpen()) zoomSrc = $('img', a);
+    if (href === location.hash || (href === '#/' && (location.hash === '' || location.hash === '#/'))) {
+      e.preventDefault(); route();                   // same link again: back to the top of the view
+    }
+  });
+  addEventListener('hashchange', route);
+
+  /* ---------- keys ---------- */
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (!lbx.hidden) { e.preventDefault(); lbClose(); return; }
+      if (menu.classList.contains('on')) { closeMenu(); burger.focus(); return; }
+      return;
+    }
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    if (e.altKey || e.metaKey || e.ctrlKey || typing(document.activeElement)) return;
+    const d = e.key === 'ArrowRight' ? 1 : -1;
+    if (!lbx.hidden) { e.preventDefault(); lbStep(d); return; }
+    if (!isOpen()) return;
+    // arrows drive the slide viewer that is in view
+    const v = viewers.find(v => { const r = v.el.getBoundingClientRect(); return r.top < innerHeight * .75 && r.bottom > innerHeight * .25; });
+    if (!v) return;
+    e.preventDefault(); d > 0 ? v.next() : v.prev();
+  });
+
+  const atTop = () => document.documentElement.classList.toggle('top', scrollY < 8);
+  addEventListener('scroll', atTop, { passive: true }); atTop();
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  cs.inert = true;
   route();
+  requestAnimationFrame(() => document.documentElement.classList.add('ready'));
 })();
