@@ -1,0 +1,29 @@
+/* Khanim Azimli · views
+   The original sections, shown one at a time (see VIEWS in app.js). Nothing here restyles them:
+   it only hides the inactive views and keeps Home to one screen on desktop. */
+
+main>[data-view][hidden],.foot[hidden]{display:none!important}
+html{scroll-behavior:auto}
+
+/* a quick fade as a view opens */
+@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+main>[data-view].v-in{animation:viewIn .35s var(--e) both}
+
+/* Home: the original hero as a single-screen entry page on desktop */
+@media (min-width:1025px){
+  html.is-home,html.is-home body{height:100%;overflow:hidden}
+  html.is-home .hero{
+    --t-mega:min(15.2vw,21.5vh);
+    height:calc(100vh - 68px);height:calc(100svh - 68px);
+    display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(16px,3vh,40px) 0;overflow:hidden
+  }
+  html.is-home .hero>.wrap{width:100%}
+  html.is-home .hero-title{margin-top:clamp(16px,3.4vh,52px)}
+  html.is-home .hero-foot{margin-top:clamp(20px,5vh,88px)}
+  html.is-home .hero-idx{margin-top:clamp(16px,4vh,64px)}
+  html.is-home .hero-idx a{padding-top:clamp(14px,2.2vh,22px)}
+}
+@media (prefers-reduced-motion:reduce){
+  main>[data-view].v-in{animation:none}
+}
