@@ -1817,6 +1817,7 @@
     cur = i; render(i);
     document.title = `${P[i].title} · Khanim Azimli`;
     if (push) go('#/case/' + SLUG[P[i].id]);
+    if (push) trackView();
     cs.classList.remove('ready', 'zoomed');
     if (cursor) cursor.classList.remove('on');
     const src = fromEl && fromEl.querySelector && fromEl.querySelector('img');
@@ -1924,6 +1925,7 @@
         markNav('work');
         document.title = `${P[PI[id]].title} · Khanim Azimli`;
         openCase(id, null, false);
+        trackView();
         return;
       }
     }
@@ -1935,9 +1937,20 @@
     if (v !== view) showView(v, toTop ? 0 : mem[v] || 0);
     else if (toTop) scrollTo(0, 0);
     toTop = false;
+    trackView();
   }
   // pushState for the case layer, keeping the router in step
   function go(h) { history.pushState(null, '', h); lastHash = location.hash; }
+  // Google Analytics 4: the site never reloads between views, so the router sends the page_view.
+  // #/work → /khanim_azimli/work (the same clean URL 404.html forwards), sent once per change of view.
+  let lastTracked = '';
+  function trackView() {
+    const route = location.hash.replace(/^#\/?/, '').replace(/\/+$/, '');
+    const path = location.pathname.replace(/index\.html$/, '') + route;
+    if (path === lastTracked || typeof window.gtag !== 'function') return;
+    lastTracked = path;
+    window.gtag('event', 'page_view', { page_location: location.origin + path, page_path: path, page_title: document.title });
+  }
   // a click on a view link always lands at the top of that view; Back / Forward restore the position
   document.addEventListener('click', e => { const a = e.target.closest('a[href^="#"]'); if (a && !a.dataset.open) toTop = true; }, true);
   addEventListener('popstate', route);
