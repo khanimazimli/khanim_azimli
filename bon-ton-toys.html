@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Little World of Colour — Campaign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;700&display=swap">
+<style>
+/* ===== Review chrome (theme-aware) ===== */
+:root{
+  --table:#e8e6e2; --panel:#f5f4f1; --t-ink:#171615; --t-muted:#64605a; --t-rule:#d0ccc5;
+  --f-ui:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--table:#151413;--panel:#1f1e1c;--t-ink:#efece8;--t-muted:#a29d96;--t-rule:#37342f;color-scheme:dark}}
+:root[data-theme="dark"]{--table:#151413;--panel:#1f1e1c;--t-ink:#efece8;--t-muted:#a29d96;--t-rule:#37342f;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--table);color:var(--t-ink);font-family:var(--f-ui);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--t-ink);outline-offset:2px}
+.wrap{max-width:1500px;margin:0 auto;padding-inline:clamp(16px,3vw,40px);padding-block:0 5rem}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--table);border-bottom:1px solid var(--t-rule)}
+.bar .in{max-width:1500px;margin:0 auto;padding:.65rem clamp(16px,3vw,40px);display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;align-items:center;justify-content:space-between}
+.bar .t{font-weight:700;font-size:.9rem}.bar .t span{font-weight:400;color:var(--t-muted)}
+.bar nav{display:flex;flex-wrap:wrap;gap:.2rem 1rem;font-size:.8rem}
+.bar nav a{color:var(--t-muted);text-decoration:none}.bar nav a:hover{color:var(--t-ink)}
+header.intro{padding-block:2.75rem 1.5rem;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:1.5rem 3rem;align-items:end}
+.flag{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1.5px solid var(--t-ink);padding:.3rem .6rem;margin-bottom:1rem}
+.flag i{width:.55rem;height:.55rem;background:#ee4b3a;display:inline-block;border-radius:50%}
+header.intro h1{margin:0;font-size:clamp(2.1rem,4.4vw,3.5rem);line-height:1;letter-spacing:-.025em;text-wrap:balance}
+header.intro p{margin:0;color:var(--t-muted);max-width:38rem}
+section.blk{padding-block:2.75rem 1rem;border-top:1px solid var(--t-rule)}
+.sh{display:grid;grid-template-columns:4.5rem minmax(0,1fr);gap:1rem;margin-bottom:1.5rem;align-items:baseline}
+.sh .n{font-size:2.6rem;font-weight:700;line-height:.8;font-variant-numeric:tabular-nums}
+.sh h2{margin:0;font-size:1.55rem;line-height:1.15;letter-spacing:-.01em}
+.sh p{margin:.35rem 0 0;color:var(--t-muted);max-width:56rem}
+.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem 2rem;margin-top:1.1rem;border-top:1px solid var(--t-rule);padding-top:.9rem;font-size:.86rem}
+.notes h3{margin:0 0 .25rem;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
+.notes p{margin:0;color:var(--t-muted)}
+.ab{position:relative;container-type:inline-size;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.08),0 16px 36px -16px rgba(25,20,15,.38)}
+.lbl{display:flex;justify-content:space-between;gap:1rem;font-size:.7rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--t-muted);margin-bottom:.5rem}
+.lbl b{color:var(--t-ink)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2rem;align-items:start}
+.carwrap{position:relative}
+.carwrap .slices{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);pointer-events:none;z-index:30}
+.carwrap .slices span{border-right:1.5px dashed rgba(255,255,255,.85);position:relative}
+.carwrap .slices span:last-child{border-right:0}
+.carwrap .slices span::after{content:attr(data-n);position:absolute;left:6px;bottom:6px;font:700 11px/1 var(--f-ui);background:#171615;color:#fff;padding:3px 5px}
+
+/* critique */
+.crit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}
+.crit figure{margin:0}
+.crit img{width:100%;border:1px solid var(--t-rule)}
+.crit h3{margin:.8rem 0 .3rem;font-size:1rem}
+.crit dl{margin:0;display:grid;grid-template-columns:5.4rem minmax(0,1fr);gap:.35rem .7rem;font-size:.84rem}
+.crit dt{font-weight:700}.crit dd{margin:0;color:var(--t-muted)}
+.verdict{margin-top:1.5rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem 2rem;background:var(--panel);border:1px solid var(--t-rule);padding:1.1rem 1.25rem;font-size:.86rem}
+.verdict h3{margin:0 0 .4rem;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+.verdict ul{margin:0;padding-left:1rem;display:grid;gap:.3rem;color:var(--t-muted)}
+.verdict li b{color:var(--t-ink)}
+
+/* system board */
+.sys{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1.25rem}
+.sys>div{background:var(--panel);border:1px solid var(--t-rule);padding:1.1rem 1.2rem;min-width:0}
+.sys h3{margin:0 0 .6rem;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+.sys p{margin:.4rem 0 0;font-size:.84rem;color:var(--t-muted)}
+.sw{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem}
+.sw div{font-size:.72rem;line-height:1.3}
+.sw i{display:block;height:3rem;border:1px solid rgba(0,0,0,.08);margin-bottom:.3rem}
+.typespec{display:grid;gap:.6rem}
+.typespec div{display:grid;grid-template-columns:2.2rem minmax(0,1fr);align-items:baseline;gap:.5rem;border-top:1px solid var(--t-rule);padding-top:.5rem}
+.typespec small{font-size:.7rem;font-weight:700;color:var(--t-muted)}
+
+/* ===== Campaign artwork (fixed palette) ===== */
+.camp{--ink:#141312;--paper:#f2eee7;--coral:#ee4b3a;--lilac:#b9a6e4;--teal:#0e8a82;--taupe:#7b6556;--beige:#dcc6a6;--offwhite:#f7f2e8;--white:#ffffff;
+  position:absolute;inset:0;overflow:hidden;isolation:isolate;color:var(--ink);font-family:"Geist",sans-serif}
+.u1920{--u:calc(100cqw / 1920)}.u1080{--u:calc(100cqw / 1080)}.u1000{--u:calc(100cqw / 1000)}.u5400{--u:calc(100cqw / 5400)}.u1680{--u:calc(100cqw / 1680)}.u840{--u:calc(100cqw / 840)}
+.p{position:absolute;left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u));width:calc(var(--w) * var(--u))}
+.g{position:absolute;top:0;bottom:0}
+.pin{position:absolute;left:0;top:0;width:calc(var(--w) * var(--u));z-index:1;opacity:0}
+.pin.on{opacity:1}
+.pin.front{z-index:4}
+.cut{filter:drop-shadow(0 calc(10 * var(--u)) calc(14 * var(--u)) rgba(20,10,5,.20))}
+.mul{mix-blend-mode:multiply}
+.ph{position:absolute;object-fit:cover;z-index:1}
+.t2{position:relative;z-index:2}
+.mono{font-family:"Geist Mono",monospace;font-weight:400;text-transform:uppercase;letter-spacing:.04em;line-height:1.45}
+.it{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400;letter-spacing:-.01em;line-height:.9}
+.cx{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-stretch:75%;font-variation-settings:"wdth" 75,"opsz" 96;letter-spacing:-.005em;line-height:.84;white-space:nowrap}
+.wm{position:absolute;z-index:2;line-height:1}
+.wm .a{font-family:"Instrument Serif",serif;font-style:italic;font-size:.62em;line-height:.86;letter-spacing:-.01em;margin-left:.015em}
+.wm .l{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-stretch:75%;font-variation-settings:"wdth" 75,"opsz" 96;line-height:.86;white-space:nowrap;letter-spacing:-.005em}
+.dot{display:inline-block;width:calc(var(--capr,.72) * 1em);height:calc(var(--capr,.72) * 1em);border-radius:50%;margin:0 .035em;vertical-align:baseline;background:var(--c)}
+.dot.ring{background:transparent;box-shadow:inset 0 0 0 .05em currentColor}
+.c1{--c:var(--coral)}.c2{--c:var(--lilac)}.c3{--c:var(--teal)}.c4{--c:var(--offwhite)}
+.bl{display:inline-block;width:0;height:0;vertical-align:baseline}
+.sdot{display:inline-block;width:.78em;height:.78em;border-radius:50%;vertical-align:-.08em;margin-right:.45em;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+.lock{position:absolute;mix-blend-mode:multiply;z-index:3}
+.lock.rev{mix-blend-mode:screen;filter:invert(1)}
+.unoff{position:absolute;z-index:9;font-variant-ligatures:none;font:500 calc(12 * var(--u))/1 "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;opacity:.6}
+.rule{position:absolute;height:0;border-top:calc(1.5 * var(--u)) solid currentColor;z-index:2}
+.vrule{position:absolute;width:0;border-left:calc(1.5 * var(--u)) solid currentColor;z-index:2}
+
+/* catalogue + sell-in tables */
+.spec-k{font-family:"Geist Mono",monospace;text-transform:uppercase;letter-spacing:.06em;color:#6b645d}
+table.ord{position:absolute;border-collapse:collapse;font-family:"Geist",sans-serif;z-index:2}
+table.ord th{font-family:"Geist Mono",monospace;font-weight:500;text-transform:uppercase;letter-spacing:.05em;text-align:left;border-bottom:calc(2 * var(--u)) solid #141312;padding:0 calc(8 * var(--u)) calc(7 * var(--u)) 0;white-space:nowrap}
+table.ord td{border-bottom:calc(1 * var(--u)) solid #d9d3ca;padding:calc(5 * var(--u)) calc(8 * var(--u)) calc(5 * var(--u)) 0;white-space:nowrap;font-variant-numeric:tabular-nums;vertical-align:middle}
+table.ord td.num,table.ord th.num{text-align:right}
+table.ord tr.grp td{border-bottom:calc(1.5 * var(--u)) solid #141312;padding-top:calc(16 * var(--u))}
+table.ord .box{display:inline-block;width:calc(56 * var(--u));height:calc(22 * var(--u));border:calc(1.2 * var(--u)) solid #141312;vertical-align:middle}
+table.ord .mono{font-size:inherit}
+table.ord td:nth-child(5),table.ord th:nth-child(5){padding-left:calc(16 * var(--u))}
+table.ord tr.grp td{padding-left:0!important}
+
+/* solo export mode */
+body.solo{background:#fff}
+body.solo .bar,body.solo header.intro,body.solo section.blk>*:not(.solo-keep),body.solo footer{display:none!important}
+body.solo .wrap{max-width:none;padding:0}
+body.solo section.blk{padding:0;border:0}
+body.solo .ab{box-shadow:none}
+
+@media (max-width:1000px){
+  header.intro,.two,.crit,.verdict,.notes{grid-template-columns:minmax(0,1fr)}
+  .sys>div{grid-column:1/-1!important}
+}
+</style>
+</head>
+<body>
+<div class="bar"><div class="in">
+  <div class="t">Miffy — A Little World of Colour <span>· elevated campaign · for review</span></div>
+  <nav aria-label="Sections"><a href="#system">System</a><a href="#hero">01 Hero</a><a href="#carousel">02 Carousel</a><a href="#poster">03 Poster</a><a href="#spread">04 Catalogue</a><a href="#sellin">05 Sell-in</a><a href="#pos">06 POS</a><a href="#store">07 In-store</a></nav>
+</div></div>
+
+<div class="wrap">
+<header class="intro">
+  <div><div class="flag"><i></i>Independent, unofficial creative exploration</div>
+  <h1>A Little World of Colour — one campaign, six applications</h1></div>
+  <p>Direction 01’s expressive typography and Direction 03’s fashion-minded product presentation, rebuilt as a single identity. The ideas, type system, layouts and commercial content are new. The product photography is Bon Ton Toys’ own, and no licensed character has been altered. Not commissioned or approved by Bon Ton Toys or Mercis bv.</p>
+</header>
+
+<!-- ===================== SYSTEM ===================== -->
+<section class="blk" id="system">
+  <div class="sh"><div class="n">◐</div><div><h2>The campaign system</h2><p>Every application below is built from these parts. Nothing is drawn freehand per artboard.</p></div></div>
+  <div class="sys">
+    <div style="grid-column:span 7">
+      <h3>1 · The wordmark: a colour card you can read</h3>
+      <div class="ab" style="aspect-ratio:7/3;box-shadow:none"><div class="camp u1080" style="background:var(--paper)">
+        <div class="wm" id="sysWM" style="left:calc(60 * var(--u));top:calc(46 * var(--u));font-size:calc(142 * var(--u))">
+          <div class="a">a little</div>
+          <div class="l">W<i class="dot c1"></i>RLD <i class="dot c2"></i>F</div>
+          <div class="l">C<i class="dot c3"></i>L<i class="dot c4 ring"></i>UR</div>
+        </div>
+        <div class="p mono" style="--x:720;--y:120;--w:320;font-size:calc(19 * var(--u))"><span class="sdot c1" style="--c:#ee4b3a"></span>Bright Coral<br><span class="sdot" style="--c:#b9a6e4"></span>Lilac<br><span class="sdot" style="--c:#0e8a82"></span>Teal<br><span class="sdot" style="--c:#f7f2e8"></span>Offwhite<br><br>The four O’s are the four campaign colourways, always in this order.</div>
+      </div></div>
+      <p>Soft italic “a little” against heavy condensed capitals: the product’s two personalities in one line. When a dot matches the background, it turns into an ink ring. That is the only variation allowed.</p>
+    </div>
+    <div style="grid-column:span 5">
+      <h3>2 · Colour roles</h3>
+      <div class="sw">
+        <div><i style="background:#ee4b3a"></i><b>Bright Coral</b><br>#EE4B3A · ground, dot 1</div>
+        <div><i style="background:#b9a6e4"></i><b>Lilac</b><br>#B9A6E4 · ground, dot 2</div>
+        <div><i style="background:#0e8a82"></i><b>Teal</b><br>#0E8A82 · ground, dot 3</div>
+        <div><i style="background:#f7f2e8"></i><b>Offwhite</b><br>#F7F2E8 · dot 4</div>
+        <div><i style="background:#141312"></i><b>Ink</b><br>#141312 · type, ground</div>
+        <div><i style="background:#f2eee7"></i><b>Paper</b><br>#F2EEE7 · documents</div>
+        <div><i style="background:#7b6556"></i><b>Taupe</b><br>#7B6556 · product only</div>
+        <div><i style="background:#dcc6a6"></i><b>Beige</b><br>#DCC6A6 · product only</div>
+      </div>
+      <p><b>Rule:</b> a product never stands on its own colour. Lilac Miffy goes on teal or coral, never on lilac. The clash is the joy.</p>
+    </div>
+    <div style="grid-column:span 5">
+      <h3>3 · Four voices</h3>
+      <div class="typespec">
+        <div><small>L1</small><span style="font:800 2.1rem/1 'Bricolage Grotesque';font-stretch:75%;font-variation-settings:'wdth' 75,'opsz' 96">W●RLD ●F C●L●UR</span></div>
+        <div><small>L2</small><span style="font:italic 2rem/1 'Instrument Serif'">to hug, to wear, to carry.</span></div>
+        <div><small>L3</small><span style="font:500 1rem/1.4 'Geist'">The sitting Miffy, 18 cm, in three colours.</span></div>
+        <div><small>L4</small><span style="font:400 .78rem/1.4 'Geist Mono';text-transform:uppercase;letter-spacing:.04em">Look 04 · Bag charm · Lilac · 11 cm · 24.205.104</span></div>
+      </div>
+      <p>Bricolage Grotesque Condensed for statements, Instrument Serif Italic for the verbs, Geist for reading, Geist Mono for facts. All are open-licence.</p>
+    </div>
+    <div style="grid-column:span 7">
+      <h3>4 · Devices</h3>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem 1.5rem;font-size:.84rem">
+        <div><b>Type as furniture.</b><br><span style="color:var(--t-muted)">Products sit on cap lines or clip behind letter stems, placed by measuring the actual glyphs. The type supports the product instead of labelling it.</span></div>
+        <div><b>The four verbs.</b><br><span style="color:var(--t-muted)">to hug (sitting, 18 cm) · to wear (brooch, 8 cm) · to carry (bag charm, 11 cm) · to clip (keychain, 8 cm). The range architecture becomes the copy.</span></div>
+        <div><b>Look credits.</b><br><span style="color:var(--t-muted)">Every photo carries a fashion-style credit line in mono: look number, product, colour, size and article number.</span></div>
+        <div><b>Honest scale.</b><br><span style="color:var(--t-muted)">When products are enlarged, the copy says so (“shown enlarged, actual size 8 cm”). Real sizes are always present, because they sell.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 01 HERO ===================== -->
+<section class="blk" id="hero">
+  <div class="sh"><div class="n">01</div><div><h2>Campaign hero</h2><p>The wordmark as a stage. Coral Miffy sits on the cap line of “F”, two keychains clip behind the stems of “L” and “R”, and the fashion photo carries a Look credit.</p></div></div>
+  <div class="solo-keep">
+  <div class="lbl"><b>Hero · web / OOH digital</b><span>1920 × 1080</span></div>
+  <div class="ab" data-solo="hero" data-w="1920" data-h="1080" style="aspect-ratio:16/9"><div class="camp u1920" style="background:var(--lilac)">
+    <img class="lock" style="left:calc(72 * var(--u));top:calc(62 * var(--u));width:calc(150 * var(--u))" src="assets/img/bon-ton-toys/lockup-miffy.png" alt="Bon Ton Toys | nijntje miffy">
+    <div class="p mono" style="--x:1352;--y:70;--w:496;font-size:calc(16 * var(--u));text-align:right;z-index:2">Miffy ECO Fuzzy<br>Autumn / Winter 2026</div>
+    <img class="ph" style="left:calc(1352 * var(--u));top:calc(150 * var(--u));width:calc(496 * var(--u));height:calc(760 * var(--u));object-position:32% 50%" src="assets/img/bon-ton-toys/photo/bagcharms.jpg" alt="Miffy ECO Fuzzy bag charms in lilac and offwhite on a paper handbag">
+    <div class="p mono" style="--x:1352;--y:928;--w:496;font-size:calc(15 * var(--u));z-index:2">Look 01 — Bag charms, Lilac &amp; Offwhite<br>11 cm · Fluff Couture strap</div>
+    <div class="wm" style="left:calc(64 * var(--u));top:calc(206 * var(--u));font-size:calc(262 * var(--u))">
+      <div class="a">a little</div>
+      <div class="l">W<i class="dot c1"></i>RLD <i class="dot c2 ring"></i><span id="hF">F</span></div>
+      <div class="l">C<i class="dot c3"></i><span id="hL">L</span><i class="dot c4"></i>U<span id="hR">R</span></div>
+    </div>
+    <img class="pin front cut" data-t="#hF" data-tx=".42" data-ty="cap" data-dy="0" data-ix=".5" data-iy=".992" style="--w:236" src="assets/img/bon-ton-toys/cut/coral-front.png" alt="Miffy ECO Fuzzy Bright Coral sitting on the letter F">
+    <img class="pin cut" data-t="#hL" data-tx=".325" data-ty="cap" data-dy=".62" data-ix=".475" data-iy="0" style="--w:150" src="assets/img/bon-ton-toys/cut/key-beige.png" alt="Miffy ECO Fuzzy keychain in beige clipped to the letter L">
+    <img class="pin cut" data-t="#hR" data-tx=".262" data-ty="cap" data-dy=".62" data-ix=".552" data-iy="0" style="--w:142" src="assets/img/bon-ton-toys/cut/key-taupe.png" alt="Miffy ECO Fuzzy keychain in taupe clipped to the letter R">
+    <div class="p it" style="--x:904;--y:846;--w:420;font-size:calc(46 * var(--u));line-height:1.02;z-index:2">to hug,<br>to wear,<br>to carry,<br>to clip.</div>
+    <div class="p mono" style="--x:72;--y:1022;--w:1200;font-size:calc(15 * var(--u));z-index:2">12 styles · 6 colours · 4 ways to wear it · recycled inside and out</div>
+    <div class="unoff" style="right:calc(72 * var(--u));bottom:calc(32 * var(--u))">Unofficial exploration</div>
+  </div></div>
+  </div>
+  <div class="notes"><div><h3>Idea</h3><p>The campaign mark carries the product: Miffy sits on a letter and the keychains clip onto letters. It is unmistakably designed, and it is impossible without the type.</p></div><div><h3>Hierarchy</h3><p>Wordmark (L1), verbs line (L2), facts (L4), with the photo as a supporting Look. The eye goes from the coral Miffy to the wordmark to the photo.</p></div><div><h3>Commercial</h3><p>The bottom line states the range in one breath: 12 pieces, 6 colours, 4 ways to wear it.</p></div></div>
+</section>
+
+<!-- ===================== 02 CAROUSEL ===================== -->
+<section class="blk" id="carousel">
+  <div class="sh"><div class="n">02</div><div><h2>Editorial Instagram carousel</h2><p>Five slides designed as one continuous strip. Each new colour ground starts 120 px before the swipe edge, so every slide hands over to the next. One verb per slide, and no product crosses a slide edge.</p></div></div>
+  <div class="solo-keep">
+  <div class="lbl"><b>Carousel · 5 slides as one strip</b><span>5 × 1080 × 1350</span></div>
+  <div class="carwrap">
+  <div class="ab" data-solo="carousel" data-w="5400" data-h="1350" style="aspect-ratio:5400/1350"><div class="camp u5400" id="car">
+    <div class="g" style="left:0;width:calc(960 * var(--u));background:var(--lilac)"></div>
+    <div class="g" style="left:calc(960 * var(--u));width:calc(1080 * var(--u));background:var(--teal)"></div>
+    <div class="g" style="left:calc(2040 * var(--u));width:calc(1080 * var(--u));background:var(--paper)"></div>
+    <div class="g" style="left:calc(3120 * var(--u));width:calc(1080 * var(--u));background:var(--ink)"></div>
+    <div class="g" style="left:calc(4200 * var(--u));right:0;background:var(--coral)"></div>
+
+    <!-- S1 cover -->
+    <img class="lock" style="left:calc(64 * var(--u));top:calc(60 * var(--u));width:calc(130 * var(--u))" src="assets/img/bon-ton-toys/lockup-miffy.png" alt="Bon Ton Toys | nijntje miffy">
+    <div class="p mono" style="--x:700;--y:66;--w:220;font-size:calc(20 * var(--u));text-align:right;z-index:2">01 / 05</div>
+    <div class="wm" style="left:calc(56 * var(--u));top:calc(410 * var(--u));font-size:calc(222 * var(--u))">
+      <div class="a">a little</div>
+      <div class="l">W<i class="dot c1"></i>RLD <i class="dot c2 ring"></i><span id="cF">F</span></div>
+      <div class="l">C<i class="dot c3"></i>L<i class="dot c4"></i>UR</div>
+    </div>
+    <img class="pin front cut" data-t="#cF" data-tx=".3" data-ty="cap" data-dy="0" data-ix=".5" data-iy=".992" style="--w:226" src="assets/img/bon-ton-toys/cut/coral-front.png" alt="Bright Coral Miffy sitting on the letter F">
+    <div class="p" style="--x:64;--y:1004;--w:820;font-size:calc(34 * var(--u));line-height:1.25;font-weight:500;z-index:2">Six colours. Four ways to wear them.<br>One very soft bunny.</div>
+    <div class="p mono" style="--x:64;--y:1250;--w:856;font-size:calc(20 * var(--u));z-index:2;display:flex;justify-content:space-between"><span>Miffy ECO Fuzzy · AW26</span><span>Swipe →</span></div>
+
+    <!-- S2 to hug -->
+    <div class="p mono" style="--x:1780;--y:66;--w:220;font-size:calc(20 * var(--u));text-align:right;z-index:2;color:var(--offwhite)">02 / 05</div>
+    <div class="p it" id="cHug" style="--x:1132;--y:96;--w:900;font-size:calc(300 * var(--u));color:var(--offwhite);z-index:2">to hug.</div>
+    <div class="p" style="--x:1420;--y:1134;--w:392;height:calc(30 * var(--u));z-index:2;background:radial-gradient(closest-side,rgba(10,8,6,0.3),transparent)"></div>
+    <img class="p cut" style="--x:1356;--y:395;--w:520;z-index:3" src="assets/img/bon-ton-toys/cut/lilac-front.png" alt="Miffy ECO Fuzzy Lilac, sitting, 18 cm">
+    <div class="rule" style="left:calc(1144 * var(--u));width:calc(856 * var(--u));top:calc(1206 * var(--u));color:var(--offwhite)"></div>
+    <div class="p mono" style="--x:1144;--y:1224;--w:856;font-size:calc(20 * var(--u));color:var(--offwhite);z-index:2;display:flex;justify-content:space-between"><span>The sitting Miffy · 18 cm</span><span><span class="sdot" style="--c:#ee4b3a"></span>Coral <span class="sdot" style="--c:#b9a6e4;margin-left:.6em"></span>Lilac <span class="sdot" style="--c:#f7f2e8;margin-left:.6em"></span>Offwhite</span></div>
+
+    <!-- S3 to wear -->
+    <div class="p mono" style="--x:2860;--y:66;--w:220;font-size:calc(20 * var(--u));text-align:right;z-index:2">03 / 05</div>
+    <div class="p it" style="--x:2212;--y:96;--w:900;font-size:calc(300 * var(--u));z-index:2">to wear.</div>
+    <div class="p" style="--x:2236;--y:1134;--w:410;height:calc(30 * var(--u));z-index:2;background:radial-gradient(closest-side,rgba(10,8,6,0.2),transparent)"></div><div class="p" style="--x:2626;--y:1134;--w:300;height:calc(30 * var(--u));z-index:2;background:radial-gradient(closest-side,rgba(10,8,6,0.2),transparent)"></div><div class="p" style="--x:2962;--y:1138;--w:126;height:calc(22 * var(--u));z-index:2;background:radial-gradient(closest-side,rgba(10,8,6,.22),transparent)"></div>
+    <img class="p cut" style="--x:2206;--y:495;--w:470;z-index:3;mix-blend-mode:multiply" src="assets/img/bon-ton-toys/cut/brooch-coral.png" alt="Miffy ECO Fuzzy brooch in Bright Coral, enlarged">
+    <img class="p cut" style="--x:2606;--y:660;--w:340;z-index:3;mix-blend-mode:multiply" src="assets/img/bon-ton-toys/cut/brooch-teal.png" alt="Miffy ECO Fuzzy brooch in Teal, enlarged">
+    <div class="p mono" style="--x:2224;--y:424;--w:620;font-size:calc(18 * var(--u));z-index:2">Shown enlarged — actual size 8 cm</div>
+    <img class="p cut" style="--x:2968;--y:1034;--w:112;z-index:3;mix-blend-mode:multiply" src="assets/img/bon-ton-toys/cut/box-lilac.png" alt="Miffy ECO Fuzzy brooch in Lilac, in its giftbox"><div class="p mono" style="--x:2900;--y:1004;--w:180;font-size:calc(14 * var(--u));text-align:right;z-index:2">In giftbox</div>
+    <div class="rule" style="left:calc(2224 * var(--u));width:calc(856 * var(--u));top:calc(1206 * var(--u))"></div>
+    <div class="p mono" style="--x:2224;--y:1224;--w:856;font-size:calc(20 * var(--u));z-index:2;display:flex;justify-content:space-between"><span>Brooch · 8 cm · in giftbox</span><span><span class="sdot" style="--c:#ee4b3a"></span>Coral <span class="sdot" style="--c:#b9a6e4;margin-left:.6em"></span>Lilac <span class="sdot" style="--c:#0e8a82;margin-left:.6em"></span>Teal</span></div>
+
+    <!-- S4 to carry -->
+    <div class="p mono" style="--x:3940;--y:66;--w:220;font-size:calc(20 * var(--u));text-align:right;z-index:2;color:var(--offwhite)">04 / 05</div>
+    <div class="p it" style="--x:3292;--y:96;--w:900;font-size:calc(300 * var(--u));color:var(--offwhite);z-index:2">to carry<span id="cDot">.</span></div>
+    <img class="ph" style="left:calc(3304 * var(--u));top:calc(540 * var(--u));width:calc(430 * var(--u));height:calc(610 * var(--u));object-position:50% 58%" src="assets/img/bon-ton-toys/photo/bagcharm-model.png" alt="Model wearing a lilac Miffy ECO Fuzzy bag charm">
+    <div class="p mono" style="--x:3760;--y:1108;--w:400;font-size:calc(16 * var(--u));color:var(--offwhite);z-index:2">← Look 04 — Bag charm, Lilac</div>
+    <img class="pin cut" data-t="#cDot" data-tx=".5" data-ty="base" data-dy="-.05" data-ix=".9" data-iy=".02" style="--w:470" src="assets/img/bon-ton-toys/cut/charm-offwhite.png" alt="Miffy ECO Fuzzy bag charm in Offwhite hanging from the full stop">
+    <div class="rule" style="left:calc(3304 * var(--u));width:calc(856 * var(--u));top:calc(1206 * var(--u));color:var(--offwhite)"></div>
+    <div class="p mono" style="--x:3304;--y:1224;--w:856;font-size:calc(20 * var(--u));color:var(--offwhite);z-index:2;display:flex;justify-content:space-between"><span>Bag charm · 11 cm · strap included</span><span><span class="sdot" style="--c:#b9a6e4"></span>Lilac <span class="sdot" style="--c:#f7f2e8;margin-left:.6em"></span>Offwhite</span></div>
+
+    <!-- S5 to clip -->
+    <div class="p mono" style="--x:5100;--y:66;--w:220;font-size:calc(20 * var(--u));text-align:right;z-index:2">05 / 05</div>
+    <div class="p it" style="--x:4372;--y:96;--w:900;font-size:calc(300 * var(--u));z-index:2">to clip.</div>
+    <div class="p cx" style="--x:4470;--y:440;--w:900;font-size:calc(350 * var(--u));letter-spacing:.2em;z-index:2"><span id="kC">C</span><span id="kL">L</span><span id="kI">I</span><span id="kP">P</span></div>
+    <img class="pin cut" data-t="#kC" data-tx=".16" data-ty="cap" data-dy=".6" data-ix=".497" data-iy="0" style="--w:196" src="assets/img/bon-ton-toys/cut/key-offwhite.png" alt="Offwhite keychain clipped to C">
+    <img class="pin cut" data-t="#kL" data-tx=".24" data-ty="cap" data-dy=".6" data-ix=".552" data-iy="0" style="--w:214" src="assets/img/bon-ton-toys/cut/key-taupe.png" alt="Taupe keychain clipped to L">
+    <img class="pin cut" data-t="#kI" data-tx=".5" data-ty="cap" data-dy=".6" data-ix=".475" data-iy="0" style="--w:224" src="assets/img/bon-ton-toys/cut/key-beige.png" alt="Beige keychain clipped to I">
+    <img class="pin cut" data-t="#kP" data-tx=".66" data-ty="cap" data-dy=".6" data-ix=".514" data-iy="0" style="--w:200" src="assets/img/bon-ton-toys/cut/key-lilac.png" alt="Lilac keychain clipped to P">
+    <div class="rule" style="left:calc(4384 * var(--u));width:calc(952 * var(--u));top:calc(1206 * var(--u))"></div>
+    <div class="p mono" style="--x:4384;--y:1224;--w:952;font-size:calc(20 * var(--u));z-index:2;display:flex;justify-content:space-between"><span>Keychain · 8 cm · four colours</span><span>Find your colour — link in bio</span></div>
+    <div class="p mono" style="--x:596;--y:24;--w:300;font-size:calc(12 * var(--u));text-align:right;z-index:9;font-variant-ligatures:none;color:rgba(20,19,18,.62)">Unofficial exploration</div><div class="p mono" style="--x:1676;--y:24;--w:300;font-size:calc(12 * var(--u));text-align:right;z-index:9;font-variant-ligatures:none;color:rgba(247,242,232,.62)">Unofficial exploration</div><div class="p mono" style="--x:2756;--y:24;--w:300;font-size:calc(12 * var(--u));text-align:right;z-index:9;font-variant-ligatures:none;color:rgba(20,19,18,.62)">Unofficial exploration</div><div class="p mono" style="--x:3836;--y:24;--w:300;font-size:calc(12 * var(--u));text-align:right;z-index:9;font-variant-ligatures:none;color:rgba(247,242,232,.62)">Unofficial exploration</div><div class="p mono" style="--x:5036;--y:24;--w:300;font-size:calc(12 * var(--u));text-align:right;z-index:9;font-variant-ligatures:none;color:rgba(20,19,18,.62)">Unofficial exploration</div>
+  </div></div>
+  <div class="slices" aria-hidden="true"><span data-n="1"></span><span data-n="2"></span><span data-n="3"></span><span data-n="4"></span><span data-n="5"></span></div>
+  </div>
+  </div>
+  <div class="notes"><div><h3>Sequence</h3><p>The cover sets the mark. Each following slide is one verb and one format, with a different composition logic each time: sitting, magnified, framed and hanging, then clipped.</p></div><div><h3>Continuity</h3><p>A 120 px teaser strip of the next colour sits on the right of every slide, and a fact rail at the same height runs through all five. The strip reads as one piece when swiped.</p></div><div><h3>Surprise</h3><p>A brooch blown up with its true size stated, a bag charm hanging from a full stop, and four keychains, one per letter of CLIP.</p></div></div>
+</section>
+
+<!-- ===================== 03 POSTER ===================== -->
+<section class="blk" id="poster">
+  <div class="sh"><div class="n">03</div><div><h2>Fashion campaign poster</h2><p>Magazine-cover logic. The bag charm’s Fluff Couture strap hooks over the comma of “C●L●UR,” and the sentence finishes in italic: worn.</p></div></div>
+  <div class="two">
+  <div class="solo-keep">
+  <div class="lbl"><b>Poster · retail &amp; window</b><span>50 × 70 cm</span></div>
+  <div class="ab" data-solo="poster" data-w="1000" data-h="1400" style="aspect-ratio:5/7"><div class="camp u1000" style="background:var(--paper)">
+    <div class="p mono" style="--x:40;--y:36;--w:600;font-size:calc(15 * var(--u));z-index:2">No. 01 · The accessories issue</div>
+    <div class="p mono" style="--x:640;--y:36;--w:320;font-size:calc(15 * var(--u));text-align:right;z-index:2">AW26</div>
+    <div class="rule" style="left:calc(40 * var(--u));width:calc(920 * var(--u));top:calc(66 * var(--u))"></div>
+    <div class="p cx" style="--x:30;--y:86;--w:960;font-size:calc(268 * var(--u));z-index:2">C<i class="dot c1" style="--capr:.72"></i>L<i class="dot c2"></i>UR<span id="pCm">,</span></div>
+    <img class="pin cut" data-t="#pCm" data-tx=".45" data-ty="base" data-dy="-.02" data-ix=".9" data-iy=".02" style="--w:700" src="assets/img/bon-ton-toys/cut/charm-lilac.png" alt="Miffy ECO Fuzzy bag charm in Lilac hooked over the comma">
+    <img class="ph" style="left:calc(40 * var(--u));top:calc(560 * var(--u));width:calc(250 * var(--u));height:calc(355 * var(--u));object-position:50% 58%" src="assets/img/bon-ton-toys/photo/bagcharm-model.png" alt="Model wearing the lilac bag charm">
+    <div class="p mono" style="--x:40;--y:924;--w:260;font-size:calc(13 * var(--u));z-index:2">Look 04 — worn on the strap</div>
+    <div class="p it" style="--x:300;--y:930;--w:680;font-size:calc(330 * var(--u));color:var(--coral);text-align:right;z-index:2">worn.</div>
+    <div class="rule" style="left:calc(40 * var(--u));width:calc(920 * var(--u));top:calc(1222 * var(--u))"></div>
+    <div class="p mono" style="--x:40;--y:1240;--w:280;font-size:calc(15 * var(--u));z-index:2">The bag charm<br>Miffy ECO Fuzzy, 11 cm<br>Lilac · 24.205.104</div>
+    <div class="p mono" style="--x:330;--y:1240;--w:280;font-size:calc(15 * var(--u));z-index:2">Fluff Couture strap<br>Recycled inside and out<br>Also in Offwhite</div>
+    <div class="p" style="--x:620;--y:1240;--w:180;font-size:calc(22 * var(--u));line-height:1.2;font-weight:500;z-index:2">Find your colour in store.</div>
+    <img class="lock" style="left:calc(828 * var(--u));top:calc(1240 * var(--u));width:calc(132 * var(--u))" src="assets/img/bon-ton-toys/lockup-miffy.png" alt="Bon Ton Toys | nijntje miffy">
+    <div class="unoff" style="left:calc(40 * var(--u));bottom:calc(16 * var(--u))">Unofficial exploration</div>
+  </div></div>
+  </div>
+  <div class="notes" style="grid-template-columns:minmax(0,1fr);border-top:0;margin-top:1.7rem"><div><h3>Idea</h3><p>“Colour, worn.” is a fashion headline built from the campaign wordmark. The comma becomes the hook, so the strap hangs from the punctuation.</p></div><div><h3>Fashion cues</h3><p>Issue line, a ruled masthead, coverline credits in mono, and a small Look photo used as an editorial inset rather than as the hero.</p></div><div><h3>Hierarchy</h3><p>“COLOUR,” (L1), then the product, then “worn.” in coral (L2), then the credits (L4). The poster reads as one sentence from top to bottom.</p></div><div><h3>Production</h3><p>The cut-out is from a 900 px packshot. Print at 50 × 70 cm needs the original studio file.</p></div></div>
+  </div>
+</section>
+
+<!-- ===================== 04 CATALOGUE SPREAD ===================== -->
+<section class="blk" id="spread">
+  <div class="sh"><div class="n">04</div><div><h2>Collection catalogue spread</h2><p>The left page is the idea: Miffys sitting on their own size, “18”. The right page is the business: one chapter with a clear product hierarchy, every colourway, article number, carton size and RRP.</p></div></div>
+  <div class="solo-keep">
+  <div class="lbl"><b>Catalogue spread · A4 × 2</b><span>420 × 297 mm</span></div>
+  <div class="ab" data-solo="spread" data-w="1680" data-h="1188" style="aspect-ratio:420/297"><div class="camp u1680" style="background:var(--paper)">
+    <div class="g" style="left:0;width:calc(840 * var(--u));background:var(--teal)"></div>
+    <div class="g" style="left:calc(810 * var(--u));width:calc(60 * var(--u));background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.10) 50%,rgba(0,0,0,0));z-index:5"></div>
+    <!-- left page -->
+    <div class="p mono" style="--x:48;--y:40;--w:500;font-size:calc(14 * var(--u));color:var(--offwhite);z-index:2">A little world of colour — Chapter 01</div>
+    <div class="p it" style="--x:44;--y:84;--w:760;font-size:calc(150 * var(--u));color:var(--offwhite);z-index:2">to hug.</div>
+    <div class="p cx" style="--x:36;--y:500;--w:800;font-size:calc(740 * var(--u));z-index:2;color:var(--ink)"><span id="n1">1</span><span id="n8">8</span><span class="it" id="ncm" style="font-size:.26em;color:var(--offwhite);margin-left:.06em">cm</span></div>
+    <img class="pin front cut" data-t="#n1" data-tx=".5" data-ty="cap" data-dy="0" data-ix=".5" data-iy=".992" style="--w:190" src="assets/img/bon-ton-toys/cut/coral-front.png" alt="Bright Coral Miffy sitting on the numeral 1">
+    <img class="pin front cut" data-t="#n8" data-tx=".5" data-ty="cap" data-dy="0" data-ix=".5" data-iy=".992" style="--w:190" src="assets/img/bon-ton-toys/cut/lilac-front.png" alt="Lilac Miffy sitting on the numeral 8">
+    <img class="pin front cut" data-t="#ncm" data-tx=".5" data-ty="x" data-dy="0" data-ix=".5" data-iy=".992" style="--w:150" src="assets/img/bon-ton-toys/cut/offwhite-front.png" alt="Offwhite Miffy sitting on the word cm">
+    <div class="p mono" style="--x:48;--y:1110;--w:560;font-size:calc(14 * var(--u));color:var(--offwhite);z-index:2">The sitting Miffy, shown on its own size</div>
+    <div class="p mono" style="--x:740;--y:1110;--w:60;font-size:calc(14 * var(--u));color:var(--offwhite);z-index:2;text-align:right">14</div>
+    <!-- right page -->
+    <div class="p mono" style="--x:888;--y:40;--w:740;font-size:calc(14 * var(--u));z-index:2;display:flex;justify-content:space-between"><span>Recycled Fuzzy · AW26</span><span>Miffy ECO Fuzzy</span></div>
+    <div class="rule" style="left:calc(888 * var(--u));width:calc(744 * var(--u));top:calc(64 * var(--u))"></div>
+    <div class="p" style="--x:888;--y:88;--w:440;z-index:2"><div class="it" style="font-size:calc(58 * var(--u))">The sitting Miffy</div><div style="font-size:calc(17 * var(--u));line-height:1.45;margin-top:calc(12 * var(--u));max-width:calc(420 * var(--u))">Dick Bruna’s Miffy in a dense, fuzzy pile. One size, three colours, and shell and filling both made from recycled polyester.</div></div>
+    <dl class="p" style="--x:1356;--y:92;--w:276;z-index:2;margin:0;display:grid;grid-template-columns:calc(96 * var(--u)) 1fr;row-gap:calc(6 * var(--u));font-size:calc(14 * var(--u))">
+      <dt class="spec-k">Size</dt><dd style="margin:0">18 cm · 7″</dd><dt class="spec-k">Material</dt><dd style="margin:0">100% recycled polyester</dd><dt class="spec-k">Packaging</dt><dd style="margin:0">No giftbox</dd><dt class="spec-k">IC / OC</dt><dd style="margin:0">6 / 36</dd><dt class="spec-k">RRP</dt><dd style="margin:0;font-weight:600">€19.95</dd>
+    </dl>
+    <img class="p cut" style="--x:914;--y:255.6;--w:180;z-index:3" src="assets/img/bon-ton-toys/cut/coral-front.png" alt="">
+    <img class="p cut" style="--x:1170;--y:254.7;--w:180;z-index:3" src="assets/img/bon-ton-toys/cut/lilac-front.png" alt="">
+    <img class="p cut" style="--x:1426;--y:249.1;--w:180;z-index:3" src="assets/img/bon-ton-toys/cut/offwhite-front.png" alt="">
+    <div class="rule" style="left:calc(888 * var(--u));width:calc(744 * var(--u));top:calc(518 * var(--u));color:#141312"></div>
+    <div class="p" style="--x:888;--y:530;--w:232;font-size:calc(15 * var(--u));z-index:2"><span class="sdot" style="--c:#ee4b3a"></span><b style="font-weight:600">Bright Coral</b><div class="mono" style="font-size:calc(13 * var(--u));margin-left:1.3em">24.318.123</div></div>
+    <div class="p" style="--x:1144;--y:530;--w:232;font-size:calc(15 * var(--u));z-index:2"><span class="sdot" style="--c:#b9a6e4"></span><b style="font-weight:600">Lilac</b><div class="mono" style="font-size:calc(13 * var(--u));margin-left:1.3em">24.318.604</div></div>
+    <div class="p" style="--x:1400;--y:530;--w:232;font-size:calc(15 * var(--u));z-index:2"><span class="sdot" style="--c:#f7f2e8"></span><b style="font-weight:600">Offwhite</b><div class="mono" style="font-size:calc(13 * var(--u));margin-left:1.3em">24.318.002</div></div>
+
+    <div class="p mono" style="--x:888;--y:622;--w:744;font-size:calc(14 * var(--u));z-index:2">The accessories — same fuzz, smaller formats</div>
+    <div class="rule" style="left:calc(888 * var(--u));width:calc(744 * var(--u));top:calc(646 * var(--u))"></div>
+    <!-- three accessory columns at x 888 / 1144 / 1400, width 232 -->
+    <div class="p it" style="--x:888;--y:664;--w:232;font-size:calc(48 * var(--u));z-index:2">to wear.</div>
+    <div class="p it" style="--x:1144;--y:664;--w:232;font-size:calc(48 * var(--u));z-index:2">to carry.</div>
+    <div class="p it" style="--x:1400;--y:664;--w:232;font-size:calc(48 * var(--u));z-index:2">to clip.</div>
+    <img class="p cut" style="--x:896;--y:748;--w:118;z-index:3" src="assets/img/bon-ton-toys/cut/brooch-coral.png" alt="">
+    <img class="p cut" style="--x:998;--y:768;--w:100;z-index:3" src="assets/img/bon-ton-toys/cut/brooch-teal.png" alt="">
+    <img class="p cut" style="--x:1146;--y:714;--w:200;z-index:3" src="assets/img/bon-ton-toys/cut/charm-lilac.png" alt="">
+    <img class="p cut" style="--x:1404;--y:728;--w:96;z-index:3" src="assets/img/bon-ton-toys/cut/key-taupe.png" alt="">
+    <img class="p cut" style="--x:1494;--y:731;--w:86;z-index:3" src="assets/img/bon-ton-toys/cut/key-offwhite.png" alt="">
+    <div class="rule" style="left:calc(888 * var(--u));width:calc(744 * var(--u));top:calc(914 * var(--u));border-top-width:calc(1 * var(--u));color:#141312"></div>
+    <div class="p" style="--x:888;--y:928;--w:232;font-size:calc(14 * var(--u));line-height:1.5;z-index:2"><div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-weight:600;font-size:calc(16 * var(--u))">Brooch</b><b style="font-weight:600;font-size:calc(16 * var(--u));font-variant-numeric:tabular-nums">€12.95</b></div><div class="mono" style="font-size:calc(12.5 * var(--u));color:#6b645d">8 cm · in giftbox<br>IC/OC 1/72</div><div class="mono" style="font-size:calc(12.5 * var(--u));margin-top:calc(10 * var(--u));display:grid;grid-template-columns:1fr auto;row-gap:calc(2 * var(--u))"><span><span class="sdot" style="--c:#ee4b3a"></span>Coral</span><span style="text-align:right">24.303.123</span><span><span class="sdot" style="--c:#b9a6e4"></span>Lilac</span><span style="text-align:right">24.303.604</span><span><span class="sdot" style="--c:#0e8a82"></span>Teal</span><span style="text-align:right">24.303.309</span></div></div>
+    <div class="p" style="--x:1144;--y:928;--w:232;font-size:calc(14 * var(--u));line-height:1.5;z-index:2"><div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-weight:600;font-size:calc(16 * var(--u))">Bag charm</b><b style="font-weight:600;font-size:calc(16 * var(--u));font-variant-numeric:tabular-nums">€23.95</b></div><div class="mono" style="font-size:calc(12.5 * var(--u));color:#6b645d">11 cm · with strap<br>IC/OC 3/36</div><div class="mono" style="font-size:calc(12.5 * var(--u));margin-top:calc(10 * var(--u));display:grid;grid-template-columns:1fr auto;row-gap:calc(2 * var(--u))"><span><span class="sdot" style="--c:#b9a6e4"></span>Lilac</span><span style="text-align:right">24.205.104</span><span><span class="sdot" style="--c:#f7f2e8"></span>Offwhite</span><span style="text-align:right">24.205.103</span></div></div>
+    <div class="p" style="--x:1400;--y:928;--w:232;font-size:calc(14 * var(--u));line-height:1.5;z-index:2"><div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-weight:600;font-size:calc(16 * var(--u))">Keychain</b><b style="font-weight:600;font-size:calc(16 * var(--u));font-variant-numeric:tabular-nums">€12.95</b></div><div class="mono" style="font-size:calc(12.5 * var(--u));color:#6b645d">8 cm · on clasp<br>IC/OC 6/144</div><div class="mono" style="font-size:calc(12.5 * var(--u));margin-top:calc(10 * var(--u));display:grid;grid-template-columns:1fr auto;row-gap:calc(2 * var(--u))"><span><span class="sdot" style="--c:#f7f2e8"></span>Offwhite</span><span style="text-align:right">24.308.002</span><span><span class="sdot" style="--c:#7b6556"></span>Taupe</span><span style="text-align:right">24.308.514</span><span><span class="sdot" style="--c:#dcc6a6"></span>Beige</span><span style="text-align:right">24.308.511</span><span><span class="sdot" style="--c:#b9a6e4"></span>Lilac</span><span style="text-align:right">24.308.604</span></div></div>
+    <div class="rule" style="left:calc(888 * var(--u));width:calc(744 * var(--u));top:calc(1096 * var(--u))"></div>
+    <div class="p mono" style="--x:888;--y:1108;--w:660;font-size:calc(11.5 * var(--u));line-height:1.5;z-index:2;color:#5f5852;white-space:nowrap">IC/OC = inner / outer carton · RRP EU incl. VAT, checked 10 Oct 2026<br>ECO = at least 90% recycled polyester, inside and out · © Mercis bv</div>
+    <div class="p mono" style="--x:1572;--y:1110;--w:60;font-size:calc(14 * var(--u));z-index:2;text-align:right">15</div>
+    <div class="unoff" style="right:calc(48 * var(--u));top:calc(14 * var(--u))">Unofficial exploration</div>
+  </div></div>
+  </div>
+  <div class="notes"><div><h3>Idea</h3><p>The size is the furniture. “18” is set so large that the three 18 cm Miffys sit on it, so a fact becomes the image.</p></div><div><h3>Hierarchy</h3><p>The hero format on top with equal-scale packshots, colour names and article numbers. Below it the three accessory formats, each introduced by its verb, with real pack sizes and RRP.</p></div><div><h3>DTP detail</h3><p>Tabular figures, a shared baseline under the packshots, mono data on one rhythm, a gutter shadow, and folios 14–15 in the running heads.</p></div></div>
+</section>
+
+<!-- ===================== 05 SELL-IN SHEET ===================== -->
+<section class="blk" id="sellin">
+  <div class="sh"><div class="n">05</div><div><h2>B2B sell-in sheet</h2><p>A one-page A4 order form a rep can leave behind or a buyer can fill in. It holds every article, a calculated starter assortment, and the display that goes with it.</p></div></div>
+  <div class="two">
+  <div class="solo-keep">
+  <div class="lbl"><b>Sell-in / order sheet</b><span>A4 · 210 × 297 mm</span></div>
+  <div class="ab" data-solo="sellin" data-w="840" data-h="1188" style="aspect-ratio:210/297"><div class="camp u840" style="background:var(--white)">
+    <div class="g" style="left:0;right:0;height:calc(176 * var(--u));background:var(--lilac)"></div>
+    <div class="wm" style="left:calc(36 * var(--u));top:calc(26 * var(--u));font-size:calc(58 * var(--u))">
+      <div class="a">a little</div>
+      <div class="l">W<i class="dot c1"></i>RLD <i class="dot c2 ring"></i>F C<i class="dot c3"></i>L<i class="dot c4"></i>UR</div>
+    </div>
+    <div class="p cx" style="--x:36;--y:122;--w:500;font-size:calc(34 * var(--u));z-index:2">SELL-IN &amp; ORDER SHEET</div>
+    <img class="lock" style="left:calc(718 * var(--u));top:calc(30 * var(--u));width:calc(86 * var(--u))" src="assets/img/bon-ton-toys/lockup-miffy.png" alt="Bon Ton Toys | nijntje miffy">
+    <div class="p mono" style="--x:520;--y:126;--w:284;font-size:calc(10.5 * var(--u));text-align:right;z-index:2">Miffy ECO Fuzzy · Recycled Fuzzy<br>Autumn / Winter 2026</div>
+    <!-- form fields -->
+    <div class="p" style="--x:36;--y:196;--w:768;z-index:2;display:grid;grid-template-columns:2fr 1.2fr 1fr 1.2fr;column-gap:calc(16 * var(--u))">
+      <div><div class="mono" style="font-size:calc(9.5 * var(--u))">Store</div><div style="border-bottom:calc(1 * var(--u)) solid #141312;height:calc(24 * var(--u))"></div></div>
+      <div><div class="mono" style="font-size:calc(9.5 * var(--u))">Account no.</div><div style="border-bottom:calc(1 * var(--u)) solid #141312;height:calc(24 * var(--u))"></div></div>
+      <div><div class="mono" style="font-size:calc(9.5 * var(--u))">Date</div><div style="border-bottom:calc(1 * var(--u)) solid #141312;height:calc(24 * var(--u))"></div></div>
+      <div><div class="mono" style="font-size:calc(9.5 * var(--u))">Delivery week</div><div style="border-bottom:calc(1 * var(--u)) solid #141312;height:calc(24 * var(--u))"></div></div>
+    </div>
+    <table class="ord" style="left:calc(36 * var(--u));top:calc(262 * var(--u));width:calc(768 * var(--u));font-size:calc(11 * var(--u))">
+      <thead><tr><th style="width:calc(98 * var(--u))">Article</th><th>Item</th><th>Colour</th><th class="num">Size</th><th>Pack</th><th class="num">IC / OC</th><th class="num">RRP €</th><th class="num">Order (IC)</th></tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="8"><span class="it" style="font-size:calc(22 * var(--u))">to hug.</span> <span class="mono" style="font-size:calc(9.5 * var(--u));margin-left:calc(8 * var(--u))">The sitting Miffy</span></td></tr>
+        <tr><td class="mono">24.318.123</td><td>Miffy ECO Fuzzy</td><td><span class="sdot" style="--c:#ee4b3a"></span>Bright Coral</td><td class="num">18 cm</td><td>—</td><td class="num">6 / 36</td><td class="num">19.95</td><td class="num"><i class="box"></i></td></tr>
+        <tr><td class="mono">24.318.604</td><td>Miffy ECO Fuzzy</td><td><span class="sdot" style="--c:#b9a6e4"></span>Lilac</td><td class="num">18 cm</td><td>—</td><td class="num">6 / 36</td><td class="num">19.95</td><td class="num"><i class="box"></i></td></tr>
+        <tr><td class="mono">24.318.002</td><td>Miffy ECO Fuzzy</td><td><span class="sdot" style="--c:#f7f2e8"></span>Offwhite</td><td class="num">18 cm</td><td>—</td><td class="num">6 / 36</td><td class="num">19.95</td><td class="num"><i class="box"></i></td></tr>
+        <tr class="grp"><td colspan="8"><span class="it" style="font-size:calc(22 * var(--u))">to wear.</span> <span class="mono" style="font-size:calc(9.5 * var(--u));margin-left:calc(8 * var(--u))">Brooch</span></td></tr>
+        <tr><td class="mono">24.303.123</td><td>Miffy ECO Fuzzy Brooch</td><td><span class="sdot" style="--c:#ee4b3a"></span>Bright Coral</td><td class="num">8 cm</td><td>Giftbox</td><td class="num">1 / 72</td><td class="num">12.95</td><td class="num"><i class="box"></i></td></tr>
+        <tr><td class="mono">24.303.604</td><td>Miffy ECO Fuzzy Brooch</td><td><span class="sdot" style="--c:#b9a6e4"></span>Lilac</td><td class="num">8 cm</td><td>Giftbox</td><td class="num">1 / 72</td><td class="num">12.95</td><td class="num"><i class="box"></i></td></tr>
+        <tr><td class="mono">24.303.309</td><td>Miffy ECO Fuzzy Brooch</td><td><span class="sdot" style="--c:#0e8a82"></span>Teal</td><td class="num">8 cm</td><td>Giftbox</td><td class="num">1 / 72</td><td class="num">12.95</td><td class="num"><i class="box"></i></td></tr>
+        <tr class="grp"><td colspan="8"><span class="it" style="font-size:calc(22 * var(--u))">to carry.</span> <span class="mono" style="font-size:calc(9.5 * var(--u));margin-left:calc(8 * var(--u))">Bag charm with strap</span></td></tr>
+        <tr><td class="mono">24.205.104</td><td>Miffy ECO Fuzzy Bag Charm</td><td><span class="sdot" style="--c:#b9a6e4"></span>Lilac</td><td class="num">11 cm</td><td>—</td><td class="num">3 / 36</td><td class="num">23.95</td><td class="num"><i class="box"></i></td></tr>
+        <tr><td class="mono">24.205.103</td><td>Miffy ECO Fuzzy Bag Charm</td><td><span class="sdot" style="--c:#f7f2e8"></span>Offwhite</td><td class="num">11 cm</td><td>—</td><td class="num">3 / 36</td><td class="num">23.95</td><td class="num"><i class="box"></i></td></tr>
+        <tr class="grp"><td colspan="8"><span class="it" style="font-size:calc(22 * var(--u))">to clip.</span> <span class="mono" style="font-size:calc(9.5 * var(--u));margin-left:calc(8 * var(--u))">Keychain</span></td></tr>
+        <tr><td class="mono">24.308.002</td><td>Miffy ECO Fuzzy Keychain</td><td><span class="sdot" style="--c:#f7f2e8"></span>Offwhite</td><td class="num">8 cm</td><td>—</td><td class="num">6 / 144</td><td class="num">12.95</td><td class="num"><i class="box"></i></td></tr>
+        <tr><td class="mono">24.308.514</td><td>Miffy ECO Fuzzy Keychain</td><td><span class="sdot" style="--c:#7b6556"></span>Taupe</td><td class="num">8 cm</td><td>—</td><td class="num">6 / 144</td><td class="num">12.95</td><td class="num"><i class="box"></i></td></tr>
+        <tr><td class="mono">24.308.511</td><td>Miffy ECO Fuzzy Keychain</td><td><span class="sdot" style="--c:#dcc6a6"></span>Beige</td><td class="num">8 cm</td><td>—</td><td class="num">6 / 144</td><td class="num">12.95</td><td class="num"><i class="box"></i></td></tr>
+        <tr><td class="mono">24.308.604</td><td>Miffy ECO Fuzzy Keychain</td><td><span class="sdot" style="--c:#b9a6e4"></span>Lilac</td><td class="num">8 cm</td><td>—</td><td class="num">6 / 144</td><td class="num">12.95</td><td class="num"><i class="box"></i></td></tr>
+      </tbody>
+    </table>
+    <!-- bottom modules: y 888 -->
+    <div class="p" style="--x:36;--y:884;--w:248;z-index:2;background:var(--coral);padding:calc(16 * var(--u));height:calc(220 * var(--u));display:flex;flex-direction:column">
+      <div class="mono" style="font-size:calc(10 * var(--u))">Starter assortment</div>
+      <div class="cx" style="font-size:calc(46 * var(--u));margin-top:calc(8 * var(--u));line-height:.9">51 PIECES</div>
+      <div style="font-size:calc(11.5 * var(--u));line-height:1.45;margin-top:calc(8 * var(--u))">One inner carton of each of the 12 articles. Every colour, every format, on the shelf from day one.</div>
+      <div class="mono" style="font-size:calc(10 * var(--u));margin-top:auto">RRP value €852.45 &nbsp;<i class="box" style="display:inline-block;width:calc(14 * var(--u));height:calc(14 * var(--u));border:calc(1.2 * var(--u)) solid #141312;vertical-align:middle"></i> Order</div>
+    </div>
+    <div class="p" style="--x:300;--y:884;--w:248;z-index:2;border:calc(1.5 * var(--u)) solid #141312;padding:calc(14.5 * var(--u)) calc(16 * var(--u)) calc(16 * var(--u));height:calc(220 * var(--u));display:flex;flex-direction:column">
+      <div class="mono" style="font-size:calc(10 * var(--u))">The display · see POS kit</div>
+      <svg viewBox="0 0 216 120" preserveAspectRatio="xMinYMid meet" style="width:100%;height:calc(88 * var(--u));margin-top:calc(12 * var(--u));display:block" aria-label="Colour Counter schematic">
+        <rect x="2" y="70" width="212" height="46" fill="#0e8a82"/><rect x="2" y="96" width="212" height="20" fill="#ee4b3a"/>
+        <circle cx="36" cy="56" r="14" fill="#ee4b3a"/><circle cx="68" cy="56" r="14" fill="#b9a6e4"/><circle cx="100" cy="56" r="14" fill="#f7f2e8" stroke="#141312" stroke-width=".8"/>
+        <text x="122" y="30" font-family="Bricolage Grotesque" font-weight="800" font-size="30" fill="#141312" style="font-stretch:75%;font-variation-settings:'wdth' 75">CLIP</text>
+        <g fill="#dcc6a6"><circle cx="129" cy="44" r="5"/><circle cx="145" cy="44" r="5"/><circle cx="160" cy="44" r="5"/><circle cx="176" cy="44" r="5"/></g>
+        <line x1="2" y1="118" x2="214" y2="118" stroke="#141312" stroke-width="1"/>
+      </svg>
+      <div style="font-size:calc(11 * var(--u));line-height:1.42;margin-top:auto">Colour Counter, 80 × 28 × 30 cm. Shows all 12 styles face-out, with reserve stock in the riser.</div>
+    </div>
+    <div class="p" style="--x:564;--y:884;--w:240;z-index:2;font-size:calc(11 * var(--u));line-height:1.45;padding-top:calc(16 * var(--u))">
+      <div class="mono" style="font-size:calc(10 * var(--u));border-bottom:calc(1.5 * var(--u)) solid #141312;padding-bottom:calc(6 * var(--u))">Why it sells</div>
+      <p style="margin:calc(8 * var(--u)) 0 0"><b>Three price points, one story:</b> €12.95, €19.95 and €23.95, from impulse buy to gift.</p>
+      <p style="margin:calc(6 * var(--u)) 0 0"><b>Proven pull:</b> Bon Ton’s WWF shark giveaway drew 1,907 Instagram comments. Accessories travel well on social.</p>
+      <p style="margin:calc(6 * var(--u)) 0 0"><b>Recycled, inside and out.</b> B Corp score 109.</p>
+    </div>
+    <div class="rule" style="left:calc(36 * var(--u));width:calc(768 * var(--u));top:calc(1128 * var(--u));border-top-width:calc(1 * var(--u))"></div>
+    <div class="p mono" style="--x:36;--y:1140;--w:640;font-size:calc(8.6 * var(--u));z-index:2;white-space:nowrap;line-height:1.55">sales@bontontoys.com · International Bon Ton Toys B.V., Amsterdam<br>Order in inner cartons (IC) · OC = outer carton · RRP: EU webshop incl. VAT, checked 10 Oct 2026 · Miffy © Mercis bv</div>
+    <div class="p mono" style="--x:684;--y:1140;--w:120;font-size:calc(8.6 * var(--u));z-index:2;text-align:right;opacity:.6;line-height:1.55">Unofficial<br>exploration</div>
+  </div></div>
+  </div>
+  <div class="notes" style="grid-template-columns:minmax(0,1fr);border-top:0;margin-top:1.7rem"><div><h3>Built to be used</h3><p>Grouped by verb so a buyer orders by format. Order boxes are counted in inner cartons, the unit a buyer actually orders in. Form fields for the store, account and delivery week.</p></div><div><h3>Commercial thinking</h3><p>A starter assortment calculated from the real inner-carton quantities: one inner of each article = 51 pieces, €852.45 at RRP. It links straight to the display that presents it.</p></div><div><h3>DTP detail</h3><p>Tabular figures with right-aligned numbers, the book’s 00.000.000 article format, consistent units, and rule weights of 2 / 1.5 / 1 for hierarchy. Wholesale prices are left out on purpose.</p></div><div><h3>QC note</h3><p>The AW26 book lists the Lilac brooch as 24.904.002. The webshop SKU and the range pattern give 24.303.604, which is used here. Worth checking before the next book.</p></div></div>
+  </div>
+</section>
+
+<!-- ===================== 06 POS ===================== -->
+<section class="blk" id="pos">
+  <div class="sh"><div class="n">06</div><div><h2>Retail POS concept: the Colour Counter</h2><p>The campaign’s typography becomes the fixture. Keychains hang from acrylic letters, Miffys sit on a riser in the campaign colours, and the price step speaks in verbs.</p></div></div>
+  <div class="solo-keep">
+  <div class="lbl"><b>POS concept board · front elevation</b><span>1920 × 1080 · drawing scale 12 px = 1 cm</span></div>
+  <div class="ab" data-solo="pos" data-w="1920" data-h="1080" style="aspect-ratio:16/9"><div class="camp u1920" style="background:var(--paper)">
+    <!-- wall card A -->
+    <div class="p" style="--x:150;--y:110;--w:432;height:calc(252 * var(--u));background:var(--lilac);z-index:1"></div>
+    <div class="p mono" style="--x:150;--y:372;--w:432;font-size:calc(13 * var(--u));color:#6b645d;z-index:2">A shown at 60% · 60 × 35 cm</div>
+    <div class="wm" style="left:calc(176 * var(--u));top:calc(132 * var(--u));font-size:calc(88 * var(--u))">
+      <div class="a">a little</div>
+      <div class="l">W<i class="dot c1"></i>RLD <i class="dot c2 ring"></i>F</div>
+      <div class="l">C<i class="dot c3"></i>L<i class="dot c4"></i>UR</div>
+    </div>
+    <img class="lock" style="left:calc(482 * var(--u));top:calc(126 * var(--u));width:calc(80 * var(--u))" src="assets/img/bon-ton-toys/lockup-miffy.png" alt="">
+    <!-- riser C + price step D -->
+    <div class="p" style="--x:120;--y:644;--w:960;height:calc(336 * var(--u));background:var(--teal);z-index:1"></div>
+    <div class="p" style="--x:120;--y:860;--w:960;height:calc(120 * var(--u));background:var(--coral);z-index:2"></div>
+    <div class="p" style="--x:150;--y:874;--w:910;z-index:3;display:grid;grid-template-columns:repeat(4,1fr);column-gap:calc(16 * var(--u))">
+      <div><div class="it" style="font-size:calc(40 * var(--u))">to wear.</div><div class="mono" style="font-size:calc(15 * var(--u));line-height:1.35;margin-top:calc(10 * var(--u))">Brooch 8 cm<br><b style="font-weight:500;font-size:calc(19 * var(--u))">€12.95</b></div></div>
+      <div><div class="it" style="font-size:calc(40 * var(--u))">to hug.</div><div class="mono" style="font-size:calc(15 * var(--u));line-height:1.35;margin-top:calc(10 * var(--u))">Sitting 18 cm<br><b style="font-weight:500;font-size:calc(19 * var(--u))">€19.95</b></div></div>
+      <div><div class="it" style="font-size:calc(40 * var(--u))">to carry.</div><div class="mono" style="font-size:calc(15 * var(--u));line-height:1.35;margin-top:calc(10 * var(--u))">Bag charm 11 cm<br><b style="font-weight:500;font-size:calc(19 * var(--u))">€23.95</b></div></div>
+      <div><div class="it" style="font-size:calc(40 * var(--u))">to clip.</div><div class="mono" style="font-size:calc(15 * var(--u));line-height:1.35;margin-top:calc(10 * var(--u))">Keychain 8 cm<br><b style="font-weight:500;font-size:calc(19 * var(--u))">€12.95</b></div></div>
+    </div>
+    <!-- sitting Miffys on riser top (18 cm = 216 px) -->
+    <div class="p" style="--x:150;--y:630;--w:482;height:calc(18 * var(--u));z-index:2;background:radial-gradient(closest-side at 15.5% 70%,rgba(20,12,6,.32),transparent),radial-gradient(closest-side at 50% 70%,rgba(20,12,6,.32),transparent),radial-gradient(closest-side at 84.5% 70%,rgba(20,12,6,.28),transparent)"></div>
+    <img class="p cut" style="--x:150;--y:428;--w:150;z-index:3" src="assets/img/bon-ton-toys/cut/coral-front.png" alt="Sitting Miffy Bright Coral on the riser">
+    <img class="p cut" style="--x:316;--y:428;--w:150;z-index:3" src="assets/img/bon-ton-toys/cut/lilac-front.png" alt="Sitting Miffy Lilac on the riser">
+    <img class="p cut" style="--x:482;--y:428;--w:150;z-index:3" src="assets/img/bon-ton-toys/cut/offwhite-front.png" alt="Sitting Miffy Offwhite on the riser">
+    <!-- brooch boxes on price step -->
+    <img class="p cut" style="--x:156;--y:731.8;--w:124;z-index:3" src="assets/img/bon-ton-toys/cut/box-coral.png" alt="Brooch giftbox, coral">
+    <img class="p cut" style="--x:300;--y:731.8;--w:124;z-index:3" src="assets/img/bon-ton-toys/cut/box-lilac.png" alt="Brooch giftbox, lilac">
+    <img class="p cut" style="--x:444;--y:731.8;--w:124;z-index:3" src="assets/img/bon-ton-toys/cut/box-teal.png" alt="Brooch giftbox, teal">
+    <div class="p mono" style="--x:600;--y:668;--w:260;font-size:calc(15 * var(--u));color:var(--offwhite);z-index:2">Miffy ECO Fuzzy<br>Recycled inside<br>and out</div>
+    <div class="p" style="--x:984;--y:650;--w:92;height:calc(5 * var(--u));background:#9a948c;z-index:3;border-radius:calc(3 * var(--u))"></div>
+    <img class="p cut" style="--x:820;--y:648;--w:200;z-index:4" src="assets/img/bon-ton-toys/cut/charm-lilac.png" alt="Bag charm in Lilac on the strap hook">
+    <img class="p cut" style="--x:895;--y:648;--w:190;z-index:4" src="assets/img/bon-ton-toys/cut/charm-offwhite.png" alt="Bag charm in Offwhite on the strap hook">
+    <div class="p mono" style="--x:1100;--y:640;--w:40;font-size:calc(17 * var(--u));z-index:4;background:#141312;color:#fff;text-align:center">F</div>
+    <!-- hook letters B on rods -->
+    <div class="p" style="--x:700;--y:470;--w:4;height:calc(174 * var(--u));background:#9a948c;z-index:1"></div>
+    <div class="p" style="--x:912;--y:470;--w:4;height:calc(174 * var(--u));background:#9a948c;z-index:1"></div>
+    <div class="p cx" style="--x:676;--y:300;--w:420;font-size:calc(236 * var(--u));z-index:2"><span id="pC">C</span><span id="pL">L</span><span id="pI">I</span><span id="pP">P</span></div>
+    <img class="pin cut" data-t="#pC" data-tx=".4" data-ty="base" data-dy="-.08" data-ix=".497" data-iy="0" style="--w:76" src="assets/img/bon-ton-toys/cut/key-offwhite.png" alt="Keychain hanging from letter C">
+    <img class="pin cut" data-t="#pL" data-tx=".3" data-ty="base" data-dy="-.08" data-ix=".552" data-iy="0" style="--w:82" src="assets/img/bon-ton-toys/cut/key-taupe.png" alt="Keychain hanging from letter L">
+    <img class="pin cut" data-t="#pI" data-tx=".5" data-ty="base" data-dy="-.08" data-ix=".475" data-iy="0" style="--w:86" src="assets/img/bon-ton-toys/cut/key-beige.png" alt="Keychain hanging from letter I">
+    <img class="pin cut" data-t="#pP" data-tx=".3" data-ty="base" data-dy="-.08" data-ix=".514" data-iy="0" style="--w:78" src="assets/img/bon-ton-toys/cut/key-lilac.png" alt="Keychain hanging from letter P">
+    <!-- counter line + dimensions -->
+    <div class="rule" style="left:calc(60 * var(--u));width:calc(1100 * var(--u));top:calc(980 * var(--u))"></div>
+    <div class="p" style="--x:120;--y:1004;--w:960;height:calc(14 * var(--u));border:calc(1.2 * var(--u)) solid #141312;border-top:0;z-index:2"></div>
+    <div class="p mono" style="--x:120;--y:1024;--w:960;font-size:calc(15 * var(--u));text-align:center;z-index:2">80 cm</div>
+    <div class="p" style="--x:82;--y:644;--w:14;height:calc(336 * var(--u));border:calc(1.2 * var(--u)) solid #141312;border-right:0;z-index:2"></div>
+    <div class="p mono" style="--x:40;--y:800;--w:60;font-size:calc(15 * var(--u));z-index:2;transform:rotate(-90deg);transform-origin:left top">28 cm</div>
+    <!-- callouts -->
+    <div class="p mono" style="--x:600;--y:118;--w:40;font-size:calc(17 * var(--u));z-index:4;background:#141312;color:#fff;text-align:center">A</div>
+    <div class="p mono" style="--x:1100;--y:330;--w:40;font-size:calc(17 * var(--u));z-index:4;background:#141312;color:#fff;text-align:center">B</div>
+    <div class="p mono" style="--x:1100;--y:780;--w:40;font-size:calc(17 * var(--u));z-index:4;background:#141312;color:#fff;text-align:center">C</div>
+    <div class="p mono" style="--x:1100;--y:900;--w:40;font-size:calc(17 * var(--u));z-index:4;background:#141312;color:#fff;text-align:center">D</div>
+    <!-- right panel -->
+    <div class="vrule" style="left:calc(1220 * var(--u));top:calc(80 * var(--u));height:calc(920 * var(--u));color:#141312"></div>
+    <div class="p" style="--x:1268;--y:80;--w:590;z-index:2">
+      <div class="mono" style="font-size:calc(15 * var(--u))">POS concept · counter unit</div>
+      <div class="cx" style="font-size:calc(104 * var(--u));margin-top:calc(14 * var(--u))">THE C<i class="dot c1"></i>L<i class="dot c3"></i>UR<br>C<i class="dot c2"></i>UNTER</div>
+      <div class="it" style="font-size:calc(44 * var(--u));margin-top:calc(14 * var(--u))">a shelf you can read.</div>
+    </div>
+    <div class="p" style="--x:1268;--y:410;--w:590;z-index:2;font-size:calc(16.5 * var(--u));line-height:1.42">
+      <div style="display:grid;grid-template-columns:calc(44 * var(--u)) 1fr;row-gap:calc(16 * var(--u))">
+        <b class="mono">A</b><div><b>Wall card</b> · 60 × 35 cm, recycled board. The campaign wordmark at eye level.</div>
+        <b class="mono">B</b><div><b>Hook letters “CLIP”</b> · 27 × 13 cm, 10 mm acrylic on two rods. One hook per letter, each holding six keychains (one inner carton).</div>
+        <b class="mono">C</b><div><b>Riser</b> · 80 × 28 × 30 cm, two steps, painted teal and coral. Sitting Miffys on top, brooch giftboxes in front.</div>
+        <b class="mono">D</b><div><b>Price step</b> · a printed 80 × 10 cm strip that speaks in verbs, with the RRP of all four formats.</div>
+        <b class="mono">E</b><div><b>Floor dots</b> · ⌀ 45 cm vinyl in coral, lilac and teal, leading from the aisle to the counter.</div>
+        <b class="mono">F</b><div><b>Strap hook</b> · a chrome bar on the riser front for the two bag charms.</div>
+      </div>
+    </div>
+    <div class="p mono" style="--x:1268;--y:1004;--w:590;font-size:calc(14 * var(--u));z-index:2;color:#6b645d">All 12 styles face-out · reserve stock stored in the riser</div>
+    <div class="unoff" style="right:calc(64 * var(--u));top:calc(28 * var(--u))">Unofficial exploration</div>
+  </div></div>
+  </div>
+  <div class="notes"><div><h3>Idea</h3><p>The fixture is the typography. The letters that carry the keychains in the carousel carry them in the shop too, so the campaign and the store read as one system.</p></div><div><h3>Commercial</h3><p>Shows all 12 styles face-out, with reserve stock in the riser. The riser (about 35 litres inside) cannot hold all 39 back-up pieces of the starter assortment, so part of it goes to the stockroom. The price step lists all four formats at their three price points, and each hook holds one inner carton of keychains.</p></div><div><h3>Next step and QC</h3><p>A spatial render and a shopfitter drawing. Bon Ton’s own giftbox copy already reads “Pin me, wear me, love me!”, which supports the verbs. Their teal box mock-up renders the brooch sky-blue rather than teal; worth correcting at source.</p></div></div>
+</section>
+
+
+<!-- ===================== 07 IN-STORE VISUALISATION ===================== -->
+<section class="blk" id="store">
+  <div class="sh"><div class="n">07</div><div><h2>In-store visualisation: the Colour Counter on a shop table</h2><p>The POS concept placed in a store at true scale. The table is 100 × 50 cm, the riser 80 × 28 cm, and the products are drawn at their real sizes in one-point perspective.</p></div></div>
+  <div class="solo-keep">
+  <div class="lbl"><b>In-store mock-up · illustrative composite</b><span>1920 × 1080</span></div>
+  <div class="ab" data-solo="store" data-w="1920" data-h="1080" style="aspect-ratio:16/9"><div class="camp u1920" id="store-art" style="background:#e7e1d7">
+    <div class="zoom" style="position:absolute;left:calc(-144 * (100cqw / 1920));top:0;width:calc(1920 * 1.15 * (100cqw / 1920));height:calc(1080 * 1.15 * (100cqw / 1920));--u:calc(1.15 * 100cqw / 1920)">
+    <svg class="g" style="left:0;top:0;width:100%;height:100%;z-index:0" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <radialGradient id="wallLight" cx="0.32" cy="0.12" r="0.9"><stop offset="0" stop-color="#f3eee6"/><stop offset=".55" stop-color="#e5ddd1"/><stop offset="1" stop-color="#d3c9ba"/></radialGradient>
+        <linearGradient id="floorG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9c0b2"/><stop offset="1" stop-color="#b9ae9e"/></linearGradient>
+        <linearGradient id="oakTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c4a2"/><stop offset="1" stop-color="#e6d4b7"/></linearGradient>
+        <linearGradient id="oakEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d2b68e"/><stop offset="1" stop-color="#b8976c"/></linearGradient>
+        <linearGradient id="leg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b8996f"/><stop offset=".45" stop-color="#d0b48c"/><stop offset="1" stop-color="#a98a61"/></linearGradient>
+        <linearGradient id="coralF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f05140"/><stop offset="1" stop-color="#dd4232"/></linearGradient>
+        <linearGradient id="tealF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#11918a"/><stop offset="1" stop-color="#0b7972"/></linearGradient>
+        <radialGradient id="vig" cx=".5" cy=".45" r=".8"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></radialGradient>
+        <linearGradient id="wallFall" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".06"/><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#2a2016" stop-opacity=".10"/></linearGradient>
+        <linearGradient id="floorLight" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#2a2016" stop-opacity=".10"/></linearGradient>
+        <linearGradient id="oakSheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#3a2a18" stop-opacity=".08"/></linearGradient>
+        <linearGradient id="faceFall" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".07"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".10"/></linearGradient>
+        <linearGradient id="tealTop" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4bb9b0"/><stop offset="1" stop-color="#36a097"/></linearGradient>
+        <linearGradient id="coralTop" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f88a7d"/><stop offset="1" stop-color="#f06f61"/></linearGradient>
+        <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d8a85"/><stop offset=".4" stop-color="#e9e7e3"/><stop offset="1" stop-color="#77736d"/></linearGradient>
+        <radialGradient id="dotSheen" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+        <linearGradient id="faceAO" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".05"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".14"/></linearGradient><clipPath id="faceClip"><rect x="691.2" y="251" width="537.6" height="122"/><rect x="665.6" y="396" width="588.8" height="73.6"/></clipPath><filter id="paint" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9 .35" numOctaves="2" seed="21"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .06"/></feComponentTransfer></filter>
+        <clipPath id="topClip"><polygon points="660,405 1260,405 1360,500 560,500"/></clipPath><clipPath id="edgeClip"><rect x="560" y="500" width="800" height="32"/></clipPath>
+        <filter id="b3"><feGaussianBlur stdDeviation="2.5"/></filter>
+        <filter id="plaster" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="3" seed="3"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .05"/></feComponentTransfer></filter>
+        <filter id="trowel" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".006 .03" numOctaves="3" seed="11"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .09"/></feComponentTransfer></filter>
+        <filter id="oakGrain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".002 .22" numOctaves="2" seed="5"/><feColorMatrix type="matrix" values="0 0 0 0 .42  0 0 0 0 .29  0 0 0 0 .16  0 0 0 -2.2 1.25"/></filter>
+        <filter id="b6"><feGaussianBlur stdDeviation="6"/></filter><filter id="b14"><feGaussianBlur stdDeviation="14"/></filter><filter id="b28"><feGaussianBlur stdDeviation="28"/></filter>
+        <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .07"/></feComponentTransfer></filter>
+      </defs>
+      <rect x="0" y="0" width="1920" height="593" fill="url(#wallLight)"/>
+      <!-- window light from the left: soft raking patch, cooler shade to the right -->
+      <polygon points="40,0 560,0 330,593 -200,593" fill="#fffaf2" opacity=".42" filter="url(#b28)"/>
+      <rect x="0" y="0" width="1920" height="593" fill="url(#wallFall)"/>
+      <rect x="0" y="0" width="1920" height="593" filter="url(#plaster)"/>
+      <!-- skirting: 8 cm at the wall plane -->
+      <rect x="0" y="558" width="1920" height="35" fill="#e9e3d9"/><rect x="0" y="558" width="1920" height="1.5" fill="#fff" opacity=".55"/><rect x="0" y="591" width="1920" height="2" fill="#5a4f43" opacity=".35"/>
+      <rect x="0" y="540" width="1920" height="20" fill="#000" opacity=".045" filter="url(#b6)"/>
+      <!-- microcement floor, 60 cm joints converging on the vanishing point -->
+      <rect x="0" y="593" width="1920" height="487" fill="url(#floorG)"/>
+      <rect x="0" y="593" width="1920" height="487" fill="url(#floorLight)"/>
+      <rect x="0" y="593" width="1920" height="487" filter="url(#trowel)"/>
+      <g stroke="#6e6355" stroke-opacity=".16" stroke-width="1"><line x1="-1020" y1="593" x2="-3059" y2="1080"/><line x1="-756" y1="593" x2="-2523" y2="1080"/><line x1="-492" y1="593" x2="-1987" y2="1080"/><line x1="-228" y1="593" x2="-1451" y2="1080"/><line x1="36" y1="593" x2="-915" y2="1080"/><line x1="300" y1="593" x2="-380" y2="1080"/><line x1="564" y1="593" x2="156" y2="1080"/><line x1="828" y1="593" x2="692" y2="1080"/><line x1="1092" y1="593" x2="1228" y2="1080"/><line x1="1356" y1="593" x2="1764" y2="1080"/><line x1="1620" y1="593" x2="2300" y2="1080"/><line x1="1884" y1="593" x2="2835" y2="1080"/><line x1="2148" y1="593" x2="3371" y2="1080"/><line x1="2412" y1="593" x2="3907" y2="1080"/><line x1="2676" y1="593" x2="4443" y2="1080"/><line x1="2940" y1="593" x2="4979" y2="1080"/><line x1="3204" y1="593" x2="5514" y2="1080"/><line x1="0" y1="726" x2="1920" y2="726"/></g>
+      <rect x="0" y="593" width="1920" height="60" fill="#3a3026" opacity=".10" filter="url(#b14)"/>
+      <!-- floor dots (E), ⌀ 45 cm, stepping in from the aisle and ending under the table front; foreshortened for depth -->
+      <ellipse cx="290" cy="715" rx="125" ry="62" fill="#e9493a"/><ellipse cx="275" cy="704" rx="77" ry="31" fill="url(#dotSheen)"/><ellipse cx="290" cy="715" rx="125" ry="62" fill="none" stroke="#000" stroke-opacity=".10" stroke-width="1"/>
+      <ellipse cx="510" cy="805" rx="143" ry="82" fill="#b4a2df"/><ellipse cx="493" cy="790" rx="89" ry="41" fill="url(#dotSheen)"/><ellipse cx="510" cy="805" rx="143" ry="82" fill="none" stroke="#000" stroke-opacity=".10" stroke-width="1"/>
+      <ellipse cx="800" cy="900" rx="163" ry="106" fill="#0d857d"/><ellipse cx="780" cy="881" rx="101" ry="53" fill="url(#dotSheen)"/><ellipse cx="800" cy="900" rx="163" ry="106" fill="none" stroke="#000" stroke-opacity=".10" stroke-width="1"/>
+      <polygon points="612,975 1308,975 1221,768 699,768" fill="#2b231b" opacity=".16" filter="url(#b14)"/>
+      <!-- table shadow, cast slightly right (light from the left) -->
+      <polygon points="600,990 1420,990 1300,772 700,772" fill="#3d3328" opacity=".30" filter="url(#b28)"/>
+      <polygon points="640,940 1330,940 1250,790 720,790" fill="#2b231b" opacity=".16" filter="url(#b14)"/>
+      <!-- back legs -->
+      <rect x="669" y="420" width="30" height="345" fill="url(#leg)"/><rect x="1221" y="420" width="30" height="345" fill="url(#leg)"/>
+      <rect x="669" y="420" width="30" height="345" fill="#000" opacity=".16"/><rect x="1221" y="420" width="30" height="345" fill="#000" opacity=".22"/>
+      <ellipse cx="690" cy="766" rx="26" ry="4" fill="#2b241c" opacity=".45" filter="url(#b6)"/><ellipse cx="1242" cy="766" rx="26" ry="4" fill="#2b241c" opacity=".45" filter="url(#b6)"/>
+      <!-- front legs -->
+      <rect x="572" y="528" width="40" height="452" fill="url(#leg)"/><rect x="1308" y="528" width="40" height="452" fill="url(#leg)"/>
+      <rect x="1308" y="528" width="40" height="452" fill="#000" opacity=".08"/>
+      <!-- apron rail between the front legs -->
+      <rect x="612" y="532" width="696" height="24" fill="url(#oakEdge)"/><rect x="612" y="532" width="696" height="24" fill="#2a1d10" opacity=".16"/><rect x="612" y="555" width="696" height="1.5" fill="#2a1d10" opacity=".3"/>
+      <rect x="572" y="532" width="40" height="18" fill="#000" opacity=".14" filter="url(#b6)"/><rect x="1308" y="532" width="40" height="18" fill="#000" opacity=".16" filter="url(#b6)"/>
+      <ellipse cx="596" cy="982" rx="34" ry="6" fill="#2b241c" opacity=".45" filter="url(#b6)"/><ellipse cx="1334" cy="982" rx="34" ry="6" fill="#2b241c" opacity=".45" filter="url(#b6)"/>
+      <!-- table top + edge, oak -->
+      <polygon points="660,405 1260,405 1360,500 560,500" fill="url(#oakTop)"/>
+      <polygon points="660,405 1260,405 1360,500 560,500" fill="url(#oakSheen)"/>
+      <g clip-path="url(#topClip)"><rect x="560" y="405" width="800" height="95" filter="url(#oakGrain)" opacity=".55"/></g>
+      <rect x="560" y="500" width="800" height="32" fill="url(#oakEdge)"/>
+      <g clip-path="url(#edgeClip)"><rect x="560" y="500" width="800" height="32" filter="url(#oakGrain)" opacity=".4"/></g>
+      <rect x="560" y="500" width="800" height="1.6" fill="#f6ead6"/><rect x="560" y="530.5" width="800" height="1.5" fill="#6b5236" opacity=".45"/>
+      <!-- riser shadow on table: contact line + soft spread to the right -->
+      <polygon points="666,470 1268,470 1238,405 690,405" fill="#3d3328" opacity=".26" filter="url(#b14)"/>
+      <rect x="666" y="467" width="590" height="6" fill="#2b2117" opacity=".45" filter="url(#b3)"/>
+      <!-- colour bounce from the coral step onto the oak -->
+      <ellipse cx="960" cy="486" rx="330" ry="12" fill="#f0503f" opacity=".13" filter="url(#b14)"/>
+      <!-- step 2 (teal, back) -->
+      <polygon points="742.4,226 1177.6,226 1228.8,251 691.2,251" fill="url(#tealTop)"/>
+      <rect x="691.2" y="251" width="537.6" height="122" fill="url(#tealF)"/>
+      <rect x="691.2" y="251" width="537.6" height="122" fill="url(#faceFall)"/>
+      <!-- step 1 (coral, front) -->
+      <polygon points="691.2,372 1228.8,372 1254.4,396 665.6,396" fill="url(#coralTop)"/>
+      <rect x="691.2" y="372" width="537.6" height="6" fill="#000" opacity=".14" filter="url(#b3)"/>
+      <rect x="665.6" y="396" width="588.8" height="73.6" fill="url(#coralF)"/>
+      <rect x="665.6" y="396" width="588.8" height="73.6" fill="url(#faceFall)"/>
+      <g clip-path="url(#faceClip)"><rect x="660" y="250" width="600" height="222" filter="url(#paint)"/><rect x="691.2" y="251" width="537.6" height="122" fill="url(#faceAO)"/><rect x="665.6" y="396" width="588.8" height="73.6" fill="url(#faceAO)"/></g>
+      <!-- printed price strip: a separate 3 mm panel on the coral face -->
+      <rect x="671" y="401" width="578" height="63.6" fill="none" stroke="#000" stroke-opacity=".10" stroke-width="1"/><rect x="671" y="401" width="578" height="1" fill="#fff" opacity=".25"/>
+      <rect x="665.6" y="469.6" width="588.8" height="3" fill="#000" opacity=".18"/><rect x="665.6" y="396" width="588.8" height="1.2" fill="#fff" opacity=".45"/><rect x="691.2" y="251" width="537.6" height="1.2" fill="#fff" opacity=".40"/><rect x="1225" y="251" width="3.8" height="122" fill="#000" opacity=".12"/><rect x="1250" y="396" width="4.4" height="73.6" fill="#000" opacity=".12"/>
+      <!-- rods for hook letters -->
+      <rect x="1018" y="140" width="3" height="100" fill="url(#chrome)"/><rect x="1198" y="140" width="3" height="100" fill="url(#chrome)"/>
+      <ellipse cx="1021" cy="241" rx="8" ry="2.4" fill="#1a1a1a" opacity=".35" filter="url(#b3)"/><ellipse cx="1201" cy="241" rx="8" ry="2.4" fill="#1a1a1a" opacity=".35" filter="url(#b3)"/><ellipse cx="1019.5" cy="239.5" rx="6" ry="1.8" fill="url(#chrome)"/><ellipse cx="1199.5" cy="239.5" rx="6" ry="1.8" fill="url(#chrome)"/>
+      <!-- strap hook bar -->
+      <rect x="1160" y="254" width="56" height="4" rx="2" fill="url(#chrome)"/><rect x="1162" y="259" width="54" height="3" fill="#000" opacity=".18" filter="url(#b3)"/>
+      <!-- contact + cast shadows for products (light from the left, so shadows fall right) -->
+      <g fill="#1e1a15">
+        <g filter="url(#b6)" opacity=".42"><ellipse cx="776" cy="242" rx="36" ry="6"/><ellipse cx="866" cy="242" rx="36" ry="6"/><ellipse cx="956" cy="242" rx="36" ry="6"/></g>
+        <g filter="url(#b3)" opacity=".5"><ellipse cx="770" cy="241" rx="24" ry="2.6"/><ellipse cx="860" cy="241" rx="24" ry="2.6"/><ellipse cx="950" cy="241" rx="24" ry="2.6"/></g>
+        <g filter="url(#b6)" opacity=".38"><ellipse cx="726" cy="388" rx="26" ry="4.5"/><ellipse cx="780" cy="388" rx="26" ry="4.5"/><ellipse cx="834" cy="388" rx="26" ry="4.5"/></g>
+      </g>
+      <!-- wall card + poster shadows, offset right -->
+      <rect x="410" y="132" width="264" height="156" fill="#3a2f24" opacity=".20" filter="url(#b14)"/>
+      <rect x="1436" y="86" width="226" height="316" fill="#3a2f24" opacity=".24" filter="url(#b14)"/>
+    </svg>
+    <!-- wall card A -->
+    <div class="p" style="--x:396;--y:118;--w:264;height:calc(154 * var(--u));background:linear-gradient(100deg,#bdabe7,#b29fde);box-shadow:calc(2 * var(--u)) calc(2 * var(--u)) 0 #8f7fbd;z-index:1;filter:blur(calc(.5 * var(--u)))"></div>
+    <div class="wm" style="left:calc(414 * var(--u));top:calc(132 * var(--u));font-size:calc(46 * var(--u));filter:blur(calc(.5 * var(--u)))"><div class="a">a little</div><div class="l">W<i class="dot c1"></i>RLD <i class="dot c2 ring"></i>F</div><div class="l">C<i class="dot c3"></i>L<i class="dot c4"></i>UR</div></div>
+    <img class="lock" style="left:calc(612 * var(--u));top:calc(128 * var(--u));width:calc(38 * var(--u));filter:blur(calc(.5 * var(--u)))" src="assets/img/bon-ton-toys/lockup-miffy.png" alt="">
+    <!-- framed poster -->
+    <div class="p" style="--x:1420;--y:70;--w:224;height:calc(314 * var(--u));background:#141312;padding:calc(6 * var(--u));z-index:1;filter:blur(calc(.5 * var(--u)))"><img src="assets/img/bon-ton-toys/03-fashion-poster.png" alt="Fashion poster framed on the wall" style="width:100%;height:100%;object-fit:cover;display:block"><i style="position:absolute;inset:calc(6 * var(--u));background:linear-gradient(115deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,0) 38%,rgba(255,255,255,0) 70%,rgba(255,255,255,.06) 100%);pointer-events:none"></i></div>
+    <!-- price step text on step 1 front -->
+    <div class="p" style="--x:684;--y:400;--w:556;z-index:3;display:grid;grid-template-columns:repeat(4,1fr);column-gap:calc(8 * var(--u));color:#141312">
+      <div><div class="it" style="font-size:calc(21 * var(--u))">to wear.</div><div class="mono" style="font-size:calc(8.5 * var(--u));line-height:1.3;margin-top:calc(4 * var(--u))">Brooch 8 cm<br><b style="font-weight:500;font-size:calc(11 * var(--u))">€12.95</b></div></div>
+      <div><div class="it" style="font-size:calc(21 * var(--u))">to hug.</div><div class="mono" style="font-size:calc(8.5 * var(--u));line-height:1.3;margin-top:calc(4 * var(--u))">Sitting 18 cm<br><b style="font-weight:500;font-size:calc(11 * var(--u))">€19.95</b></div></div>
+      <div><div class="it" style="font-size:calc(21 * var(--u))">to carry.</div><div class="mono" style="font-size:calc(8.5 * var(--u));line-height:1.3;margin-top:calc(4 * var(--u))">Bag charm 11 cm<br><b style="font-weight:500;font-size:calc(11 * var(--u))">€23.95</b></div></div>
+      <div><div class="it" style="font-size:calc(21 * var(--u))">to clip.</div><div class="mono" style="font-size:calc(8.5 * var(--u));line-height:1.3;margin-top:calc(4 * var(--u))">Keychain 8 cm<br><b style="font-weight:500;font-size:calc(11 * var(--u))">€12.95</b></div></div>
+    </div>
+    <!-- products on step 2 (6.4 px/cm) -->
+    <img class="p cut" style="--x:730;--y:128;--w:80;z-index:3" src="assets/img/bon-ton-toys/cut/coral-front.png" alt="Sitting Miffy Bright Coral">
+    <img class="p cut" style="--x:820;--y:128;--w:80;z-index:3" src="assets/img/bon-ton-toys/cut/lilac-front.png" alt="Sitting Miffy Lilac">
+    <img class="p cut" style="--x:910;--y:126;--w:80;z-index:3" src="assets/img/bon-ton-toys/cut/offwhite-front.png" alt="Sitting Miffy Offwhite">
+    <!-- brooch boxes on step 1 (7 px/cm) -->
+    <img class="p cut" style="--x:699;--y:340;--w:46;z-index:3" src="assets/img/bon-ton-toys/cut/box-coral.png" alt="Brooch giftbox coral">
+    <img class="p cut" style="--x:753;--y:340;--w:46;z-index:3" src="assets/img/bon-ton-toys/cut/box-lilac.png" alt="Brooch giftbox lilac">
+    <img class="p cut" style="--x:807;--y:340;--w:46;z-index:3" src="assets/img/bon-ton-toys/cut/box-teal.png" alt="Brooch giftbox teal">
+    <!-- hook letters + keychains -->
+    <div class="p cx" style="--x:1000;--y:38;--w:240;font-size:calc(124 * var(--u));letter-spacing:.12em;z-index:2;color:#1a1918;text-shadow:calc(1.5 * var(--u)) calc(1 * var(--u)) 0 #0b0a0a,calc(3 * var(--u)) calc(2 * var(--u)) 0 #0b0a0a,calc(14 * var(--u)) calc(12 * var(--u)) calc(16 * var(--u)) rgba(40,30,20,.13)"><span id="sC">C</span><span id="sL">L</span><span id="sI">I</span><span id="sP">P</span></div>
+    <img class="pin cut" data-t="#sC" data-tx=".4" data-ty="base" data-dy="-.08" data-ix=".497" data-iy="0" style="--w:40" src="assets/img/bon-ton-toys/cut/key-offwhite.png" alt="">
+    <img class="pin cut" data-t="#sL" data-tx=".3" data-ty="base" data-dy="-.08" data-ix=".552" data-iy="0" style="--w:44" src="assets/img/bon-ton-toys/cut/key-taupe.png" alt="">
+    <img class="pin cut" data-t="#sI" data-tx=".5" data-ty="base" data-dy="-.08" data-ix=".475" data-iy="0" style="--w:46" src="assets/img/bon-ton-toys/cut/key-beige.png" alt="">
+    <img class="pin cut" data-t="#sP" data-tx=".35" data-ty="base" data-dy="-.08" data-ix=".514" data-iy="0" style="--w:41" src="assets/img/bon-ton-toys/cut/key-lilac.png" alt="">
+    <!-- bag charms on the strap hook (F) -->
+    <img class="p cut" style="--x:1100;--y:254;--w:78;z-index:4" src="assets/img/bon-ton-toys/cut/charm-lilac.png" alt="Bag charm lilac on strap hook">
+    <img class="p cut" style="--x:1132;--y:254;--w:74;z-index:4" src="assets/img/bon-ton-toys/cut/charm-offwhite.png" alt="Bag charm offwhite on strap hook">
+    </div>
+    <svg class="g" style="left:0;top:0;width:100%;height:100%;z-index:8;pointer-events:none" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="key" x1="0" y1="0" x2="1" y2=".7"><stop offset="0" stop-color="#ffe9c8" stop-opacity=".10"/><stop offset=".55" stop-color="#ffe9c8" stop-opacity="0"/><stop offset="1" stop-color="#1c2230" stop-opacity=".10"/></linearGradient></defs><rect width="1920" height="1080" fill="url(#key)"/><rect width="1920" height="1080" fill="url(#vig)"/><rect width="1920" height="1080" filter="url(#grain)"/></svg>
+    <div class="p mono" style="--x:40;--y:30;--w:900;font-size:calc(13 * var(--u));color:#5a5046;z-index:9">Illustrative composite · not a photograph · products at true scale on a 100 × 50 cm table, 60 cm high</div>
+    <div class="unoff" style="right:calc(40 * var(--u));bottom:calc(22 * var(--u));color:#3c342b">Unofficial exploration</div>
+  </div></div>
+  </div>
+  <div class="notes"><div><h3>What it proves</h3><p>The counter reads at shop distance. Colour, verbs and prices register before any copy is read, and all 12 styles are visible.</p></div><div><h3>How it is made</h3><p>One-point perspective (eye height about 107 cm) with real dimensions. Floor joints, the floor dots and the table all resolve to the same vanishing point. One window light from the left sets every shadow. Product photos are placed at true scale; nothing is AI-generated.</p></div><div><h3>Production step</h3><p>A 3D render or a photographed sample unit would replace this before any retailer presentation.</p></div></div>
+</section>
+
+<footer style="margin-top:2.5rem;font-size:.78rem;color:var(--t-muted);border-top:1px solid var(--t-rule);padding-top:1rem">Independent, unofficial creative exploration by Khanım Azimli · October 2026 · Miffy © Mercis bv · Product photography © Bon Ton Toys · Fonts: Bricolage Grotesque, Instrument Serif, Geist (open licence) · Not an approved campaign; not for distribution.</footer>
+</div>
+
+<script>
+(function(){
+  /* solo export: #solo=hero | #solo=carousel-3 etc. */
+  const m=/^#solo=([a-z]+)(?:-(\d))?$/.exec(location.hash);
+  if(m){
+    const ab=document.querySelector('.ab[data-solo="'+m[1]+'"]');
+    const W=+ab.dataset.w;
+    const holder=document.createElement('div');
+    holder.style.cssText='position:relative;overflow:hidden;width:'+(m[2]?1080:W)+'px';
+    ab.style.width=W+'px'; ab.style.boxShadow='none';
+    if(m[2]) ab.style.transform='translateX(-'+((+m[2]-1)*1080)+'px)';
+    holder.appendChild(ab); document.body.prepend(holder);
+    document.querySelector('.bar').style.display='none';
+    document.querySelector('.wrap').style.display='none';
+    document.body.style.background='#fff';
+  }
+
+  function capRatio(t,g){
+    const cs=getComputedStyle(t); const c=document.createElement('canvas').getContext('2d');
+    c.font=cs.fontStyle+' '+cs.fontWeight+' 200px '+cs.fontFamily;
+    const mm=c.measureText(g||'H'); return mm.actualBoundingBoxAscent/200;
+  }
+  function place(){
+    document.querySelectorAll('img.pin').forEach(img=>{
+      const art=img.closest('.camp'); const t=art.querySelector(img.dataset.t); if(!t||!img.naturalWidth) return;
+      const ar=art.getBoundingClientRect(); const r=t.getBoundingClientRect();
+      const scaleX=ar.width/art.offsetWidth||1; /* guards CSS transforms */
+      let bl=t.querySelector(':scope > i.bl'); if(!bl){bl=document.createElement('i');bl.className='bl';t.appendChild(bl);}
+      const base=bl.getBoundingClientRect().top;
+      const fs=parseFloat(getComputedStyle(t).fontSize)*scaleX;
+      const cap=capRatio(t)*fs;
+      const dy=parseFloat(img.dataset.dy||0)*cap;
+      const xh=capRatio(t,'x')*fs;
+      const y=(img.dataset.ty==='base'? base : img.dataset.ty==='x'? base-xh : base-cap)+dy;
+      const x=r.left+parseFloat(img.dataset.tx)*r.width;
+      const w=img.getBoundingClientRect().width; const h=w*img.naturalHeight/img.naturalWidth;
+      const op=(img.offsetParent||art).getBoundingClientRect();
+      img.style.left=((x-op.left-parseFloat(img.dataset.ix)*w)/scaleX)+'px';
+      img.style.top=((y-op.top-parseFloat(img.dataset.iy)*h)/scaleX)+'px';
+      img.classList.add('on');
+    });
+  }
+  function setCap(){
+    const probe=document.querySelector('.wm .l'); if(!probe) return;
+    document.documentElement.style.setProperty('--capr',capRatio(probe).toFixed(4));
+  }
+  const imgs=[...document.images].map(i=>i.complete?Promise.resolve():new Promise(r=>{i.onload=i.onerror=r}));
+  Promise.all([document.fonts.ready,...imgs]).then(()=>{ setCap(); requestAnimationFrame(()=>{ place(); document.body.dataset.ready='1'; }); });
+  let to; addEventListener('resize',()=>{clearTimeout(to);to=setTimeout(place,80)});
+})();
+</script>
+</body>
+</html>
