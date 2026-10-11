@@ -40,7 +40,10 @@ only hides inactive views and fits Home to one screen.
 index.html                     The portfolio: nav, all sections (one view each), footer, case view
 assets/app.js                  Projects, cards, case pages, components and the view router
 assets/views.css               View switching + single-screen Home
+assets/work.css                Work: index jump link, full index (all listed projects by discipline), case-page ordering, home format index
 publishing.html                Editorial & educational publishing case
+campaign.html                  Campaign & Visual Design: Grease, Oliver! JR.
+bon-ton-toys.html              A Little World of Colour campaign. Unlisted: reachable by its direct URL only
 powerpoint-rebuilt.html        PowerPoint, Rebuilt · 01 From Complexity to Control
 powerpoint-rebuilt/            02 AI, Prioritized · 03 The Pipeline Is Growing (pages, images, downloads)
 404.html                       Not-found page + clean-URL forwarding
