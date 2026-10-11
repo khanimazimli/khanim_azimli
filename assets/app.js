@@ -27,7 +27,8 @@
     ['exec', 'Executive & pitch decks'],
     ['data', 'Data storytelling'],
     ['interactive', 'Interactive & motion'],
-    ['editorial', 'Editorial & print']
+    ['editorial', 'Editorial & print'],
+    ['campaign', 'Campaign & identity']
   ];
   const P = [
     {
@@ -137,13 +138,18 @@
       note: 'Portfolio adaptation of an in-house deck. Fictional brand, synthetic data.'
     }
   ];
+  // case order for Prev / Next: the art-directed interactive pieces first, then the presentation redesigns
+  const CASE_ORDER = ['nrf', 'got', 'tmf', 'sys', 'gai', 'mel', 'indo', 'pas'];
+  P.sort((a, b) => CASE_ORDER.indexOf(a.id) - CASE_ORDER.indexOf(b.id));
   const PI = Object.fromEntries(P.map((p, i) => [p.id, i]));
   const SLUG = { got: 'the-world-is-still-trading', tmf: 'tech-moves-fast', gai: 'generative-ai', mel: 'melbourne', nrf: 'the-new-rules-of-fashion', sys: 'the-system-is-waking-up', indo: 'indonesia', pas: 'personalization-at-scale' };
   const BYSLUG = Object.fromEntries(Object.entries(SLUG).map(([k, v]) => [v, k]));
 
-  /* Selected Work: curated home order. Cases not listed here (gai, mel, indo, pas) stay reachable
-     through Before / After and case navigation. XP = home cards that link to their own pages. */
-  const HOME = ['nrf', 'got', 'sys', 'edu', 'ppt', 'tmf']; // got replaced the 'trade' link card (XP.trade kept, unused)
+  /* Selected Work: curated opening sequence, chosen for range rather than category:
+     art direction → published print → information design → presentation → interactive → campaign → system.
+     Every other project (gai, mel, indo, pas, the PowerPoint studies, Təbiət, yearbooks, theatre print)
+     is listed in the full index under it (WINDEX). XP = home cards that link to their own pages. */
+  const HOME = ['nrf', 'edu', 'got', 'ppt', 'tmf', 'campaign', 'sys']; // got replaced the 'trade' link card (XP.trade kept, unused)
   const XP = {
     trade: {
       id: 'trade', title: 'The World Is Still Trading. Just Differently.', cat: 'Interactive Data Atlas · Data Storytelling', year: '2026', groups: ['redesign', 'data', 'interactive'],
@@ -165,6 +171,13 @@
       img: 'assets/img/ppt/after-05', full: true, thumbs: ['assets/img/ppt/before-13', 'powerpoint-rebuilt/ai-prioritized/img/slide-02'],
       desc: 'Three ordinary corporate decks rebuilt through hierarchy, storytelling and fully editable PowerPoint design.',
       kpi: `158${TO}30`, kpiCap: 'source slides to redesigned slides, across 3 studies'
+    },
+    campaign: {
+      id: 'campaign', title: 'Campaign & Visual Design', cat: 'Campaign · Identity · Promotional print', year: '3 projects', groups: ['campaign'],
+      href: 'campaign.html', go: 'View the campaign work', goI: '→',
+      img: 'assets/img/campaign/awc-hero', thumbs: ['assets/img/edu/gr-poster', 'assets/img/edu/ol-cover'],
+      desc: 'A retail campaign system for Miffy ECO Fuzzy, a theatre identity for Grease and a ten-page programme for Oliver! JR. One graphic idea, carried into every format.',
+      kpi: '6', kpiCap: 'campaign applications built from one wordmark system'
     }
   };
   const homeList = () => HOME.map(id => XP[id] || P[PI[id]]).filter(Boolean);
@@ -584,6 +597,84 @@
     for (let k = 0; k < rest.length; k += 2) b.push(`<div class="pc-grid">${rest.slice(k, k + 2).map(stdCard).join('')}</div>`);
     return b;
   };
+  /* ---------- full project index (Work, under the curated sequence) ----------
+     Every project in the portfolio, grouped by discipline, always visible (filters only touch the
+     curated blocks above). cap = the one capability the project shows best, so no two rows say the same thing.
+     Facts come from the case pages: slide and page counts, print runs from the imprint pages. */
+  const WINDEX = [
+    ['Presentation & report design', 'Decks rebuilt around one argument', [
+      { t: 'From Complexity to Control', s: 'PowerPoint, Rebuilt · 01', cap: 'Native PowerPoint · Morph systems', fmt: `49${TO}10 slides · editable PPTX`, ctx: 'Independent redesign', yr: '2026', href: 'powerpoint-rebuilt.html', img: 'assets/img/ppt/after-05.webp' },
+      { t: 'AI, Prioritized', s: 'PowerPoint, Rebuilt · 02', cap: 'Decision framing', fmt: `69${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', href: 'powerpoint-rebuilt/ai-prioritized.html', img: 'powerpoint-rebuilt/ai-prioritized/img/slide-02.webp' },
+      { t: 'The pipeline is growing. The engine is stalling.', s: 'PowerPoint, Rebuilt · 03', cap: 'Diagnostic storyline', fmt: `40${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', href: 'powerpoint-rebuilt/vaccine-innovation.html', img: 'powerpoint-rebuilt/vaccine-innovation/img/f02.webp' },
+      { t: 'Melbourne', cap: 'Executive storyline · Rebuilt charts', fmt: `56${TO}12 · pages to slides`, ctx: 'Independent redesign', yr: '2026', open: 'mel' },
+      { t: 'Indonesia', cap: 'Map system · Geographic data', fmt: `69${TO}11 · pages to slides`, ctx: 'Independent redesign', yr: '2026', open: 'indo' },
+      { t: 'Generative AI & the Future of Work', cap: 'Narrative editing · Chart motion', fmt: `76${TO}10 · pages to slides`, ctx: 'Independent redesign', yr: '2026', open: 'gai' },
+      { t: 'Personalization at Scale', cap: 'Executive deck · Live present mode', fmt: '10-slide HTML deck', ctx: 'In-house deck, adapted', yr: '2026', open: 'pas' }
+    ]],
+    ['Interactive & information design', 'Research turned into experiences you move through', [
+      { t: 'The New Rules of Fashion', cap: 'Art direction · Editorial typography', fmt: `143 pages${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', open: 'nrf' },
+      { t: 'The World Is Still Trading', cap: 'Information design · Cartographic narrative', fmt: '10-plate interactive atlas', ctx: 'Independent redesign', yr: '2026', open: 'got' },
+      { t: 'Tech Moves Fast', cap: 'Interactive presentation · Human-centred framing', fmt: '10-slide interactive HTML', ctx: 'Independent redesign', yr: '2026', open: 'tmf' },
+      { t: 'The System Is Waking Up', cap: 'Systems visualisation · Motion', fmt: `108 pages${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', open: 'sys' }
+    ]],
+    ['Editorial & publishing', 'Published work, in print', [
+      { t: 'Game Changer, Azerbaijan Edition', s: 'Cambridge × Azerbaijan', cap: 'Localisation · Textbook systems', fmt: '2 editions · 300,550 copies', ctx: 'Published textbook', yr: '2024–2025', href: 'publishing.html#game-changer', img: 'assets/img/edu/gc5-cover.webp' },
+      { t: 'Təbiət 5 / Природа 5', cap: 'Bilingual learning design', fmt: 'AZ + RU editions · 169,260 copies', ctx: 'Published textbook', yr: '2022', href: 'publishing.html#tebiet', img: 'assets/img/edu/taz-cover.webp' },
+      { t: 'TISA Yearbooks', cap: 'Editorial series · Photo curation', fmt: '5 annual editions', ctx: 'Client · TISA', yr: '', href: 'publishing.html#yearbooks', img: 'assets/img/edu/yb-cover.webp' }
+    ]],
+    ['Campaign & visual identity', 'One idea across every format', [
+      { t: 'A Little World of Colour', s: 'Miffy ECO Fuzzy · AW26', cap: 'Campaign system · Retail applications', fmt: 'Hero · carousel · poster · catalogue · POS', ctx: 'Independent exploration', yr: '2026', href: 'campaign.html#colour', img: 'assets/img/campaign/awc-hero-t.webp' },
+      { t: 'Grease', cap: 'Theatre identity · Poster', fmt: 'Poster · promo trailer', ctx: 'Production · TISA Drama', yr: '', href: 'campaign.html#grease', img: 'assets/img/edu/gr-poster.webp' },
+      { t: 'Oliver! JR.', cap: 'Programme design · Print', fmt: '10-page programme', ctx: 'Production · TISA', yr: '2024', href: 'campaign.html#oliver', img: 'assets/img/edu/ol-cover.webp' }
+    ]]
+  ];
+  const wiCount = WINDEX.reduce((n, g) => n + g[2].length, 0);
+  const wIndex = () => {
+    let n = 0;
+    return `
+    <section class="wi" aria-labelledby="wi-title">
+      <div class="wi-head rv"><h3 id="wi-title">Index</h3><p>All ${wiCount} projects, by discipline.</p></div>
+      ${WINDEX.map(([g, gs, rows]) => `
+      <div class="wi-g rv">
+        <p class="wi-gh"><b>${g}</b><span>${gs}</span><span class="wi-gc">${pad(rows.length)}</span></p>
+        <ul>${rows.map(r => {
+          const img = r.img || T(P[PI[r.open]].card);
+          const at = r.open ? `href="#/work/${r.open}" data-open="${r.open}"` : `href="${r.href}"`;
+          return `
+          <li><a class="wi-r" ${at} data-img="${img}">
+            <span class="wi-n">${pad(++n)}</span>
+            <span class="wi-t"><b>${r.t}</b>${r.s ? `<small>${r.s}</small>` : ''}</span>
+            <span class="wi-cap">${r.cap}</span>
+            <span class="wi-f">${r.fmt}</span>
+            <span class="wi-c">${r.ctx}${r.yr ? ` · ${r.yr}` : ''}</span>
+            <i aria-hidden="true">→</i>
+          </a></li>`;
+        }).join('')}</ul>
+      </div>`).join('')}
+      <span class="wi-pv" aria-hidden="true"><img alt=""></span>
+    </section>`;
+  };
+  // hover preview: the project's lead image follows the pointer (fine pointers only)
+  const initWIndex = root => {
+    const wi = $('.wi', root); if (!wi) return;
+    observe($$('.rv', wi));
+    const pv = $('.wi-pv', wi), im = $('img', pv);
+    if (!FINE || RM) return;
+    let mx = 0, my = 0, x = 0, y = 0, raf = 0;
+    const loop = () => {
+      x += (mx - x) * .18; y += (my - y) * .18;
+      pv.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
+      raf = (Math.abs(mx - x) > .3 || Math.abs(my - y) > .3) ? requestAnimationFrame(loop) : 0;
+    };
+    $$('.wi-r', wi).forEach(a => {
+      a.addEventListener('pointerenter', e => { if (im.getAttribute('src') !== a.dataset.img) im.src = a.dataset.img; if (!pv.classList.contains('on')) { x = mx = e.clientX; y = my = e.clientY; } pv.classList.add('on'); });
+      a.addEventListener('pointerleave', () => pv.classList.remove('on'));
+    });
+    wi.addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
+  };
+  const wiMount = $('#wIndex');
+  if (wiMount) { wiMount.innerHTML = wIndex(); initWIndex(wiMount); }
+
   const projects = $('#projects'), filters = $('#filters');
   let group = 'all';
   const renderList = () => {
@@ -1785,15 +1876,18 @@
           </div>
         </header>
         <div class="c-cover"><div class="frame r169" id="cCover"><img${Z(p.cover)} src="${F(p.cover)}" alt="${p.title}, cover"></div></div>
-        <section class="c-sec tight rv">${head(num(), 'Challenge', p.challenge)}</section>
-        <section class="c-sec rv">${head(num(), 'Approach', p.approach)}</section>`;
-    if (p.story) h += `<section class="c-sec">${head(num(), 'How it reads', 'Scroll through the key moves in the story.', true)}<div data-story></div></section>`;
+        <section class="c-sec tight c-glance rv">${head(num(), 'Overview', p.outcome)}<div class="c-out">${p.out.map(o => `<div><b>${o[0]}</b><span>${o[1]}</span></div>`).join('')}</div></section>`;
+    // visual first: the comparison and the slides come before the reasoning
     if (p.ba) h += `<section class="c-sec">${head(num(), 'Before / after', 'Drag the handle to compare the original with the redesign.', true)}<div class="rv" data-ba></div></section>`;
+    if (p.slides) h += `<section class="c-sec">${head(num(), 'Selected slides', `${p.slides.length} slides from the deck. Use the arrows, your keyboard or swipe.`, true)}<div class="rv" data-viewer></div></section>`;
     if (p.phones) h += `<section class="c-sec">${head(num(), 'The stories', 'Animated 9:16 in-app stories built on one visual grammar. Shown here as still frames.', true)}<div class="phones rv">${p.phones.map(k => `<img src="${T('stories/' + k)}" alt="" loading="lazy" decoding="async">`).join('')}</div></section>`;
     if (p.video) h += `<section class="c-sec">${head(num(), 'In motion', 'The opener as it runs on screen. Press play.', true)}<div class="c-video rv"><video controls playsinline preload="none" poster="${F(p.cover)}"><source src="assets/video/${p.video}.webm" type="video/webm"><source src="assets/video/${p.video}.mp4" type="video/mp4"></video></div></section>`;
-    if (p.slides) h += `<section class="c-sec">${head(num(), 'Selected slides', `${p.slides.length} slides from the deck. Use the arrows, your keyboard or swipe.`, true)}<div class="rv" data-viewer></div></section>`;
-    h += `<section class="c-sec">${head(num(), 'Outcome', p.outcome)}<div class="c-out rv">${p.out.map(o => `<div><b>${o[0]}</b><span>${o[1]}</span></div>`).join('')}</div>${p.note ? `<p class="c-note">${p.note}</p>` : ''}</section>`;
+    h += `<section class="c-sec tight rv"><div class="c-h c-dec"><h2><span class="idx">${num()}</span>Design decisions</h2><div><p class="c-dl"><b>The problem</b>${p.challenge}</p><p class="c-dl"><b>The approach</b>${p.approach}</p></div></div></section>`;
+    if (p.story) h += `<section class="c-sec">${head(num(), 'How it reads', 'The key moves in the story, one at a time.', true)}<div data-story></div></section>`;
+    if (p.note) h += `<section class="c-sec tight"><p class="c-note">${p.note}</p></section>`;
+    const pv = P[(i - 1 + P.length) % P.length];
     h += `</div>
+      <nav class="c-pv wrap" aria-label="More projects"><button data-goto="${(i - 1 + P.length) % P.length}"><span>Previous project</span><b><i>←</i> ${pv.title}</b></button><a href="#/work">All work · full index</a></nav>
       <button class="c-next" data-goto="${(i + 1) % P.length}">
         <div class="wrap">
           <div><span>Next project</span><b>${nx.title} <i>→</i></b><small>${nx.cat}</small></div>

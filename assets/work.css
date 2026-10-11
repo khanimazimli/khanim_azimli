@@ -1,0 +1,82 @@
+/* Khanim Azimli · Work index, case-page ordering, home format index
+   Loaded after app.css. Only adds new components (.wi, .c-glance, .c-dec, .c-pv) and the
+   fourth home format. About, Capabilities, Tools and Contact are not touched here. */
+
+/* ---------- home: four formats instead of three ---------- */
+@media (min-width:821px){
+  .hero-idx{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .hero-idx .x{font-size:13.5px}
+}
+
+/* ---------- Work: full project index ---------- */
+.wi{position:relative;margin-top:clamp(72px,9vw,140px)}
+.wi-head{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:24px;align-items:end;padding-bottom:20px;border-bottom:1px solid var(--line-2)}
+.wi-head h3{font-size:var(--t-d2);font-weight:500;letter-spacing:-.045em;line-height:.95}
+.wi-head p{font-size:var(--t-md);color:var(--fg-2);max-width:44ch}
+.wi-g{margin-top:clamp(40px,4.4vw,64px)}
+.wi-gh{display:flex;align-items:baseline;gap:18px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.wi-gh b{font-size:var(--t-lg);font-weight:500;letter-spacing:-.01em;color:var(--fg)}
+.wi-gh span{font-size:var(--t-sm);color:var(--fg-3)}
+.wi-gh .wi-gc{margin-left:auto;color:var(--gold);font-variant-numeric:tabular-nums}
+.wi ul{list-style:none;margin:0;padding:0}
+.wi-r{position:relative;display:grid;grid-template-columns:44px minmax(0,3.2fr) minmax(0,2.6fr) minmax(0,2.4fr) minmax(0,2fr) 24px;gap:8px 20px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line);color:var(--fg);transition:color .3s}
+.wi-r::before{content:"";position:absolute;inset:0 calc(var(--gut) * -.35);background:linear-gradient(90deg,rgba(201,164,92,.07),rgba(201,164,92,0) 70%);opacity:0;transition:opacity .35s var(--e);pointer-events:none}
+.wi-n{font-size:13px;color:var(--fg-3);font-variant-numeric:tabular-nums}
+.wi-t b{display:block;font-size:clamp(19px,1.6vw,24px);font-weight:500;letter-spacing:-.025em;line-height:1.15;transition:color .3s}
+.wi-t small{display:block;margin-top:4px;font-size:13px;color:var(--fg-3)}
+.wi-cap{font-size:15px;color:var(--gold-2)}
+.wi-f{font-size:15px;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.wi-f em{color:var(--gold);font-style:normal}
+.wi-c{font-size:13.5px;color:var(--fg-3)}
+.wi-r>i{font-style:normal;color:var(--fg-3);justify-self:end;transition:transform .45s var(--e),color .3s}
+.wi-r:hover::before,.wi-r:focus-visible::before{opacity:1}
+.wi-r:hover .wi-t b,.wi-r:hover>i{color:var(--gold-2)}
+.wi-r:hover>i{transform:translateX(6px)}
+
+/* hover preview follows the pointer (desktop, fine pointer only; see initWIndex) */
+.wi-pv{position:fixed;left:0;top:0;z-index:60;width:clamp(220px,20vw,320px);margin:24px 0 0 28px;pointer-events:none;opacity:0;transition:opacity .25s var(--e)}
+.wi-pv img{width:100%;height:auto;max-height:340px;object-fit:contain;object-position:left top;box-shadow:0 24px 60px -24px rgba(0,0,0,.7);transform:scale(.96);transition:transform .35s var(--e)}
+.wi-pv.on{opacity:1}
+.wi-pv.on img{transform:none}
+@media (hover:none),(pointer:coarse){.wi-pv{display:none}}
+
+@media (max-width:1100px){
+  .wi-r{grid-template-columns:40px minmax(0,1fr) minmax(0,1fr) 20px}
+  .wi-t{grid-column:2}
+  .wi-cap{grid-column:3}
+  .wi-f{grid-column:2}
+  .wi-c{grid-column:3}
+  .wi-r>i{grid-column:4;grid-row:1}
+}
+@media (max-width:640px){
+  .wi-head{grid-template-columns:1fr;gap:10px}
+  .wi-gh{flex-wrap:wrap;gap:4px 14px}
+  .wi-gh span:not(.wi-gc){flex-basis:100%;order:3}
+  .wi-r{grid-template-columns:32px minmax(0,1fr) 16px;gap:4px 12px;padding:16px 0}
+  .wi-t,.wi-cap,.wi-f,.wi-c{grid-column:2}
+  .wi-r>i{grid-column:3;grid-row:1}
+  .wi-cap{font-size:14px}
+  .wi-f,.wi-c{font-size:13px}
+}
+
+/* ---------- case pages (Melbourne, Indonesia, Personalization at Scale) ---------- */
+/* overview figures sit directly under the cover */
+.c-glance .c-out{margin-top:clamp(8px,1vw,16px)}
+/* design decisions: problem and approach as one block, after the visuals */
+.c-dec p.c-dl{font-size:var(--t-md);line-height:1.5;letter-spacing:-.005em;color:var(--fg-2);max-width:62ch}
+.c-dec p.c-dl+p.c-dl{margin-top:24px}
+.c-dec p.c-dl b{display:block;margin-bottom:6px;font-size:var(--t-sm);font-weight:500;letter-spacing:.02em;color:var(--gold)}
+/* previous project + back to the index, above the Next band */
+.c-pv{display:flex;justify-content:space-between;align-items:center;gap:16px 32px;flex-wrap:wrap;padding-top:24px;padding-bottom:clamp(40px,5vw,72px);border-top:1px solid var(--line)}
+.c-pv button{display:flex;flex-direction:column;gap:6px;text-align:left;color:var(--fg)}
+.c-pv button span{font-size:var(--t-sm);color:var(--fg-3)}
+.c-pv button b{font-size:clamp(20px,1.8vw,26px);font-weight:500;letter-spacing:-.02em;transition:color .3s}
+.c-pv button i{font-style:normal;display:inline-block;transition:transform .45s var(--e)}
+.c-pv button:hover b{color:var(--gold-2)}
+.c-pv button:hover i{transform:translateX(-6px)}
+.c-pv a{font-size:var(--t-md);color:var(--fg-2);border-bottom:1px solid var(--line-2);padding-bottom:4px;transition:color .3s,border-color .3s}
+.c-pv a:hover{color:var(--gold-2);border-color:var(--gold-2)}
+
+@media (prefers-reduced-motion:reduce){
+  .wi-r>i,.c-pv button i,.wi-pv,.wi-pv img{transition:none}
+}
