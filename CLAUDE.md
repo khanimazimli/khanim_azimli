@@ -150,13 +150,32 @@ Do not automatically place every new project on the homepage.
 Current preferred hierarchy:
 
 - 01 — THE NEW RULES OF FASHION
-- 02 — THE WORLD IS STILL TRADING. JUST DIFFERENTLY.
-- 03 — THE SYSTEM IS WAKING UP
-- 04 — GAME CHANGER / EDITORIAL PUBLISHING
-- 05 — POWERPOINT, REBUILT.
-- 06 — TECH MOVES FAST. PEOPLE DECIDE IF IT LANDS.
+- 02 — GAME CHANGER / EDITORIAL PUBLISHING
+- 03 — THE WORLD IS STILL TRADING. JUST DIFFERENTLY.
+- 04 — POWERPOINT, REBUILT.
+- 05 — TECH MOVES FAST. PEOPLE DECIDE IF IT LANDS.
+- 06 — CAMPAIGN & VISUAL DESIGN (Grease · Oliver! JR. → `campaign.html`)
+- 07 — THE SYSTEM IS WAKING UP
 
 Any change to this hierarchy should be intentional.
+
+Under Selected Work sits the **Index**: every listed project, grouped by
+discipline (Presentation & report design · Interactive & information design ·
+Editorial & publishing · Campaign & visual identity). It is the only
+categorisation on the Work page; there is no filter bar.
+
+- Projects already shown in Selected Work carry a quiet "Selected" label.
+- Projects with no Selected Work block (Melbourne, Indonesia, Generative AI,
+  Personalization at Scale, Təbiət 5, TISA Yearbooks) are listed again in
+  the index header so they are easy to find.
+- "Index · N projects ↓" under the Selected Work heading jumps to it.
+  The count is generated from the index data; never hard-code it.
+- New projects go into the index (`WINDEX` in `assets/app.js`); only add
+  them to Selected Work intentionally.
+
+**A LITTLE WORLD OF COLOUR** (`bon-ton-toys.html`) is unlisted on purpose:
+reachable only by its direct URL. Do not add it to Selected Work, the index,
+the campaign page or any navigation until Khanim says so.
 
 ---
 

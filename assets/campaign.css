@@ -1,7 +1,6 @@
 /* Khanim Azimli · Campaign & Visual Design
    Standalone showcase page (campaign.html). Uses the portfolio's navy / gold system for the frame;
-   each project section takes the colour of its own work. Images are the real artwork:
-   A Little World of Colour frames are captured from bon-ton-toys.html, theatre print from publishing. */
+   each project section takes the colour of its own work. Images are the real printed artwork. */
 
 @font-face{font-family:"Satoshi";src:url(fonts/satoshi-var.woff2) format("woff2-variations"),url(fonts/satoshi-var.woff2) format("woff2");font-weight:300 900;font-style:normal;font-display:swap}
 @font-face{font-family:"Plex Mono";src:url(fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
@@ -13,7 +12,6 @@
   --line:rgba(214,224,238,.12);--line-2:rgba(214,224,238,.22);
   --gold:#C9A45C;--gold-2:#E2C98D;
   --paper:#F2EEE7;--ink:#141312;--ink-2:#5E5850;--rule:rgba(20,19,18,.16);
-  --coral:#EE4B3A;--lilac:#B9A6E4;--teal:#0E8A82;
   --ol-red:#B3261E;--ol-paper:#F4EFE6;
   --f:"Satoshi","Helvetica Neue",Helvetica,Arial,sans-serif;
   --mono:"Plex Mono",ui-monospace,Menlo,monospace;
@@ -88,20 +86,7 @@ figcaption i{font-style:normal;opacity:.7}
 .go i{font-style:normal;transition:transform .4s var(--e)}
 .go:hover i{transform:translateX(6px)}
 
-/* 01 · A Little World of Colour: the campaign's own paper, ink and four colourways */
-.awc{background:var(--paper);color:var(--ink)}
-.awc .pj-h em{font-style:normal;color:var(--coral)}
-.awc-dots{display:inline-flex;gap:6px;vertical-align:middle}
-.awc-dots i{width:12px;height:12px;border-radius:50%;background:var(--c)}
-.awc-strip{margin-top:clamp(48px,6vw,96px)}
-.awc-strip .scroller{overflow-x:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
-.awc-strip .scroller img{width:100%;min-width:900px}
-.awc-pair{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1fr);gap:clamp(20px,3vw,48px);margin-top:clamp(48px,6vw,96px);align-items:end}
-.awc-store{margin-top:clamp(48px,6vw,96px)}
-.awc .shot img,.awc-strip img,.awc-pair img,.awc-store img{box-shadow:0 1px 2px rgba(0,0,0,.08),0 22px 48px -24px rgba(25,20,15,.45)}
-.awc .go{color:var(--ink)}
-
-/* 02 · Grease: the main navy system, the poster carries the colour */
+/* 01 · Grease: the main navy system, the poster carries the colour */
 .gr{background:var(--deep)}
 .gr .pj-h span{color:#FF4FA3}
 .gr-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr);gap:clamp(32px,5vw,88px);margin-top:clamp(40px,5vw,72px);align-items:start}
@@ -115,7 +100,7 @@ figcaption i{font-style:normal;opacity:.7}
 .gr .pj-foot,.gr .pj-mast{border-color:var(--line-2)}
 .gr .go{color:var(--gold-2)}
 
-/* 03 · Oliver! JR.: playbill paper and Tower Bridge red */
+/* 02 · Oliver! JR.: playbill paper and Tower Bridge red */
 .ol{background:var(--ol-paper);color:var(--ink)}
 .ol .pj-h span{color:var(--ol-red)}
 .ol-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.4vw,36px);margin-top:clamp(40px,5vw,72px)}
@@ -154,7 +139,7 @@ figcaption i{font-style:normal;opacity:.7}
   .cbar .wrap{grid-template-columns:auto 1fr}
 }
 @media (max-width:900px){
-  .intro-grid,.gr-grid,.awc-pair,.ol-sky{grid-template-columns:1fr}
+  .intro-grid,.gr-grid,.ol-sky{grid-template-columns:1fr}
   .ov,.dec{grid-template-columns:1fr}
   .gr-poster{position:static;max-width:520px}
   .end-links{grid-template-columns:1fr}
@@ -165,7 +150,10 @@ figcaption i{font-style:normal;opacity:.7}
   .cbar nav a{font-size:11px}
   .intro-k span+span{display:none}
   .pj-mast span+span{display:none}
-  .gr-crops{grid-template-columns:1fr}
+  /* the four poster details: a compact 2 × 2 grid (tap any one to see it full size) */
+  .gr-crops{gap:16px 12px;margin-top:28px;align-items:start}
+  .gr-crops figure.w{grid-column:auto}
+  .gr-crops figcaption{font-size:10px;letter-spacing:.04em;gap:6px;margin-top:8px}
   .go{font-size:16px;white-space:normal}
 }
 @media (max-width:420px){

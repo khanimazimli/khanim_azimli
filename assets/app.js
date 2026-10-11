@@ -1,5 +1,5 @@
 /* Khanim Azimli · portfolio
-   Home + SPA case view. Components: project list (featured + grid) with filters,
+   Home + SPA case view. Components: project list (featured blocks + full index),
    case view, slide viewer, before/after slider, scroll story, cursor label. No libraries. */
 (() => {
   'use strict';
@@ -19,17 +19,8 @@
   /* ================================================================
      CONTENT
      kpi / kpiCap: the one figure shown on the card (taken from the project facts, nothing invented)
-     out: outcome figures for the case page · groups: filter membership
+     out: outcome figures for the case page · groups: discipline tags (kept as data; Work is organised by the index, WINDEX)
      ================================================================ */
-  const GROUPS = [
-    ['all', 'All work'],
-    ['redesign', 'Report redesigns'],
-    ['exec', 'Executive & pitch decks'],
-    ['data', 'Data storytelling'],
-    ['interactive', 'Interactive & motion'],
-    ['editorial', 'Editorial & print'],
-    ['campaign', 'Campaign & identity']
-  ];
   const P = [
     {
       // featured interactive atlas: home block, case page and transformation study live in case-got.js / case-got.css (the atlas's own ink / cobalt / cyan system)
@@ -147,8 +138,8 @@
 
   /* Selected Work: curated opening sequence, chosen for range rather than category:
      art direction → published print → information design → presentation → interactive → campaign → system.
-     Every other project (gai, mel, indo, pas, the PowerPoint studies, Təbiət, yearbooks, theatre print)
-     is listed in the full index under it (WINDEX). XP = home cards that link to their own pages. */
+     Every project is listed in the full index under it (WINDEX); the six that have no block here
+     are flagged there. XP = home cards that link to their own pages. */
   const HOME = ['nrf', 'edu', 'got', 'ppt', 'tmf', 'campaign', 'sys']; // got replaced the 'trade' link card (XP.trade kept, unused)
   const XP = {
     trade: {
@@ -173,11 +164,11 @@
       kpi: `158${TO}30`, kpiCap: 'source slides to redesigned slides, across 3 studies'
     },
     campaign: {
-      id: 'campaign', title: 'Campaign & Visual Design', cat: 'Campaign · Identity · Promotional print', year: '3 projects', groups: ['campaign'],
+      id: 'campaign', title: 'Campaign & Visual Design', cat: 'Theatre identity · Promotional print', year: '2 productions', groups: ['campaign'],
       href: 'campaign.html', go: 'View the campaign work', goI: '→',
-      img: 'assets/img/campaign/awc-hero', thumbs: ['assets/img/edu/gr-poster', 'assets/img/edu/ol-cover'],
-      desc: 'A retail campaign system for Miffy ECO Fuzzy, a theatre identity for Grease and a ten-page programme for Oliver! JR. One graphic idea, carried into every format.',
-      kpi: '6', kpiCap: 'campaign applications built from one wordmark system'
+      img: 'assets/img/edu/ol-spread', full: true, thumbs: ['assets/img/edu/gr-poster', 'assets/img/edu/ol-cover'],
+      desc: 'A promotional identity for Grease, with a poster and a promo trailer, and a ten-page programme for Oliver! JR. Each built on one graphic idea, carried through every piece.',
+      kpi: '10', kpiCap: 'programme pages carried by one graphic idea'
     }
   };
   const homeList = () => HOME.map(id => XP[id] || P[PI[id]]).filter(Boolean);
@@ -598,52 +589,61 @@
     return b;
   };
   /* ---------- full project index (Work, under the curated sequence) ----------
-     Every project in the portfolio, grouped by discipline, always visible (filters only touch the
-     curated blocks above). cap = the one capability the project shows best, so no two rows say the same thing.
-     Facts come from the case pages: slide and page counts, print runs from the imprint pages. */
+     Every listed project, grouped by discipline: the one categorisation on Work.
+     cap = the one capability the project shows best, so no two rows say the same thing.
+     sel = already shown as (or inside) a Selected Work block above; the others appear only here.
+     Facts come from the case pages: slide and page counts, print runs from the imprint pages.
+     A Little World of Colour (bon-ton-toys.html) is deliberately unlisted: reachable by its own URL only. */
   const WINDEX = [
     ['Presentation & report design', 'Decks rebuilt around one argument', [
-      { t: 'From Complexity to Control', s: 'PowerPoint, Rebuilt · 01', cap: 'Native PowerPoint · Morph systems', fmt: `49${TO}10 slides · editable PPTX`, ctx: 'Independent redesign', yr: '2026', href: 'powerpoint-rebuilt.html', img: 'assets/img/ppt/after-05.webp' },
-      { t: 'AI, Prioritized', s: 'PowerPoint, Rebuilt · 02', cap: 'Decision framing', fmt: `69${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', href: 'powerpoint-rebuilt/ai-prioritized.html', img: 'powerpoint-rebuilt/ai-prioritized/img/slide-02.webp' },
-      { t: 'The pipeline is growing. The engine is stalling.', s: 'PowerPoint, Rebuilt · 03', cap: 'Diagnostic storyline', fmt: `40${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', href: 'powerpoint-rebuilt/vaccine-innovation.html', img: 'powerpoint-rebuilt/vaccine-innovation/img/f02.webp' },
+      { t: 'From Complexity to Control', s: 'PowerPoint, Rebuilt · 01', sel: 1, cap: 'Native PowerPoint · Morph systems', fmt: `49${TO}10 slides · editable PPTX`, ctx: 'Independent redesign', yr: '2026', href: 'powerpoint-rebuilt.html', img: 'assets/img/ppt/after-05.webp' },
+      { t: 'AI, Prioritized', s: 'PowerPoint, Rebuilt · 02', sel: 1, cap: 'Decision framing', fmt: `69${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', href: 'powerpoint-rebuilt/ai-prioritized.html', img: 'powerpoint-rebuilt/ai-prioritized/img/slide-02.webp' },
+      { t: 'The pipeline is growing. The engine is stalling.', s: 'PowerPoint, Rebuilt · 03', sel: 1, cap: 'Diagnostic storyline', fmt: `40${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', href: 'powerpoint-rebuilt/vaccine-innovation.html', img: 'powerpoint-rebuilt/vaccine-innovation/img/f02.webp' },
       { t: 'Melbourne', cap: 'Executive storyline · Rebuilt charts', fmt: `56${TO}12 · pages to slides`, ctx: 'Independent redesign', yr: '2026', open: 'mel' },
       { t: 'Indonesia', cap: 'Map system · Geographic data', fmt: `69${TO}11 · pages to slides`, ctx: 'Independent redesign', yr: '2026', open: 'indo' },
       { t: 'Generative AI & the Future of Work', cap: 'Narrative editing · Chart motion', fmt: `76${TO}10 · pages to slides`, ctx: 'Independent redesign', yr: '2026', open: 'gai' },
       { t: 'Personalization at Scale', cap: 'Executive deck · Live present mode', fmt: '10-slide HTML deck', ctx: 'In-house deck, adapted', yr: '2026', open: 'pas' }
     ]],
     ['Interactive & information design', 'Research turned into experiences you move through', [
-      { t: 'The New Rules of Fashion', cap: 'Art direction · Editorial typography', fmt: `143 pages${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', open: 'nrf' },
-      { t: 'The World Is Still Trading', cap: 'Information design · Cartographic narrative', fmt: '10-plate interactive atlas', ctx: 'Independent redesign', yr: '2026', open: 'got' },
-      { t: 'Tech Moves Fast', cap: 'Interactive presentation · Human-centred framing', fmt: '10-slide interactive HTML', ctx: 'Independent redesign', yr: '2026', open: 'tmf' },
-      { t: 'The System Is Waking Up', cap: 'Systems visualisation · Motion', fmt: `108 pages${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', open: 'sys' }
+      { t: 'The New Rules of Fashion', sel: 1, cap: 'Art direction · Editorial typography', fmt: `143 pages${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', open: 'nrf' },
+      { t: 'The World Is Still Trading', sel: 1, cap: 'Information design · Cartographic narrative', fmt: '10-plate interactive atlas', ctx: 'Independent redesign', yr: '2026', open: 'got' },
+      { t: 'Tech Moves Fast', sel: 1, cap: 'Interactive presentation · Human-centred framing', fmt: '10-slide interactive HTML', ctx: 'Independent redesign', yr: '2026', open: 'tmf' },
+      { t: 'The System Is Waking Up', sel: 1, cap: 'Systems visualisation · Motion', fmt: `108 pages${TO}10 slides`, ctx: 'Independent redesign', yr: '2026', open: 'sys' }
     ]],
     ['Editorial & publishing', 'Published work, in print', [
-      { t: 'Game Changer, Azerbaijan Edition', s: 'Cambridge × Azerbaijan', cap: 'Localisation · Textbook systems', fmt: '2 editions · 300,550 copies', ctx: 'Published textbook', yr: '2024–2025', href: 'publishing.html#game-changer', img: 'assets/img/edu/gc5-cover.webp' },
+      { t: 'Game Changer, Azerbaijan Edition', s: 'Cambridge × Azerbaijan', sel: 1, cap: 'Localisation · Textbook systems', fmt: '2 editions · 300,550 copies', ctx: 'Published textbook', yr: '2024–2025', href: 'publishing.html#game-changer', img: 'assets/img/edu/gc5-cover.webp' },
       { t: 'Təbiət 5 / Природа 5', cap: 'Bilingual learning design', fmt: 'AZ + RU editions · 169,260 copies', ctx: 'Published textbook', yr: '2022', href: 'publishing.html#tebiet', img: 'assets/img/edu/taz-cover.webp' },
       { t: 'TISA Yearbooks', cap: 'Editorial series · Photo curation', fmt: '5 annual editions', ctx: 'Client · TISA', yr: '', href: 'publishing.html#yearbooks', img: 'assets/img/edu/yb-cover.webp' }
     ]],
-    ['Campaign & visual identity', 'One idea across every format', [
-      { t: 'A Little World of Colour', s: 'Miffy ECO Fuzzy · AW26', cap: 'Campaign system · Retail applications', fmt: 'Hero · carousel · poster · catalogue · POS', ctx: 'Independent exploration', yr: '2026', href: 'campaign.html#colour', img: 'assets/img/campaign/awc-hero-t.webp' },
-      { t: 'Grease', cap: 'Theatre identity · Poster', fmt: 'Poster · promo trailer', ctx: 'Production · TISA Drama', yr: '', href: 'campaign.html#grease', img: 'assets/img/edu/gr-poster.webp' },
-      { t: 'Oliver! JR.', cap: 'Programme design · Print', fmt: '10-page programme', ctx: 'Production · TISA', yr: '2024', href: 'campaign.html#oliver', img: 'assets/img/edu/ol-cover.webp' }
+    ['Campaign & visual identity', 'One idea across every piece', [
+      { t: 'Grease', sel: 1, cap: 'Theatre identity · Poster', fmt: 'Poster · promo trailer', ctx: 'Production · TISA Drama', yr: '', href: 'campaign.html#grease', img: 'assets/img/edu/gr-poster.webp' },
+      { t: 'Oliver! JR.', sel: 1, cap: 'Programme design · Print', fmt: '10-page programme', ctx: 'Production · TISA', yr: '2024', href: 'campaign.html#oliver', img: 'assets/img/edu/ol-cover.webp' }
     ]]
   ];
-  const wiCount = WINDEX.reduce((n, g) => n + g[2].length, 0);
+  const WROWS = WINDEX.flatMap(g => g[2]);
+  const wiCount = WROWS.length;
+  const wiAt = r => r.open ? `href="#/work/${r.open}" data-open="${r.open}"` : `href="${r.href}"`;
   const wIndex = () => {
     let n = 0;
+    const only = WROWS.filter(r => !r.sel);
     return `
     <section class="wi" aria-labelledby="wi-title">
-      <div class="wi-head rv"><h3 id="wi-title">Index</h3><p>All ${wiCount} projects, by discipline.</p></div>
+      <div class="wi-head rv">
+        <h3 id="wi-title">Index</h3>
+        <div class="wi-sum">
+          <p>All ${wiCount} projects, by discipline. <span>${pad(wiCount - only.length)} are in Selected Work above; ${only.length} appear only here:</span></p>
+          <ul class="wi-only">${only.map(r => `<li><a ${wiAt(r)}>${r.t}</a></li>`).join('')}</ul>
+        </div>
+      </div>
       ${WINDEX.map(([g, gs, rows]) => `
       <div class="wi-g rv">
         <p class="wi-gh"><b>${g}</b><span>${gs}</span><span class="wi-gc">${pad(rows.length)}</span></p>
         <ul>${rows.map(r => {
           const img = r.img || T(P[PI[r.open]].card);
-          const at = r.open ? `href="#/work/${r.open}" data-open="${r.open}"` : `href="${r.href}"`;
           return `
-          <li><a class="wi-r" ${at} data-img="${img}">
+          <li><a class="wi-r${r.sel ? ' is-sel' : ''}" ${wiAt(r)} data-img="${img}">
             <span class="wi-n">${pad(++n)}</span>
-            <span class="wi-t"><b>${r.t}</b>${r.s ? `<small>${r.s}</small>` : ''}</span>
+            <span class="wi-t"><b>${r.t}</b>${r.sel ? '<em class="wi-tag">Selected</em>' : ''}${r.s ? `<small>${r.s}</small>` : ''}</span>
             <span class="wi-cap">${r.cap}</span>
             <span class="wi-f">${r.fmt}</span>
             <span class="wi-c">${r.ctx}${r.yr ? ` · ${r.yr}` : ''}</span>
@@ -675,11 +675,21 @@
   const wiMount = $('#wIndex');
   if (wiMount) { wiMount.innerHTML = wIndex(); initWIndex(wiMount); }
 
-  const projects = $('#projects'), filters = $('#filters');
-  let group = 'all';
+  // "Index · N projects ↓" under the Selected Work heading: a smooth jump to the index, staying on #/work
+  const wJump = $('#wJump');
+  if (wJump && wiMount) {
+    $('#wJumpN').textContent = wiCount;
+    wJump.setAttribute('aria-label', `Index, ${wiCount} projects: jump to the full project list`);
+    wJump.addEventListener('click', e => {
+      e.preventDefault();
+      toTop = false;                                   // set by the view-link listener; this is an in-view jump
+      wiMount.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
+    });
+  }
+
+  const projects = $('#projects');
   const renderList = () => {
-    const list = homeList().filter(p => group === 'all' || p.groups.includes(group));
-    projects.innerHTML = layout(list);
+    projects.innerHTML = layout(homeList());
     observe($$('.pc, .gx', projects));
     initGaiCard(projects);
     initNx(projects);
@@ -687,21 +697,8 @@
     window.TMF && TMF.initCard(projects);
     window.GOT && GOT.initCard(projects);
   };
-  filters.innerHTML = GROUPS.map(([k, label]) => {
-    const H = homeList(), c = k === 'all' ? H.length : H.filter(p => p.groups.includes(k)).length;
-    return `<button role="tab" data-g="${k}" aria-selected="${k === group}" class="${k === group ? 'on' : ''}">${label}<sup>${pad(c)}</sup></button>`;
-  }).join('');
-  $$('button', filters).forEach(b => b.addEventListener('click', () => {
-    if (b.dataset.g === group) return;
-    group = b.dataset.g;
-    $$('button', filters).forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); });
-    projects.classList.add('fade');
-    setTimeout(() => { renderList(); projects.classList.remove('fade'); }, RM ? 0 : 320);
-  }));
   renderList();
   initTf();
-  // hero format index: jump to work with the matching filter
-  $$('[data-filter-go]').forEach(a => a.addEventListener('click', () => { const b = $(`button[data-g="${a.dataset.filterGo}"]`, filters); b && b.click(); }));
 
   /* ---------- cursor label over project images ---------- */
   const cursor = $('#cursor');
@@ -742,22 +739,23 @@
      ================================================================ */
 
   // slide viewer
-  const viewerHTML = (slides, uid) => `
+  // start: first slide shown (0-based). Cases whose first slide is the cover open on the next one.
+  const viewerHTML = (slides, uid, start = 0) => `
     <div class="viewer" id="${uid}" tabindex="0" aria-roledescription="slide viewer">
-      <div class="vstage"><img src="${F(slides[0][0])}" alt="${slides[0][1]}"><button class="hit l" aria-label="Previous slide"></button><button class="hit r" aria-label="Next slide"></button></div>
+      <div class="vstage"><img src="${F(slides[start][0])}" alt="${slides[start][1]}"><button class="hit l" aria-label="Previous slide"></button><button class="hit r" aria-label="Next slide"></button></div>
       <div class="vbar">
-        <p class="vcap"><b>${slides[0][1]}</b></p>
-        <div class="vnav"><button class="vp" aria-label="Previous slide">${ARROW_L}</button><span class="vc">01 / ${pad(slides.length)}</span><button class="vn" aria-label="Next slide">${ARROW_R}</button></div>
+        <p class="vcap"><b>${slides[start][1]}</b></p>
+        <div class="vnav"><button class="vp" aria-label="Previous slide">${ARROW_L}</button><span class="vc">${pad(start + 1)} / ${pad(slides.length)}</span><button class="vn" aria-label="Next slide">${ARROW_R}</button></div>
         <button class="vfull">Full screen</button>
       </div>
-      <div class="vthumbs">${slides.map((s, i) => `<button class="${i ? '' : 'on'}" aria-label="Slide ${i + 1}: ${s[1]}"><img src="${T(s[0])}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>
+      <div class="vthumbs">${slides.map((s, i) => `<button class="${i === start ? 'on' : ''}" aria-label="Slide ${i + 1}: ${s[1]}"><img src="${T(s[0])}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>
     </div>`;
   const viewers = [];
-  const initViewer = (el, slides) => {
+  const initViewer = (el, slides, start = 0) => {
     const stage = $('.vstage', el), cap = $('.vcap', el), cnt = $('.vc', el), th = $$('.vthumbs button', el);
-    let i = 0, busy = false, cur = $('img', stage);
+    let i = start, busy = false, cur = $('img', stage);
     const pre = k => { const im = new Image(); im.src = F(slides[(k + slides.length) % slides.length][0]); };
-    pre(1);
+    pre(start + 1); pre(start - 1);
     const go = (k, dir) => {
       k = (k + slides.length) % slides.length; if (k === i || busy) return;
       dir = dir || (k > i ? 1 : -1); busy = true;
@@ -1899,7 +1897,8 @@
     viewers.length = 0;
     const bv = $('[data-ba]', cb); if (bv) { bv.innerHTML = baHTML(p.ba, p.baLabels); initBA(bv, p.ba, p.baLabels); }
     const sv = $('[data-story]', cb); if (sv) { sv.innerHTML = storyHTML(p.story); initStory(sv, cs); }
-    const vv = $('[data-viewer]', cb); if (vv) { vv.innerHTML = viewerHTML(p.slides, 'v-' + p.id); initViewer(vv.firstElementChild, p.slides); }
+    const v0 = p.slides && p.slides.length > 1 && p.slides[0][0] === p.cover ? 1 : 0;   // the cover is already shown above
+    const vv = $('[data-viewer]', cb); if (vv) { vv.innerHTML = viewerHTML(p.slides, 'v-' + p.id, v0); initViewer(vv.firstElementChild, p.slides, v0); }
     const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { root: cs, rootMargin: '0px 0px -6% 0px' });
     if (RM) $$('.rv', cb).forEach(el => el.classList.add('in')); else $$('.rv', cb).forEach(el => o.observe(el));
     cs.scrollTop = 0;
