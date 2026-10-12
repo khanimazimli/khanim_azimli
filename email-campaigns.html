@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Google tag (gtag.js) · GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W9ESRVDGKR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W9ESRVDGKR');
+</script>
+<title>Email Campaign Design &amp; Development · Khanim Azimli</title>
+<meta name="description" content="Email campaign design and development in two chapters: TISA weekly newsletters and campaigns, shown from the original HTML, and a labelled reconstruction of the PASHA Malls executive retail intelligence newsletter.">
+<meta name="theme-color" content="#0D1B2A">
+<meta property="og:title" content="Email Campaign Design &amp; Development · Khanim Azimli">
+<meta property="og:description" content="Designed, built and sent: TISA campaign communications in Campaign Monitor, and PASHA Malls executive briefings in Mailchimp.">
+<meta property="og:image" content="https://khanimazimli.github.io/khanim_azimli/assets/case-tisa/renders/d-header.webp">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://khanimazimli.github.io/khanim_azimli/email-campaigns.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230D1B2A'/%3E%3Cpath d='M14 20h36v24H14z' fill='none' stroke='%23F7F3E9' stroke-width='3'/%3E%3Cpath d='M14 20l18 14 18-14' fill='none' stroke='%23D4AF37' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/satoshi-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/case-tisa.css">
+<link rel="stylesheet" href="assets/email-campaigns.css">
+</head>
+<body class="tx-body ec-body">
+<a class="tx-skip" href="#tisa">Skip to the first chapter</a>
+
+<header class="tx-bar ec-bar">
+  <div class="tx-wrap tx-bar__in">
+    <a class="tx-back" href="index.html#/work"><i aria-hidden="true">←</i> Khanim Azimli</a>
+    <nav class="ec-chapnav" aria-label="Chapters">
+      <a href="#tisa" data-ec-nav="tisa" data-ec-jump="tisa"><span>01</span> TISA</a>
+      <a href="#pasha" data-ec-nav="pasha" data-ec-jump="pasha"><span>02</span> PASHA Malls</a>
+      <i class="ec-chapnav__bar" aria-hidden="true" data-ec-bar></i>
+    </nav>
+    <span class="tx-bar__end">Email Campaigns</span>
+  </div>
+  <span class="ec-progress" aria-hidden="true"><i data-ec-progress></i></span>
+</header>
+
+<main class="tx ec">
+<!-- ============ INTRO ============ -->
+<section class="ec-intro" id="top" aria-labelledby="ec-title">
+  <div class="tx-wrap">
+    <p class="tx-k ec-intro__k ec-up">Email Campaign Design &amp; Development · Two chapters</p>
+    <h1 id="ec-title" class="ec-intro__title">
+      <span class="ec-line"><span>Emails, designed</span></span>
+      <span class="ec-line"><span>to be experienced.</span></span>
+    </h1>
+    <div class="ec-intro__foot ec-up">
+      <p class="ec-intro__sub">From engaging campaign communications to executive-level retail intelligence.</p>
+      <p class="ec-intro__note">Chapter 01 is shown from the original HTML. Chapter 02 is a labelled reconstruction, because the original issues no longer exist.</p>
+    </div>
+
+    <ol class="ec-toc" aria-label="Chapters">
+      <li class="ec-toc__item ec-up">
+        <a class="ec-toc__a" href="#tisa" data-ec-jump="tisa">
+          <span class="ec-toc__n">01</span>
+          <span class="ec-toc__main">
+            <span class="ec-toc__t">TISA</span>
+            <span class="ec-toc__d">Campaign Communications</span>
+          </span>
+          <span class="ec-toc__meta"><span>2019 to 2024</span><span>Weekly newsletter and campaigns</span><span>Campaign Monitor</span></span>
+          <span class="ec-toc__fig ec-toc__fig--tisa" aria-hidden="true"><img src="assets/case-tisa/renders/d-header.webp" alt="" width="1200" height="1600" decoding="async"></span>
+          <span class="ec-toc__go" aria-hidden="true">→</span>
+        </a>
+      </li>
+      <li class="ec-toc__item ec-up">
+        <a class="ec-toc__a" href="#pasha" data-ec-jump="pasha">
+          <span class="ec-toc__n">02</span>
+          <span class="ec-toc__main">
+            <span class="ec-toc__t">PASHA Malls</span>
+            <span class="ec-toc__d">Executive Retail Intelligence</span>
+          </span>
+          <span class="ec-toc__meta"><span>2024 to 2025</span><span>Monthly executive briefing</span><span>Mailchimp</span></span>
+          <span class="ec-toc__fig ec-toc__fig--pm" aria-hidden="true">
+            <span class="mini">
+              <span class="mini__top"><b>PASHA Malls</b><i>For senior management</i></span>
+              <span class="mini__rule"></span>
+              <span class="mini__t">Retail Intelligence</span>
+              <span class="mini__rows"><i></i><i></i><i></i><i></i><i></i></span>
+            </span>
+          </span>
+          <span class="ec-toc__go" aria-hidden="true">→</span>
+        </a>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ CHAPTER 01 OPENER ============ -->
+<section class="ec-chap" id="tisa" aria-labelledby="ch1-title" data-chapter="tisa">
+  <div class="tx-wrap ec-chap__in">
+    <p class="ec-chap__n" aria-hidden="true">01</p>
+    <div class="ec-chap__head">
+      <p class="tx-k ec-up">Chapter 01</p>
+      <h2 id="ch1-title" class="ec-chap__t ec-up">TISA</h2>
+      <p class="ec-chap__d ec-up">Campaign Communications</p>
+      <p class="ec-chap__p ec-up">Four years of weekly newsletters and campaigns for The International School of Azerbaijan. Email was the school's main line to families, so every Friday issue had to be read on a laptop at work and on a phone at the school gate.</p>
+    </div>
+    <dl class="ec-meta ec-up">
+      <div><dt>Role</dt><dd>Communications, External Relations and Publishing Coordinator</dd></div>
+      <div><dt>Years</dt><dd>2019 to 2024</dd></div>
+      <div><dt>Format</dt><dd>Weekly newsletter, event and announcement emails</dd></div>
+      <div><dt>Platforms</dt><dd>Campaign Monitor, Mailchimp</dd></div>
+      <div class="ec-meta__wide"><dt>Skills</dt><dd><ul class="ec-skills"><li>Email campaign design</li><li>Campaign layout design</li><li>Responsive email development</li><li>HTML</li><li>CSS</li><li>Visual communication</li><li>Adobe Creative Cloud</li></ul></dd></div>
+    </dl>
+  </div>
+</section>
+
+
+<section class="tx-hero" id="inbox" aria-labelledby="tx-title">
+  <div class="tx-wrap">
+    <div class="tx-hero__head ec-tisa-head">
+      <h3 id="tx-title" class="ec-subh">The Friday inbox</h3>
+      <p class="tx-hero__sub">Every Friday, one email carried the school week to families. A new message is arriving. The email inside it is the original HTML.</p>
+    </div>
+
+    <div class="mail" data-mail>
+      <div class="mail__toast" role="status" aria-live="polite" data-toast>
+        <span class="mail__toast-dot" aria-hidden="true"></span>
+        <span><b>New message</b> TISA Communications</span>
+      </div>
+
+      <div class="mail__chrome">
+        <span class="mail__lights" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="mail__app">Mail</span><span class="src src--r">Reconstruction</span>
+        <span class="mail__acct">publishing@tisa.az</span>
+      </div>
+
+      <div class="mail__grid">
+        <nav class="mail__rail" aria-label="Case study sections">
+          <a href="#inbox" class="is-on" aria-current="true"><span>Inbox</span><b data-count hidden>1</b></a>
+          <a href="#issue"><span>The newsletter</span></a>
+          <a href="#archive"><span>Archive</span></a>
+          <a href="#production"><span>Production</span></a>
+          <a href="#code"><span>The markup</span></a>
+          <a href="#years"><span>Four years</span></a>
+        </nav>
+
+        <div class="mail__list">
+          <div class="mail__listhead">
+            <h2 class="mail__h">Inbox</h2>
+            <span class="mail__new" data-newcount>1 new message</span>
+          </div>
+          <ul class="mail__rows" role="list" data-rows>
+            <li class="row row--new" data-row="intro">
+              <button type="button" class="row__btn" data-open="intro" aria-label="Open message from TISA Communications: Four Years of Digital Storytelling">
+                <span class="row__av" aria-hidden="true">T</span>
+                <span class="row__main">
+                  <span class="row__top"><span class="row__from">TISA Communications</span><span class="row__date">Now</span></span>
+                  <span class="row__subj">Four Years of Digital Storytelling</span>
+                  <span class="row__prev">A look inside the newsletters, campaigns, and digital experiences created for TISA.</span>
+                </span>
+                <span class="row__dot" aria-hidden="true"></span>
+                <span class="row__cue" aria-hidden="true">Open <i>→</i></span>
+              </button>
+            </li>
+            <li class="row" data-row="issue">
+              <button type="button" class="row__btn" data-open="issue" aria-label="Open TISA Weekly Look Ahead, 27 August 2021">
+                <span class="row__av" aria-hidden="true">T</span>
+                <span class="row__main">
+                  <span class="row__top"><span class="row__from">TISA Communications</span><span class="row__date">27 Aug 2021</span></span>
+                  <span class="row__subj">TISA Weekly Look Ahead - 27 August</span>
+                  <span class="row__prev">Message from the Director · Distance Learning · Library Corner · Calendar · Upcoming Events</span>
+                </span>
+                <span class="row__thumb" aria-hidden="true"><img src="assets/case-tisa/renders/d-header.webp" alt="" width="1200" height="1600" decoding="async"></span>
+              </button>
+            </li>
+          </ul>
+          <p class="mail__foot">Every Friday · Sent through Campaign Monitor</p>
+        </div>
+      </div>
+    </div>
+    <div class="tx-hero__foot">
+      <p class="tx-hero__hint" data-hint>Open the new message to read the original newsletter</p>
+      <ul class="facts" aria-label="At a glance">
+        <li><b>4 years</b> Communications, External Relations and Publishing Coordinator</li>
+        <li><b>Every Friday</b> The TISA Weekly Look Ahead</li>
+        <li><b>Original HTML</b> Built in Campaign Monitor</li>
+        <li><b>Design to send</b> Graphics, build, testing, delivery</li>
+      </ul>
+      <p class="legend"><span class="src src--o">Original</span> material from the 2021 email &nbsp; <span class="src src--r">Reconstruction</span> drawn for this portfolio</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 · THE NEWSLETTER (scroll showcase) ============ -->
+<section class="tx-sec tx-issue" id="issue" aria-labelledby="issue-title">
+  <div class="tx-wrap">
+    <header class="tx-head">
+      <p class="tx-k">01 · The newsletter</p>
+      <h2 id="issue-title" class="tx-h2">One Friday, from masthead to footer.</h2>
+      <p class="tx-lede">The TISA Weekly Look Ahead of 27 August 2021, rendered from its original HTML. Scroll, and the issue scrolls with you.</p>
+    </header>
+  </div>
+  <div class="tx-wrap issue" data-issue>
+    <div class="issue__stage">
+      <div class="issue__device">
+        <div class="issue__bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span>TISA Weekly Look Ahead - 27 August</span><span class="src src--o">Original HTML</span></div>
+        <div class="issue__win" data-issue-win>
+          <iframe class="issue__frame" style="width:640px;height:2000px" data-issue-frame title="TISA Weekly Look Ahead, 27 August 2021, scrolling preview" tabindex="-1" sandbox="allow-same-origin" scrolling="no"></iframe>
+        </div>
+        <div class="issue__meter" aria-hidden="true"><span data-issue-meter></span></div>
+      </div>
+    </div>
+    <ol class="issue__steps" data-issue-steps></ol>
+  </div>
+</section>
+
+<!-- ============ 03 · ARCHIVE ============ -->
+<section class="tx-sec tx-archive" id="archive" aria-labelledby="arc-title">
+  <div class="tx-wrap">
+    <header class="tx-head tx-head--split">
+      <div>
+        <p class="tx-k">02 · Archive</p>
+        <h2 id="arc-title" class="tx-h2">Eight ways into one issue.</h2>
+      </div>
+      <p class="tx-lede">Each Friday issue carried many campaigns at once: events, announcements, community news. Open any of them to see it in place in the original email.</p>
+    </header>
+    <div class="arc__filters" role="group" aria-label="Filter by category" data-filters></div>
+    <ul class="arc" role="list" data-arc></ul>
+    <p class="arc__missing"><b>Not yet in the archive</b> Tour TISA and the other promotional emails. Their original files are still being recovered, so they are not shown here.</p>
+  </div>
+</section>
+
+
+
+
+
+<!-- ============ 03 · PRODUCTION JOURNEY ============ -->
+<section class="tx-sec tx-journey" id="production" aria-labelledby="jr-title">
+  <div class="tx-wrap">
+    <header class="tx-head tx-head--split">
+      <div>
+        <p class="tx-k">03 · Production</p>
+        <h2 id="jr-title" class="tx-h2">From design to delivery, every week.</h2>
+      </div>
+      <p class="tx-lede">Four stages turned a Thursday inbox of submissions into a Friday email. Each stage below is shown with material from the 27 August 2021 issue.</p>
+    </header>
+    <div class="jr" data-jr>
+      <div class="jr__rail" aria-hidden="true"><span class="jr__fill" data-jr-fill></span><span class="jr__env" data-jr-env><svg viewBox="0 0 28 20"><rect x="1" y="1" width="26" height="18" rx="2"/><path d="M1.5 2l12.5 9 12.5-9"/></svg></span></div>
+      <div class="jr__tabs" role="tablist" aria-label="Production stages" data-jr-tabs></div>
+      <div class="jr__stage" data-jr-stage></div>
+      <div class="jr__nav">
+        <button type="button" class="rbtn rbtn--icon" data-jr-prev aria-label="Previous stage"><i aria-hidden="true">←</i></button>
+        <button type="button" class="rbtn rbtn--icon" data-jr-next aria-label="Next stage"><i aria-hidden="true">→</i></button>
+        <span class="jr__hint" data-jr-hint>Plays on its own. Select a stage to stop.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 · DESIGN MEETS CODE ============ -->
+<section class="tx-sec tx-code" id="code" aria-labelledby="code-title">
+  <div class="tx-wrap">
+    <header class="tx-head">
+      <p class="tx-k">04 · The markup</p>
+      <h2 id="code-title" class="tx-h2">Designed to be opened.<br>Built to be experienced.</h2>
+      <p class="tx-lede">An email has to survive Gmail, Outlook and a phone in one hand. Select a part of the newsletter to see the markup that carried it.</p>
+    </header>
+
+    <div class="code" data-code>
+      <div class="code__left">
+        <div class="code__tabs" role="tablist" aria-label="Parts of the email" data-code-tabs></div>
+        <div class="code__view">
+          <div class="code__screen" data-code-screen>
+            <iframe style="width:640px" data-code-frame title="Newsletter with the selected part highlighted" tabindex="-1" sandbox="allow-same-origin"></iframe>
+          </div>
+          <div class="seg seg--light" role="group" aria-label="Preview width">
+            <button type="button" class="seg__b" data-code-view="desktop" aria-pressed="true">Desktop</button>
+            <button type="button" class="seg__b" data-code-view="mobile" aria-pressed="false">Mobile</button>
+          </div>
+        </div>
+      </div>
+      <div class="code__right">
+        <p class="code__label" data-code-label>Header</p>
+        <p class="code__note" data-code-note></p>
+        <div class="code__panel">
+          <div class="code__panelbar"><span>source.html <span class="src src--o src--dark">Original markup</span></span><span>Campaign Monitor · The Blueprint</span></div>
+          <pre class="code__pre" tabindex="0" aria-label="HTML from the original newsletter"><code data-code-src></code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="evid">
+      <div class="evid__col">
+        <p class="evid__k"><span class="mk mk--v" aria-hidden="true"></span>Verified in the 2021 source file</p>
+        <ul>
+          <li>Built in Campaign Monitor's email builder, on its "The Blueprint" template.</li>
+          <li><b data-fact="mso">34</b> Outlook-only conditional blocks, <b data-fact="mq">7</b> media queries and a VML button, all from the platform's template.</li>
+          <li>Sent through Campaign Monitor as a preview on Friday 27 August 2021. That preview is the file this case study is built from.</li>
+        </ul>
+      </div>
+      <div class="evid__col">
+        <p class="evid__k"><span class="mk mk--d" aria-hidden="true"></span>Skills I bring to email today</p>
+        <ul>
+          <li>Reading and editing template HTML with inline CSS.</li>
+          <li>Responsive email layout: hybrid columns, media queries, image scaling.</li>
+          <li>HTML and CSS in my current work, for interactive campaign previews built before development.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============ 06 · FOUR YEARS ============ -->
+<section class="tx-years" id="years" aria-labelledby="years-title" data-years>
+  <div class="years__sticky">
+    <div class="tx-wrap years__head">
+      <p class="tx-k">05 · Four years</p>
+      <h2 id="years-title" class="tx-h2">Every Friday.<br>For four years.</h2>
+      <p class="years__p">The Weekly Look Ahead turned each school week into one email: the Director's letter, the classrooms, the calendar, the community. These are pages from the issue of 27 August 2021, the first original recovered from the archive.</p>
+    </div>
+    <div class="years__stack" data-years-stack aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ============ CHAPTER 02 · PASHA MALLS ============ -->
+<div class="pm" id="pasha" data-chapter="pasha">
+
+<section class="ec-chap ec-chap--pm" aria-labelledby="ch2-title">
+  <div class="tx-wrap ec-chap__in">
+    <p class="ec-chap__n" aria-hidden="true">02</p>
+    <div class="ec-chap__head">
+      <p class="tx-k ec-up">Chapter 02</p>
+      <h2 id="ch2-title" class="ec-chap__t ec-up">PASHA Malls</h2>
+      <p class="ec-chap__d ec-up">Executive Retail Intelligence</p>
+      <p class="ec-chap__p ec-up">A monthly newsletter written for senior management. At the end of each month it summarised what had changed across major shopping malls in eight countries, so executives could see the retail picture in one read.</p>
+    </div>
+    <dl class="ec-meta ec-up">
+      <div><dt>Role</dt><dd>Marketing Specialist, PASHA Malls</dd></div>
+      <div><dt>Years</dt><dd>2024 to 2025</dd></div>
+      <div><dt>Format</dt><dd>Monthly executive newsletter, HTML email</dd></div>
+      <div><dt>Audience</dt><dd>Senior management</dd></div>
+      <div><dt>Cadence</dt><dd>End of each month, usually the 30th or 31st</dd></div>
+      <div><dt>Coverage</dt><dd>Major shopping malls in eight countries</dd></div>
+      <div><dt>Platform</dt><dd>Mailchimp</dd></div>
+    </dl>
+
+    <aside class="pm-status ec-up" aria-label="About this reconstruction">
+      <p class="pm-status__k">Reconstruction</p>
+      <p class="pm-status__p">The original issues are no longer available. The briefing below rebuilds the format from the working process: its sections, its hierarchy and its email build. It is not an archived email.</p>
+      <ul class="pm-status__key">
+        <li><span class="pm-dot pm-dot--fact" aria-hidden="true"></span><b>Historical</b> The brief, audience, cadence, coverage and platform described on this page.</li>
+        <li><span class="pm-dot pm-dot--ill" aria-hidden="true"></span><b>Illustrative</b> Every market, brand, store and figure inside the email and the charts.</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- brief -->
+<section class="pm-sec pm-brief" aria-labelledby="pm-brief-t">
+  <div class="tx-wrap pm-brief__grid">
+    <div>
+      <p class="tx-k">The brief</p>
+      <h3 id="pm-brief-t" class="pm-h3">A month of retail news, read in minutes.</h3>
+      <p class="pm-p">Senior managers did not need every store update. They needed to know what had moved, where, and what was coming. The newsletter carried the month's developments in a fixed order, so each issue could be read the same way: overview first, detail after, summary last.</p>
+    </div>
+    <div class="pm-brief__cols">
+      <div>
+        <p class="pm-lab">What each issue covered</p>
+        <ul class="pm-list">
+          <li>Major shopping mall developments</li>
+          <li>New retail brands entering malls</li>
+          <li>Store openings</li>
+          <li>Store closures</li>
+          <li>Retail tenant changes</li>
+          <li>Upcoming openings</li>
+          <li>Expansion announcements</li>
+          <li>Future retail development plans</li>
+          <li>Important retail industry updates</li>
+        </ul>
+      </div>
+      <div>
+        <p class="pm-lab">My contribution</p>
+        <ul class="pm-list pm-list--own">
+          <li><b>Email communication design</b> Layout and typography for a reader with little time.</li>
+          <li><b>Information architecture</b> A fixed section order, from overview to summary.</li>
+          <li><b>Visual storytelling</b> Turning market updates into tables, timelines and simple charts.</li>
+          <li><b>HTML email production</b> Building and sending the issue in Mailchimp.</li>
+          <li><b>Executive communication</b> Short, plain headlines that state the point first.</li>
+          <li><b>Campaign presentation</b> A consistent monthly format that readers learned to scan.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- executive inbox -->
+<section class="pm-sec pm-inboxsec" id="pm-inbox" aria-labelledby="pm-inbox-t">
+  <div class="tx-wrap">
+    <header class="pm-head">
+      <p class="tx-k">The briefing</p>
+      <h3 id="pm-inbox-t" class="pm-h2">The last working day of the month.</h3>
+      <p class="pm-lede">The briefing arrived in executives' inboxes at month end. Open it to read the reconstructed issue, at desktop or phone width.</p>
+    </header>
+
+    <div class="xin" data-pm-inbox>
+      <div class="xin__toast" role="status" aria-live="polite" data-pm-toast>
+        <span class="xin__toast-dot" aria-hidden="true"></span><span><b>Retail Intelligence</b> Monthly Retail Intelligence | Executive Briefing</span>
+      </div>
+      <div class="xin__chrome">
+        <span class="xin__app">Outlook</span>
+        <span class="xin__search" aria-hidden="true">Search mail</span>
+        <span class="xin__acct">Senior management</span>
+      </div>
+      <div class="xin__grid">
+        <div class="xin__folders" aria-hidden="true">
+          <p class="is-on">Inbox <b data-pm-count>0</b></p>
+          <p>Briefings</p>
+          <p>Board papers</p>
+          <p>Archive</p>
+        </div>
+        <div class="xin__list">
+          <div class="xin__tabs" aria-hidden="true"><span class="is-on">Focused</span><span>Other</span></div>
+          <ul role="list" class="xin__rows">
+            <li class="xr xr--new" data-pm-new>
+              <button type="button" class="xr__btn" data-pm-open aria-label="Open message from Retail Intelligence: Monthly Retail Intelligence, Executive Briefing">
+                <span class="xr__from">Retail Intelligence</span>
+                <span class="xr__time">Month end</span>
+                <span class="xr__subj">Monthly Retail Intelligence | Executive Briefing</span>
+                <span class="xr__prev">Executive overview · Eight markets · New arrivals · Departures · Looking ahead</span>
+                <span class="xr__flag" aria-hidden="true"></span>
+              </button>
+            </li>
+            <li class="xr xr--old" aria-disabled="true">
+              <div class="xr__btn">
+                <span class="xr__from">Retail Intelligence</span>
+                <span class="xr__time">Previous month</span>
+                <span class="xr__subj">Monthly Retail Intelligence | Executive Briefing</span>
+                <span class="xr__prev">Original issue not recovered</span>
+              </div>
+            </li>
+            <li class="xr xr--old" aria-disabled="true">
+              <div class="xr__btn">
+                <span class="xr__from">Retail Intelligence</span>
+                <span class="xr__time">Two months ago</span>
+                <span class="xr__subj">Monthly Retail Intelligence | Executive Briefing</span>
+                <span class="xr__prev">Original issue not recovered</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="xin__pane" data-pm-pane>
+          <div class="xin__empty" data-pm-empty>
+            <svg viewBox="0 0 40 28" aria-hidden="true"><rect x="1" y="1" width="38" height="26" rx="2"/><path d="M1.5 2l18.5 14 18.5-14"/></svg>
+            <p>Waiting for the month-end briefing</p>
+          </div>
+          <div class="xin__peek" data-pm-peek hidden>
+            <div class="xin__peekhead">
+              <span class="xin__av" aria-hidden="true">RI</span>
+              <span><b>Retail Intelligence</b><br><span>To: Senior management</span></span>
+            </div>
+            <p class="xin__peeksubj">Monthly Retail Intelligence | Executive Briefing</p>
+            <div class="xin__peekwin" aria-hidden="true">
+              <iframe data-pm-peekframe title="Preview of the briefing" tabindex="-1" sandbox="allow-same-origin" scrolling="no"></iframe>
+            </div>
+            <button type="button" class="xin__openbtn" data-pm-open>Read the briefing <i aria-hidden="true">→</i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="pm-cap">Inbox styled for the portfolio. Earlier issues are shown as rows only: their originals were not kept.</p>
+  </div>
+</section>
+
+<!-- anatomy -->
+<section class="pm-sec pm-anat" aria-labelledby="pm-anat-t">
+  <div class="tx-wrap">
+    <header class="pm-head pm-head--split">
+      <div>
+        <p class="tx-k">Anatomy of an issue</p>
+        <h3 id="pm-anat-t" class="pm-h2">Seven sections, one reading order.</h3>
+      </div>
+      <p class="pm-lede">The order never changed. An executive with two minutes reads the first and last sections. One with ten reads everything in between.</p>
+    </header>
+    <ol class="anat" data-pm-anat></ol>
+  </div>
+</section>
+
+<!-- landscape explorer -->
+<section class="pm-sec pm-land" aria-labelledby="pm-land-t">
+  <div class="tx-wrap">
+    <header class="pm-head pm-head--split">
+      <div>
+        <p class="tx-k">Inside the data</p>
+        <h3 id="pm-land-t" class="pm-h2">Eight markets, one view.</h3>
+      </div>
+      <p class="pm-lede">In the email, the landscape is a table, because that is what every inbox can render. Here the same sample data can be explored one market at a time.</p>
+    </header>
+
+    <div class="land" data-pm-land>
+      <div class="land__tiles" role="tablist" aria-label="Sample markets" data-pm-tiles></div>
+      <div class="land__panel" role="tabpanel" aria-live="polite" data-pm-panel></div>
+    </div>
+
+    <figure class="mv" data-pm-mv>
+      <figcaption class="mv__cap">
+        <span class="pm-lab">Market movements</span>
+        <span class="mv__legend"><span><i class="mv__sw mv__sw--out"></i>More exits</span><span><i class="mv__sw mv__sw--in"></i>More arrivals</span></span>
+      </figcaption>
+      <div class="mv__chart" data-pm-mvchart></div>
+    </figure>
+    <p class="pm-ill"><span class="pm-dot pm-dot--ill" aria-hidden="true"></span>Illustrative data for sample markets A to H. Not historical figures.</p>
+  </div>
+</section>
+
+<!-- email build -->
+<section class="pm-sec pm-build" aria-labelledby="pm-build-t">
+  <div class="tx-wrap pm-build__grid">
+    <div>
+      <p class="tx-k">Email build</p>
+      <h3 id="pm-build-t" class="pm-h2">Built for the inbox, not the browser.</h3>
+      <p class="pm-lede">Executives read on Outlook at the desk and on a phone between meetings. The reconstruction follows the same limits the original had to respect.</p>
+      <ul class="pm-rules">
+        <li><b>Tables for layout</b> No flexbox or grid inside the email. Columns are table cells that stack on a phone.</li>
+        <li><b>Inline styles</b> Every style sits on its element, so clients that strip the head still render the issue.</li>
+        <li><b>System fonts</b> Georgia for headlines, Arial for text. No web fonts to fail in Outlook.</li>
+        <li><b>Charts without images</b> Bars are coloured table cells, so the chart reads even with images off.</li>
+        <li><b>One media query</b> Below 620 px the columns stack and the type steps down.</li>
+        <li><b>No scripts</b> Interaction lives in this portfolio page, never inside the email.</li>
+      </ul>
+    </div>
+    <figure class="pm-code">
+      <div class="pm-code__bar" aria-hidden="true"><span>briefing.html</span><span>05 · Market Movements</span></div>
+      <pre tabindex="0" aria-label="Table markup for one bar of the Market Movements chart"><code>&lt;tr&gt;
+  &lt;td width="22%" style="font-family:Georgia,serif;
+      font-size:15px;color:#16181D;"&gt;Market C&lt;/td&gt;
+  &lt;td width="33%" align="right"
+      style="border-right:1px solid #16181D;"&gt;&amp;nbsp;&lt;/td&gt;
+  &lt;td width="33%"&gt;
+    &lt;table role="presentation" width="100%"
+        cellpadding="0" cellspacing="0"&gt;
+      &lt;tr&gt;&lt;td height="12" bgcolor="#16181D"
+          style="font-size:0;line-height:0;"&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+  &lt;/td&gt;
+  &lt;td width="12%" align="right"&gt;&lt;b&gt;+6&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+      <figcaption>One row of the chart. The bar is a table cell with a background colour and a percentage width.</figcaption>
+    </figure>
+  </div>
+</section>
+
+</div>
+
+<!-- ============ END ============ -->
+<section class="ec-end">
+  <div class="tx-wrap ec-end__in">
+    <p class="tx-k">End of both chapters</p>
+    <div class="ec-end__links">
+      <a class="ec-end__a" href="#tisa" data-ec-jump="tisa"><span>01</span> TISA</a>
+      <a class="ec-end__a" href="#pasha" data-ec-jump="pasha"><span>02</span> PASHA Malls</a>
+    </div>
+    <a class="tx-end__link" href="index.html#/work">Back to the portfolio <i aria-hidden="true">→</i></a>
+    <p class="tx-end__note">TISA: student photographs are blurred, and student names and personal email addresses are covered. Everything else in the newsletter is shown as it was sent. PASHA Malls: a reconstruction of the format; all content inside the email is illustrative.</p>
+  </div>
+</section>
+
+<!-- ============ PASHA READER ============ -->
+<div class="pmr" data-pm-reader hidden role="dialog" aria-modal="true" aria-labelledby="pmr-subj">
+  <div class="pmr__bar">
+    <button type="button" class="rbtn" data-pm-close><i aria-hidden="true">←</i><span>Back to inbox</span></button>
+    <p class="pmr__subj" id="pmr-subj"><span>Retail Intelligence</span> Monthly Retail Intelligence | Executive Briefing</p>
+    <div class="pmr__tools">
+      <div class="seg" role="group" aria-label="Preview width">
+        <button type="button" class="seg__b" data-pm-view="desktop" aria-pressed="true">Desktop</button>
+        <button type="button" class="seg__b" data-pm-view="mobile" aria-pressed="false">Mobile</button>
+      </div>
+      <button type="button" class="rbtn rbtn--icon" data-pm-full aria-label="Full screen"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8V3h5M12 3h5v5M17 12v5h-5M8 17H3v-5"/></svg></button>
+    </div>
+  </div>
+  <div class="pmr__body">
+    <nav class="pmr__toc" aria-label="Sections of the briefing" data-pm-toc></nav>
+    <div class="pmr__scroll" data-pm-scroll>
+      <div class="pmr__stage" data-pm-stage>
+        <div class="pmr__dev" data-pm-dev>
+          <div class="pmr__win" data-pm-win>
+            <iframe data-pm-frame title="Monthly Retail Intelligence, Executive Briefing. Illustrative reconstruction" sandbox="allow-same-origin"></iframe>
+          </div>
+        </div>
+      </div>
+      <p class="pmr__end">End of the briefing · <button type="button" class="linkbtn" data-pm-close>Back to inbox</button></p>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ============ READER (opens from inbox and archive) ============ -->
+<div class="reader" data-reader hidden role="dialog" aria-modal="true" aria-labelledby="reader-subj">
+  <div class="reader__bar">
+    <button type="button" class="rbtn" data-r-close><i aria-hidden="true">←</i><span>Back to inbox</span></button>
+    <div class="seg" role="group" aria-label="Preview width">
+      <button type="button" class="seg__b" data-r-view="desktop" aria-pressed="true">Desktop</button>
+      <button type="button" class="seg__b" data-r-view="mobile" aria-pressed="false">Mobile</button>
+    </div>
+    <div class="reader__nav">
+      <span class="reader__pos" data-r-pos>1 / 9</span>
+      <button type="button" class="rbtn rbtn--icon" data-r-prev aria-label="Previous email"><i aria-hidden="true">←</i></button>
+      <button type="button" class="rbtn rbtn--icon" data-r-next aria-label="Next email"><i aria-hidden="true">→</i></button>
+      <button type="button" class="rbtn rbtn--icon" data-r-full aria-label="Fullscreen"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8V3h5M12 3h5v5M17 12v5h-5M8 17H3v-5"/></svg></button>
+    </div>
+  </div>
+  <div class="reader__scroll" data-r-scroll>
+    <div class="reader__inner">
+      <header class="msg">
+        <span class="row__av row__av--lg" aria-hidden="true">T</span>
+        <div class="msg__meta">
+          <p class="msg__from"><b>TISA Communications</b> <span>&lt;publishing@tisa.az&gt;</span></p>
+          <p class="msg__to" data-r-date>To: the TISA community</p>
+        </div>
+        <p class="msg__cat" data-r-cat>Weekly newsletter</p>
+      </header>
+      <h2 class="msg__subj" id="reader-subj" data-r-subj>Four Years of Digital Storytelling</h2>
+
+      <div class="cover" data-r-cover>
+        <p class="cover__k">TISA</p>
+        <p class="cover__t">Email<br>Campaigns</p>
+        <p class="cover__s">Four Years of Digital Storytelling</p>
+        <p class="cover__by">Designed by Khanim Azimli</p>
+      </div>
+      <p class="msg__lede" data-r-lede></p>
+
+      <p class="rstage__tag"><span class="src src--o">Original HTML</span> TISA Weekly Look Ahead, sent 27 August 2021 through Campaign Monitor</p>
+      <div class="rstage" data-r-stage>
+        <div class="rdev" data-r-dev>
+          <div class="rdev__win" data-r-win>
+            <iframe style="width:640px" data-r-frame title="TISA Weekly Look Ahead, 27 August 2021" sandbox="allow-same-origin"></iframe>
+          </div>
+        </div>
+      </div>
+      <p class="msg__end">End of the original email · <button type="button" class="linkbtn" data-r-close>Back to inbox</button></p>
+    </div>
+  </div>
+</div>
+
+
+<script src="assets/case-tisa-data.js"></script>
+<script src="assets/case-pasha-data.js"></script>
+<script src="assets/case-tisa.js"></script>
+<script src="assets/email-campaigns.js"></script>
+</body>
+</html>

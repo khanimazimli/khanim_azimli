@@ -177,6 +177,12 @@
   .tl-endh,.tl-ends{grid-column:1/-1}
   .tl-ends{margin-top:24px;max-width:420px}
 }
+/* ---------- 06 Email campaigns: same source-code rows, sized for longer names ---------- */
+.tl-code--em .tl-cl code{font-size:clamp(26px,3.4vw,52px)}
+.tl-em-link{display:inline-flex;align-items:center;gap:12px;margin-top:clamp(22px,2.4vw,30px);font-size:15px;color:var(--fg-2);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:6px;transition:color .4s var(--e),border-color .4s var(--e)}
+.tl-em-link i{font-style:normal;color:var(--gold);transition:transform .45s var(--e)}
+.tl-em-link:is(:hover,:focus-visible){color:var(--fg);border-color:var(--gold)}
+.tl-em-link:is(:hover,:focus-visible) i{transform:translateX(5px)}
 @media (max-width:700px){
   .tl-sw .a{display:none}
   .tl-sw .b{opacity:1;transform:none}
