@@ -156,9 +156,8 @@
 .tl-ends li:last-child{color:var(--fg-3)}
 
 /* ---------- responsive ---------- */
-/* nav gained a sixth link (Tools): keep the logo on one line before the burger takes over at 820 */
+/* keep the logo on one line; the burger takes over at 1180 (see the nav rules in app.css) */
 .nav .logo{white-space:nowrap}
-@media (min-width:821px) and (max-width:1180px){.nav .wrap{gap:28px}.nav nav{gap:clamp(16px,2vw,28px)}}
 @media (max-width:1024px){
   .tl-title{grid-column:1/-1}
   .tl-intro{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:12px;padding:0}
