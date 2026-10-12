@@ -166,12 +166,18 @@ categorisation on the Work page; there is no filter bar.
 
 - Projects already shown in Selected Work carry a quiet "Selected" label.
 - Projects with no Selected Work block (Melbourne, Indonesia, Generative AI,
-  Personalization at Scale, Təbiət 5, TISA Yearbooks) are listed again in
-  the index header so they are easy to find.
+  Personalization at Scale, Təbiət 5, TISA Yearbooks, Email Campaign Design &
+  Development) are listed again in the index header so they are easy to find.
 - "Index · N projects ↓" under the Selected Work heading jumps to it.
   The count is generated from the index data; never hard-code it.
 - New projects go into the index (`WINDEX` in `assets/app.js`); only add
   them to Selected Work intentionally.
+
+**EMAIL CAMPAIGN DESIGN & DEVELOPMENT** (`email-campaigns.html`) has two
+chapters: TISA (the original 27 Aug 2021 newsletter, privacy-safe, in sandboxed
+iframes) and PASHA Malls (a labelled reconstruction; every figure inside the
+email is illustrative). Keep the Original / Reconstruction labels. Sources and
+notes: `assets/case-tisa/README.md`, `assets/case-pasha/README.md`.
 
 **A LITTLE WORLD OF COLOUR** (`bon-ton-toys.html`) is unlisted on purpose:
 reachable only by its direct URL. Do not add it to Selected Work, the index,

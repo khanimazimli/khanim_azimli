@@ -617,7 +617,8 @@
     ]],
     ['Campaign & visual identity', 'One idea across every piece', [
       { t: 'Grease', sel: 1, cap: 'Theatre identity · Poster', fmt: 'Poster · promo trailer', ctx: 'Production · TISA Drama', yr: '', href: 'campaign.html#grease', img: 'assets/img/edu/gr-poster.webp' },
-      { t: 'Oliver! JR.', sel: 1, cap: 'Programme design · Print', fmt: '10-page programme', ctx: 'Production · TISA', yr: '2024', href: 'campaign.html#oliver', img: 'assets/img/edu/ol-cover.webp' }
+      { t: 'Oliver! JR.', sel: 1, cap: 'Programme design · Print', fmt: '10-page programme', ctx: 'Production · TISA', yr: '2024', href: 'campaign.html#oliver', img: 'assets/img/edu/ol-cover.webp' },
+      { t: 'Email Campaign Design & Development', s: 'TISA · PASHA Malls', cap: 'Email design · HTML/CSS build', fmt: 'Weekly and monthly newsletters', ctx: 'Campaign Monitor · Mailchimp', yr: '2019–2025', href: 'email-campaigns.html', img: 'assets/case-tisa/renders/d-header.webp' }
     ]]
   ];
   const WROWS = WINDEX.flatMap(g => g[2]);
