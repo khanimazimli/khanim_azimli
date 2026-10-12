@@ -20,6 +20,12 @@
 .wjump a:hover::after,.wjump a:focus-visible::after{transform:scaleX(1)}
 .wjump a:hover i{transform:translateY(4px)}
 .wjump p{font-size:var(--t-sm);color:var(--fg-3)}
+.wjump .wj-links{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px clamp(28px,3vw,48px)}
+/* a direct route to a case page: the arrow points onward, not down */
+.wjump .wj-go{color:var(--fg-2);white-space:nowrap;transition:color .4s var(--e)}
+.wjump .wj-s{display:inline-flex;gap:10px}
+.wjump .wj-go:hover,.wjump .wj-go:focus-visible{color:var(--fg)}
+.wjump .wj-go:hover i{transform:translateX(4px)}
 
 /* ---------- Work: tighter rhythm between the Selected Work blocks ---------- */
 #projects .nx-air{height:clamp(150px,22vh,240px)}
@@ -86,6 +92,8 @@
 @media (max-width:640px){
   .wjump{padding-bottom:14px}
   .wjump p{flex-basis:100%}
+  .wjump .wj-links{flex-direction:column;align-items:flex-start}
+  .wjump .wj-s{display:none}
   .wi-head{grid-template-columns:1fr;gap:12px}
   .wi-only{font-size:14px}
   .wi-gh{flex-wrap:wrap;gap:4px 14px}
