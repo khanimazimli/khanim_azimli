@@ -2,6 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- Google tag (gtag.js) · GA4. Only when this page is opened on its own ("Open live experience");
+     inside the portfolio's preview iframe the parent page is already counted. -->
+<script>
+  (function () {
+    if (window.top !== window.self) return;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', 'G-W9ESRVDGKR');
+    var tag = document.createElement('script'); tag.async = true;
+    tag.src = 'https://www.googletagmanager.com/gtag/js?id=G-W9ESRVDGKR';
+    document.head.appendChild(tag);
+  })();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Generative AI and the Future of Work · Redesign</title>
 <meta name="description" content="Independent 10-slide presentation redesign of McKinsey Global Institute research, Generative AI and the Future of Work in America (July 2023).">
