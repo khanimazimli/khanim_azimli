@@ -2037,13 +2037,19 @@
   function go(h) { history.pushState(null, '', h); lastHash = location.hash; }
   // Google Analytics 4: the site never reloads between views, so the router sends the page_view.
   // #/work → /khanim_azimli/work (the same clean URL 404.html forwards), sent once per change of view.
-  let lastTracked = '';
+  // The query string stays on page_location: it carries utm_* / gclid, and GA4 reads campaign
+  // attribution from the first page_view of a session (the config call sends none here).
+  // Later views name the previous view as referrer, so the landing referrer is not repeated.
+  let lastTracked = '', lastLocation = '';
   function trackView() {
     const route = location.hash.replace(/^#\/?/, '').replace(/\/+$/, '');
     const path = location.pathname.replace(/index\.html$/, '') + route;
     if (path === lastTracked || typeof window.gtag !== 'function') return;
-    lastTracked = path;
-    window.gtag('event', 'page_view', { page_location: location.origin + path, page_path: path, page_title: document.title });
+    const loc = location.origin + path + location.search;
+    const ev = { page_location: loc, page_path: path, page_title: document.title };
+    if (lastLocation) ev.page_referrer = lastLocation;
+    lastTracked = path; lastLocation = loc;
+    window.gtag('event', 'page_view', ev);
   }
   // a click on a view link always lands at the top of that view; Back / Forward restore the position
   document.addEventListener('click', e => { const a = e.target.closest('a[href^="#"]'); if (a && !a.dataset.open) toTop = true; }, true);
