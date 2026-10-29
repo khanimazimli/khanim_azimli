@@ -22,7 +22,7 @@
 
   /* ================= CHAPTER NAV + PROGRESS ================= */
   var nav = $$("[data-ec-nav]"), bar = $("[data-ec-bar]"), prog = $("[data-ec-progress]");
-  var chTisa = $("#tisa"), chPm = $("#pasha");
+  var chapters = ["tisa", "pasha", "arti", "nargis"].map(function (id) { return doc.getElementById(id); }).filter(Boolean);
   var current = null;
   function setChapter(id) {
     if (id === current) return;
@@ -46,9 +46,9 @@
     requestAnimationFrame(function () {
       ticking = false;
       var y = win.scrollY + win.innerHeight * .4;
-      var pmTop = chPm.getBoundingClientRect().top + win.scrollY;
-      var tTop = chTisa.getBoundingClientRect().top + win.scrollY;
-      setChapter(y >= pmTop ? "pasha" : (y >= tTop ? "tisa" : null));
+      var id = null;
+      chapters.forEach(function (c) { if (y >= c.getBoundingClientRect().top + win.scrollY) id = c.id; });
+      setChapter(id);
       var max = doc.documentElement.scrollHeight - win.innerHeight;
       prog.style.transform = "scaleX(" + (max > 0 ? Math.min(1, win.scrollY / max) : 0) + ")";
     });
@@ -396,6 +396,50 @@
     mio.observe(mv);
   } else mv.classList.add("is-in");
   if (sel >= 0) $$(".mv__row").forEach(function (r, j) { r.classList.toggle("is-hl", j === sel); });
+
+  /* ================= ARTİ + NARGIS · EMAIL VIEWERS =================
+     Each [data-ev] holds two full-length renders of the HTML email (desktop 680 px, mobile 375 px, both 2x). */
+  var evx = $("[data-evx]"), evxImg = $("[data-evx-img]"), evxScroll = $("[data-evx-scroll]"), evxCur = null, evxBack = null;
+  function evSrc(v, m) { return { src: v.dataset[m === "m" ? "evM" : "evD"], w: m === "m" ? 375 : 680, h: Math.round(+v.dataset[m === "m" ? "evMh" : "evDh"] / 2) }; }
+  function press(btns, attr, m) { btns.forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute(attr) === m ? "true" : "false"); }); }
+  function evxMode(m) {
+    var r = evSrc(evxCur, m);
+    evx.classList.toggle("is-m", m === "m");
+    evxImg.src = r.src; evxImg.width = r.w; evxImg.height = r.h;
+    evxImg.alt = evxCur.dataset.evName + ", full email, " + (m === "m" ? "mobile" : "desktop") + " width";
+    press($$("[data-evx-mode]"), "data-evx-mode", m);
+    evxScroll.scrollTop = 0;
+  }
+  function evxClose() {
+    evx.hidden = true; doc.documentElement.style.overflow = "";
+    if (evxBack) evxBack.focus();
+  }
+  $$("[data-ev]").forEach(function (v) {
+    var winEl = $("[data-ev-win]", v), img = $("[data-ev-img]", v), btns = $$("[data-ev-mode]", v), mode = "d";
+    btns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        mode = b.dataset.evMode;
+        var r = evSrc(v, mode);
+        img.src = r.src; img.width = r.w; img.height = r.h;
+        img.alt = img.alt.replace(/(desktop|mobile) width$/, mode === "m" ? "mobile width" : "desktop width");
+        winEl.classList.toggle("is-m", mode === "m");
+        winEl.scrollTop = 0;
+        press(btns, "data-ev-mode", mode);
+      });
+    });
+    $("[data-ev-full]", v).addEventListener("click", function (e) {
+      evxCur = v; evxBack = e.currentTarget;
+      $("[data-evx-t]").textContent = v.dataset.evName;
+      evx.hidden = false; doc.documentElement.style.overflow = "hidden";
+      evxMode(mode);
+      $("[data-evx-close]", evx).focus();
+    });
+  });
+  if (evx) {
+    $$("[data-evx-mode]").forEach(function (b) { b.addEventListener("click", function () { evxMode(b.dataset.evxMode); }); });
+    $$("[data-evx-close]").forEach(function (b) { b.addEventListener("click", evxClose); });
+    doc.addEventListener("keydown", function (e) { if (e.key === "Escape" && !evx.hidden) evxClose(); });
+  }
 
   /* ================= SMOOTH CHAPTER JUMPS ================= */
   $$("[data-ec-jump]").forEach(function (a) {
