@@ -427,6 +427,8 @@
         press(btns, "data-ev-mode", mode);
       });
     });
+    /* on a phone, open on the mobile render: it is the readable one at that width */
+    if (win.matchMedia("(max-width: 600px)").matches) btns.filter(function (b) { return b.dataset.evMode === "m"; })[0].click();
     $("[data-ev-full]", v).addEventListener("click", function (e) {
       evxCur = v; evxBack = e.currentTarget;
       $("[data-evx-t]").textContent = v.dataset.evName;
