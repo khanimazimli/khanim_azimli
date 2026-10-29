@@ -175,11 +175,10 @@ categorisation on the Work page; there is no filter bar.
 
 **EMAIL CAMPAIGN DESIGN & DEVELOPMENT** (`email-campaigns.html`) has four
 chapters: TISA (the original 27 Aug 2021 newsletter, privacy-safe, in sandboxed
-iframes), PASHA Malls (a labelled reconstruction; every figure inside the
-email is illustrative), ARTİ (two PDF research digests from 2022 adapted into
+iframes), PASHA Malls (Khanim's real 2024–2025 role, plus a 2026 redesigned
+weekly events email built from a later PASHA Malls document; never sent), ARTİ (two PDF research digests from 2022 adapted into
 HTML emails in 2026 for Mailchimp, never sent) and NARGIS (an independent concept, not
-affiliated with NARGIS Magazine, Unsplash photography). Keep the Original /
-Reconstruction / Adaptation / Concept labels. Sources and notes:
+affiliated with NARGIS Magazine, Unsplash photography). Keep the Original / Reinterpretation / Adaptation / Concept labels. Sources and notes:
 `assets/case-tisa/README.md`, `assets/case-pasha/README.md`,
 `assets/case-email/arti/README.md`, `assets/case-email/nargis/README.md`.
 
