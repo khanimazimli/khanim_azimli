@@ -177,7 +177,7 @@ categorisation on the Work page; there is no filter bar.
 chapters: TISA (the original 27 Aug 2021 newsletter, privacy-safe, in sandboxed
 iframes), PASHA Malls (a labelled reconstruction; every figure inside the
 email is illustrative), ARTİ (two PDF research digests from 2022 adapted into
-HTML emails in 2026, never sent) and NARGIS (an independent concept, not
+HTML emails in 2026 for Mailchimp, never sent) and NARGIS (an independent concept, not
 affiliated with NARGIS Magazine, Unsplash photography). Keep the Original /
 Reconstruction / Adaptation / Concept labels. Sources and notes:
 `assets/case-tisa/README.md`, `assets/case-pasha/README.md`,
