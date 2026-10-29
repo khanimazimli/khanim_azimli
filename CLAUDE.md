@@ -173,11 +173,15 @@ categorisation on the Work page; there is no filter bar.
 - New projects go into the index (`WINDEX` in `assets/app.js`); only add
   them to Selected Work intentionally.
 
-**EMAIL CAMPAIGN DESIGN & DEVELOPMENT** (`email-campaigns.html`) has two
+**EMAIL CAMPAIGN DESIGN & DEVELOPMENT** (`email-campaigns.html`) has four
 chapters: TISA (the original 27 Aug 2021 newsletter, privacy-safe, in sandboxed
-iframes) and PASHA Malls (a labelled reconstruction; every figure inside the
-email is illustrative). Keep the Original / Reconstruction labels. Sources and
-notes: `assets/case-tisa/README.md`, `assets/case-pasha/README.md`.
+iframes), PASHA Malls (a labelled reconstruction; every figure inside the
+email is illustrative), ARTİ (two PDF research digests from 2022 adapted into
+HTML emails in 2026 for Mailchimp, never sent) and NARGIS (an independent concept, not
+affiliated with NARGIS Magazine, Unsplash photography). Keep the Original /
+Reconstruction / Adaptation / Concept labels. Sources and notes:
+`assets/case-tisa/README.md`, `assets/case-pasha/README.md`,
+`assets/case-email/arti/README.md`, `assets/case-email/nargis/README.md`.
 
 **A LITTLE WORLD OF COLOUR** (`bon-ton-toys.html`) is unlisted on purpose:
 reachable only by its direct URL. Do not add it to Selected Work, the index,
