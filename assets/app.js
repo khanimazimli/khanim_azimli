@@ -613,7 +613,8 @@
     ['Editorial & publishing', 'Published work, in print', [
       { t: 'Game Changer, Azerbaijan Edition', s: 'Cambridge × Azerbaijan', sel: 1, cap: 'Localisation · Textbook systems', fmt: '2 editions · 300,550 copies', ctx: 'Published textbook', yr: '2024–2025', href: 'publishing.html#game-changer', img: 'assets/img/edu/gc5-cover.webp' },
       { t: 'Təbiət 5 / Природа 5', cap: 'Bilingual learning design', fmt: 'AZ + RU editions · 169,260 copies', ctx: 'Published textbook', yr: '2022', href: 'publishing.html#tebiet', img: 'assets/img/edu/taz-cover.webp' },
-      { t: 'TISA Yearbooks', cap: 'Editorial series · Photo curation', fmt: '5 annual editions', ctx: 'Client · TISA', yr: '', href: 'publishing.html#yearbooks', img: 'assets/img/edu/yb-cover.webp' }
+      { t: 'TISA Yearbooks', cap: 'Editorial series · Photo curation', fmt: '5 annual editions', ctx: 'Client · TISA', yr: '', href: 'publishing.html#yearbooks', img: 'assets/img/edu/yb-cover.webp' },
+      { t: 'Inclusive Education', s: 'Azerbaijan Institute of Education (ARTİ)', cap: 'Editorial design · Chapter colour system', fmt: '166 pages · 12 chapters', ctx: 'Published methodological guide', yr: '2023', href: 'publishing.html#inclusive', img: 'assets/img/inclusive/cover.webp' }
     ]],
     ['Campaign & visual identity', 'One idea across every piece', [
       { t: 'Grease', sel: 1, cap: 'Theatre identity · Poster', fmt: 'Poster · promo trailer', ctx: 'Production · TISA Drama', yr: '', href: 'campaign.html#grease', img: 'assets/img/edu/gr-poster.webp' },

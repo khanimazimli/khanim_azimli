@@ -211,9 +211,15 @@ Current structure:
 **ANNUAL PUBLICATIONS**
 - 03 TISA YEARBOOKS — Five-Year Editorial Series
 
+**INSTITUTIONAL PUBLISHING**
+- 04 INCLUSIVE EDUCATION — ARTİ methodological guide, 2023
+  (`publishing.html#inclusive`; selected pages only, never host the full PDF;
+  design credit as printed in the colophon; no Ministry-commissioning claims,
+  no print-run or distribution figures)
+
 **STAGE & CULTURE**
-- 04 GREASE — Theatre Visual Identity
-- 05 OLIVER! JR — Theatre Programme Design
+- 05 GREASE — Theatre Visual Identity
+- 06 OLIVER! JR — Theatre Programme Design
 
 Publishing projects should feel physical.
 
